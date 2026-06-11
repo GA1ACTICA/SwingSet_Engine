@@ -1,0 +1,33 @@
+plugins {
+    id 'java-library'
+    id 'com.gradleup.shadow' version '9.4.2'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // Use JUnit Jupiter for testing
+    testImplementation libs.junit.jupiter
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+    implementation 'com.google.code.gson:gson:2.11.0'
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(25)
+    }
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
+
+import org.gradle.api.file.DuplicatesStrategy
+
+tasks.shadowJar {
+    archiveClassifier.set('all')
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}

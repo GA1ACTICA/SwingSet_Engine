@@ -1,0 +1,3 @@
+Adwaita | 96x96 | png cursors from https://gitlab.gnome.org/GNOME/adwaita-icon-theme
+
+Read more about license in: licenses/ADWAITA-CURSOR-NOTICE.txt

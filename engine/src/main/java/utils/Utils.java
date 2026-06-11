@@ -1,0 +1,147 @@
+/**
+ * Project: SwingSet_Engine
+ *
+ * Author: Galactica
+ *
+ * Licensed under the MIT License.
+ * See LICENSE file in the project root for full license information.
+ *
+ * Copyright © 2026 Galactica
+ */
+
+package utils;
+
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.font.FontRenderContext;
+import java.awt.font.LineMetrics;
+
+public class Utils {
+    /**
+     * Resets the color used when writing to the terminal
+     * <p>
+     * This is injected into the string that is being written to the terminal at the
+     * desired location
+     */
+    public static final String RESET = "\u001B[0m";
+    /**
+     * Sets the color used when writing to the terminal to {@code Red}
+     * <p>
+     * This is injected into the string that is being written to the terminal at the
+     * desired location
+     */
+    public static final String RED = "\u001B[31m";
+    /**
+     * Sets the color used when writing to the terminal to {@code Green}
+     * <p>
+     * This is injected into the string that is being written to the terminal at the
+     * desired location
+     */
+    public static final String GREEN = "\u001B[32m";
+    /**
+     * Sets the color used when writing to the terminal to {@code Blue}
+     * <p>
+     * This is injected into the string that is being written to the terminal at the
+     * desired location
+     */
+    public static final String YELLOW = "\u001B[33m";
+
+    /**
+     * Returns a resized version of the supplied {@link java.awt.Font Font} whose
+     * rendered height is greater than or equal to the target height.
+     * <p>
+     * The font size is increased one point at a time starting from size {@code 1}
+     * until the measured height of the font reaches or exceeds the target height.
+     * <p>
+     * Font height is measured using
+     * {@link java.awt.font.LineMetrics LineMetrics} with the supplied dummy text.
+     * <p>
+     * <b>Note:</b> The returned font may exceed the target height since the first
+     * font size whose height is greater than or equal to the target is returned.
+     *
+     * @param font         the base font used to derive resized fonts
+     *
+     * @param dummyText    the text used when calculating font metrics
+     *
+     * @param targetHeight the minimum desired rendered font height
+     *
+     * @return a resized font whose rendered height is greater than or equal to the
+     *         target height
+     */
+    public static Font matchFontToHeight(Font font, String dummyText, int targetHeight) {
+
+        int size = 1;
+        FontRenderContext renderContext = new FontRenderContext(null, true, true);
+
+        while (true) {
+            LineMetrics metrics = font.getLineMetrics(dummyText, renderContext);
+
+            if (metrics.getHeight() >= targetHeight) {
+                return font;
+            }
+
+            size++;
+
+            font = font.deriveFont((float) size);
+
+        }
+    }
+
+    /**
+     * Creates a color from red, green, blue, and alpha components. Every value
+     * should fall between (0-255).
+     *
+     * @param r red channel value
+     * 
+     * @param g green channel value
+     * 
+     * @param b blue channel value
+     * 
+     * @param a alpha channel value
+     * 
+     * @return a new Color instance
+     * 
+     * @throws IllegalArgumentException if {@code r}, {@code g}, {@code b} or
+     *                                  {@code a} are outside the range of 0 to
+     *                                  255.
+     * 
+     * @see #rgb(int, int, int)
+     */
+    public static Color rgba(int r, int g, int b, double a) {
+        return new Color(r, g, b, (int) (a * 255));
+    }
+
+    /**
+     * Creates an opaque color from red, green, and blue components. Every value
+     * should fall between (0-255).
+     *
+     * @param r red channel value
+     * 
+     * @param g green channel value
+     * 
+     * @param b blue channel value
+     * 
+     * @return a new Color instance
+     * 
+     * @throws IllegalArgumentException if {@code r}, {@code g} or {@code b} are
+     *                                  outside the range of 0 to 255.
+     * 
+     * @see #rgba(int, int, int, int)
+     */
+    public static Color rgb(int r, int g, int b) {
+        return new Color(r, g, b);
+    }
+
+    public static Color mergeRGBColor(Color primaryColor, Color secondaryColor) {
+        return new Color(Math.round((primaryColor.getRed() + secondaryColor.getRed()) / 2),
+                Math.round((primaryColor.getGreen() + secondaryColor.getGreen()) / 2),
+                Math.round((primaryColor.getBlue() + secondaryColor.getBlue()) / 2));
+    }
+
+    public static Color mergeRGBAColor(Color primaryColor, Color secondaryColor) {
+        return new Color(Math.round((primaryColor.getRed() + secondaryColor.getRed()) / 2),
+                Math.round((primaryColor.getGreen() + secondaryColor.getGreen()) / 2),
+                Math.round((primaryColor.getBlue() + secondaryColor.getBlue()) / 2),
+                Math.round((primaryColor.getAlpha() + secondaryColor.getAlpha()) / 2));
+    }
+}
