@@ -295,7 +295,7 @@ public class TextField
      * Enables or disables the visual click effect (color or image change)
      * when the button is pressed.
      *
-     * @param showPress true to enable the click effect, false to disable it
+     * @param isEnabled true to enable the click effect, false to disable it
      */
     public void setClickEffectEnabled(boolean isEnabled) {
         showPress = isEnabled;

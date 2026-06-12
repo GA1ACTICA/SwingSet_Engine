@@ -21,7 +21,7 @@ import java.util.Set;
 import gameEngine.engineState.EngineState;
 import gameEngine.interfaces.KeyNotifier;
 
-public class Keys implements KeyListener {
+public final class Keys implements KeyListener {
 
     private Set<Integer> keysPressed = new HashSet<>();
     private final Queue<Character> typedCharacters = new LinkedList<>();

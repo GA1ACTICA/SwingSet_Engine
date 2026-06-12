@@ -320,10 +320,10 @@ public class RectCheckbox implements UIDrawable, MenuInterface, MenuSetPosition,
      * Enables or disables the visual click effect (color or image change)
      * when the button is pressed.
      *
-     * @param showPress true to enable the click effect, false to disable it
+     * @param clickEffect true to enable the click effect, false to disable it
      */
-    public void setClickEffectEnabled(boolean isEnabled) {
-        showPress = isEnabled;
+    public void setClickEffectEnabled(boolean clickEffect) {
+        showPress = clickEffect;
     }
 
     /**
@@ -350,8 +350,10 @@ public class RectCheckbox implements UIDrawable, MenuInterface, MenuSetPosition,
     }
 
     /**
+     * Set the state of the toggleButton to either pressed or not pressed
      * 
-     * @param state
+     * @param state {@code True} to set the checkbox state to pressed, {@code false}
+     *              otherwise
      */
     public void setCheckboxState(boolean state) {
         toggled = state;

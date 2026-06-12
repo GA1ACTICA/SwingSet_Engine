@@ -301,7 +301,7 @@ public class Slider implements UIDrawable, Updatable, MenuInterface {
      * Both set the slider current percentage and updates the handle's position on
      * the slider.
      * 
-     * @param value The new percentage of the slider
+     * @param percentage The new percentage of the slider
      */
     public void setPercentage(double percentage) {
         this.sliderPercentage = percentage;

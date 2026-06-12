@@ -11,5 +11,4 @@ plugins {
 }
 
 rootProject.name = 'SwingSet_Engine'
-include('engine')
-include('sandbox')
+include(":engine", ":sandbox")

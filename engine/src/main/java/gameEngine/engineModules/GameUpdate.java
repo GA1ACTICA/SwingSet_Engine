@@ -16,7 +16,7 @@ import javax.swing.JFrame;
 import gameEngine.engineState.EngineState;
 import gameEngine.interfaces.Updatable;
 
-public class GameUpdate implements Runnable {
+class GameUpdate implements Runnable {
 
     private boolean running = true;
     private long lastUpdateTime;
@@ -37,7 +37,6 @@ public class GameUpdate implements Runnable {
         this.state = state;
         this.panel = panel;
         this.context = context;
-        state.setGameStateData(state);
 
         game.start();
     }
@@ -53,7 +52,7 @@ public class GameUpdate implements Runnable {
 
             float deltaTime = (currentTime - lastUpdateTime) / 1000000000.0f;
 
-            if (currentTime - lastUpdateTime >= state.data().exampleUpdateInterval) {
+            if (currentTime - lastUpdateTime >= state.data().updateInterval) {
 
                 // update all updatables
                 for (Updatable u : context.getUpdatables()) {

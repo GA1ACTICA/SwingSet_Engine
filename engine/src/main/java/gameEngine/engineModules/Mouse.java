@@ -22,7 +22,7 @@ import gameEngine.interfaces.MouseNotifier;
 import gameEngine.interfaces.Updatable;
 import utils.ErrorManagement;
 
-public class Mouse implements MouseMotionListener, MouseListener, MouseWheelListener, Updatable {
+public final class Mouse implements MouseMotionListener, MouseListener, MouseWheelListener, Updatable {
 
     private boolean leftDown;
     private boolean rightDown;
@@ -73,7 +73,7 @@ public class Mouse implements MouseMotionListener, MouseListener, MouseWheelList
         MouseManager.handlePriority(context, getPoint());
         MouseManager.handleHover(context, getPoint());
 
-        for (MouseNotifier object : context.getBackBufferMouseNotifiers()) {
+        for (MouseNotifier object : context.getMouseNotifiers()) {
             object.mouseMovementNotification(x, y, dragging);
         }
     }
@@ -89,7 +89,7 @@ public class Mouse implements MouseMotionListener, MouseListener, MouseWheelList
      */
     @Override
     public void mouseClicked(MouseEvent e) {
-        for (MouseNotifier object : context.getBackBufferMouseNotifiers()) {
+        for (MouseNotifier object : context.getMouseNotifiers()) {
             object.mouseClickNotification(x, y);
         }
     }

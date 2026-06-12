@@ -31,6 +31,9 @@ import utils.GraphicsUtils;
 import utils.Utils;
 import utils.GraphicsUtils.MaskType;
 
+/**
+ * A rectangular button
+ */
 public class RectButton implements
         UIDrawable, MenuInterface, MenuSetPosition, MenuSetSize, Clickable, Hoverable {
 

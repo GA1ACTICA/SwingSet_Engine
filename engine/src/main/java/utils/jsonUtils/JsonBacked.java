@@ -18,6 +18,7 @@ import java.io.FileWriter;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import gameEngine.interfaces.JSONNotifier;
 import utils.ErrorManagement;
 import utils.jsonUtils.adapters.ColorAdapter;
 
@@ -33,22 +34,6 @@ public abstract class JsonBacked<T> {
     }
 
     /**
-     * @param object
-     * @param path
-     */
-    protected void successfulExportLog(T object, String path) {
-
-    }
-
-    /**
-     * @param data
-     * @param path
-     */
-    protected void successfulImportLog(T data, String path) {
-
-    }
-
-    /**
      * @return T
      */
     public T data() {
@@ -58,18 +43,20 @@ public abstract class JsonBacked<T> {
     /**
      * Very work in progress!
      * 
-     * {@code .exportJSON(new GameStateData(), "conf.json");}
+     * {@code .exportJSON("conf.json");}
      * 
      * @param object
      * @param path
      */
-    public void exportJSON(T object, String path) {
+    public void exportJSON(String path) {
 
         try (FileWriter writer = new FileWriter(path)) {
 
             // Export to Json
-            gson.toJson(object, writer);
-            successfulExportLog(object, path);
+            gson.toJson(data, writer);
+
+            if (this instanceof JSONNotifier notifier)
+                notifier.successfulExportNotification(path);
 
         } catch (Exception e) {
             ErrorManagement.throwError(e, "Error exporting JSON file ('%s')".formatted(path));
@@ -90,7 +77,9 @@ public abstract class JsonBacked<T> {
 
             // Import Json and set data
             data = gson.fromJson(reader, clazz);
-            successfulImportLog(data, path);
+
+            if (this instanceof JSONNotifier notifier)
+                notifier.successfulImportNotification(path);
 
         } catch (Exception e) {
             ErrorManagement.throwError(e, "Error importing JSON file ('%s')".formatted(path));

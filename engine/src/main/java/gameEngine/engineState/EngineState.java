@@ -11,30 +11,28 @@
 
 package gameEngine.engineState;
 
+import gameEngine.interfaces.JSONNotifier;
+import utils.Utils;
 import utils.jsonUtils.JsonBacked;
 
-public class EngineState extends JsonBacked<EngineStateData> {
-
-    EngineState state;
+public class EngineState extends JsonBacked<EngineStateData> implements JSONNotifier {
 
     public EngineState() {
         super(new EngineStateData());
     }
 
-    public void setGameStateData(EngineState state) {
-        this.state = state;
+    @Override
+    public void successfulExportNotification(String path) {
+        if (data.debug)
+            System.out.println("%s Successfully exported EngineStateData to %s %s".formatted(Utils.ConsoleGREEN, path,
+                    Utils.ConsoleRESET));
     }
 
     @Override
-    protected void successfulExportLog(EngineStateData object, String path) {
-        if (state.data().debug)
-            System.out.println('\n' + "Successfully exported ('%s') to %s".formatted(object, path));
-    }
-
-    @Override
-    protected void successfulImportLog(EngineStateData object, String path) {
-        if (state.data().debug)
-            System.out.println('\n' + "Successfully imported ('%s') to %s".formatted(path, object));
+    public void successfulImportNotification(String path) {
+        if (data.debug)
+            System.out.println("%s Successfully imported EngineStateData from %s %s".formatted(Utils.ConsoleGREEN, path,
+                    Utils.ConsoleRESET));
     }
 
 }

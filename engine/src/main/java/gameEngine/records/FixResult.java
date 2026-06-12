@@ -12,7 +12,6 @@
 package gameEngine.records;
 
 import java.awt.Point;
-import java.util.Objects;
 
 import utils.MathUtils;
 
@@ -34,13 +33,6 @@ import utils.MathUtils;
  * <li>{@code 1.0} corresponds to the end point</li>
  * </ul>
  * </p>
- * 
- * @throws NullPointerException if {@code point} or {@code progress} is
- *                              {@code null}
  */
 public record FixResult(Point point, double progress) {
-    public FixResult {
-        Objects.requireNonNull(point, "point must not be null");
-        Objects.requireNonNull(progress, "progress must not be null");
-    }
 }

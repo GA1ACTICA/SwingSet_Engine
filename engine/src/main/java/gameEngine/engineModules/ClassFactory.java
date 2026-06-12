@@ -23,7 +23,16 @@ import gameEngine.interfaces.drawables.Drawable;
 import gameEngine.interfaces.drawables.UIDrawable;
 import utils.ErrorManagement;
 
-public class ClassFactory {
+/**
+ * Manages the sorting of objects implementing specific interfaces into
+ * different lists in {@link EngineContext}.
+ */
+public final class ClassFactory {
+
+    @SuppressWarnings("unused")
+    private ClassFactory() {
+        throw new AssertionError("No instances allowed");
+    }
 
     /**
      * Adds an object to a reference list, making it eligible to receive drawing,

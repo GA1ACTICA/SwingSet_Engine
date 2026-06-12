@@ -21,7 +21,7 @@ import gameEngine.interfaces.drawables.Drawable;
 
 import java.awt.*;
 
-public class EnginePanel extends JPanel {
+public final class EnginePanel extends JPanel {
 
     // logical space dimension
     public final int logicalWidth = 1000;

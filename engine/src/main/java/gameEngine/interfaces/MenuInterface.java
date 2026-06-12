@@ -40,8 +40,14 @@ import uiElements.misc.UPSCounter;
  */
 public interface MenuInterface {
 
+    /**
+     * Shows the components implementing the {@link MenuInterface}.
+     */
     void show();
 
+    /**
+     * Hides the components implementing the {@link MenuInterface}.
+     */
     void hide();
 
     /**
@@ -50,12 +56,21 @@ public interface MenuInterface {
      * Implemented by components such as {@link RectButton}
      */
     public interface MenuSetSize {
+
+        /**
+         * Sets the components size relative to its current size.
+         * 
+         * @param dWidth  the width offset
+         * 
+         * @param dHeight the height offset
+         */
         void setSize(int width, int height);
 
         /**
          * Changes the components size relative to its current size.
          * 
          * @param dWidth  the width offset
+         * 
          * @param dHeight the height offset
          */
         void translateSize(int dWidth, int dHeight);
@@ -67,14 +82,28 @@ public interface MenuInterface {
      * Implemented by components such as {@link UPSCounter}
      */
     public interface MenuSetPosition {
+
+        /**
+         * Sets the components position with x and y coordinates.
+         * 
+         * @param x The X coordinate
+         * 
+         * @param y The Y coordinate
+         */
         void setPosition(int x, int y);
 
+        /**
+         * Sets the components position with the {@link Point Points} position.
+         * 
+         * @param position The point
+         */
         void setPosition(Point position);
 
         /**
          * Moves the component relative to its current position.
          *
          * @param dx the horizontal offset
+         * 
          * @param dy the vertical offset
          */
         void translatePosition(int dx, int dy);

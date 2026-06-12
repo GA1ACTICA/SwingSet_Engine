@@ -18,7 +18,13 @@ import java.nio.file.Path;
 
 import javax.swing.ImageIcon;
 
+/**
+ * Utility methods for file operations.
+ */
 public class FileUtils extends Utils {
+
+    private FileUtils() {
+    }
 
     /**
      * Get an image from the specified file path of the type {@code Image}.

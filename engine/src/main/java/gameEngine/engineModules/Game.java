@@ -19,27 +19,42 @@ import gameEngine.engineState.EngineState;
 
 public abstract class Game {
 
-    protected final EngineState state = new EngineState();
+    protected final EngineState state;
 
-    protected final EngineContext context = new EngineContext();
-    protected final EnginePanel panel = new EnginePanel(state, context);
-    protected final JFrame frame = new JFrame("Game_Title");
+    protected final EngineContext context;
+    protected final EnginePanel panel;
+    protected final JFrame frame;
 
-    protected final Keys keys = new Keys(state, context);
-    protected final Mouse mouse = new Mouse(state, context, panel);
+    protected final Keys keys;
+    protected final Mouse mouse;
 
-    protected final CursorManager cursor = new CursorManager(context, panel, mouse, state);
+    protected final CursorManager cursor;
 
-    protected final GameUpdate gu = new GameUpdate(keys,
-            mouse,
-            state,
-            panel,
-            frame,
-            context,
-            this);
+    protected final GameUpdate gu;
 
     public Game() {
+        this("Game_Title");
+    }
 
+    public Game(String name) {
+        state = new EngineState();
+
+        context = new EngineContext();
+        panel = new EnginePanel(state, context);
+        frame = new JFrame(name);
+
+        keys = new Keys(state, context);
+        mouse = new Mouse(state, context, panel);
+
+        cursor = new CursorManager(context, panel, mouse, state);
+
+        gu = new GameUpdate(keys,
+                mouse,
+                state,
+                panel,
+                frame,
+                context,
+                this);
         // PANEL setup
         panel.setLayout(null);
         panel.setPreferredSize(new Dimension(state.data().width, state.data().height));

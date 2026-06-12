@@ -16,7 +16,10 @@ import java.awt.Point;
 import gameEngine.interfaces.Clickable;
 import gameEngine.interfaces.Hoverable;
 
-public class MouseManager {
+/**
+ * Manages the mouse such as hover priority and click events
+ */
+class MouseManager {
 
     static Hoverable lastHovered = null;
     static Hoverable topMost = null;

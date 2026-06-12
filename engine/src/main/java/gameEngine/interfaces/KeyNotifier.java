@@ -12,6 +12,7 @@
 package gameEngine.interfaces;
 
 import java.awt.event.KeyEvent;
+import gameEngine.engineModules.Keys;
 
 public interface KeyNotifier {
     /**
@@ -28,10 +29,10 @@ public interface KeyNotifier {
      * Depending on the platform and user keyboard repeat settings, this method
      * may be invoked repeatedly while a key is held down.
      *
-     * @see gameEngine.engineModules.Keys#getKeysTyped()
+     * @see Keys#pollTypedCharacter() pollTypedCharacter()
      */
     default void keyTypedNotification(KeyEvent e) {
-    };
+    }
 
     /**
      * Invoked when a physical key is pressed down.
@@ -42,7 +43,7 @@ public interface KeyNotifier {
      * operating system keyboard repeat settings.
      */
     default void keyPressedNotification(KeyEvent e) {
-    };
+    }
 
     /**
      * Invoked when a physical key is released.
@@ -50,6 +51,6 @@ public interface KeyNotifier {
      * Intended for gameplay controls and input state handling.
      */
     default void keyReleasedNotification(KeyEvent e) {
-    };
+    }
 
 }

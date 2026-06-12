@@ -11,21 +11,20 @@
 
 package gameEngine.engineModules.cursor;
 
+import gameEngine.interfaces.JSONNotifier;
 import utils.jsonUtils.JsonBacked;
 
-public class AnimatedCursor extends JsonBacked<AnimatedCursorData> {
+class AnimatedCursor extends JsonBacked<AnimatedCursorData> implements JSONNotifier {
 
     protected AnimatedCursor(AnimatedCursorData initialData) {
         super(new AnimatedCursorData());
     }
 
     @Override
-    protected void successfulExportLog(AnimatedCursorData object, String path) {
-        System.out.println();
+    public void successfulExportNotification(String path) {
     }
 
     @Override
-    protected void successfulImportLog(AnimatedCursorData data, String path) {
-        System.out.println("Successfully imported" + path + '\n');
+    public void successfulImportNotification(String path) {
     }
 }

@@ -16,15 +16,23 @@ import java.util.Objects;
 
 import gameEngine.records.FixResult;
 
+/**
+ * Utility methods for math operations.
+ */
 public class MathUtils extends Utils {
 
+    private MathUtils() {
+        super();
+    }
+
     /**
+     * Calculates the distance between two {@link Point Points}.
      * 
-     * @param pointOne
+     * @param pointOne First point
      * 
-     * @param pointTwo
+     * @param pointTwo Second point
      * 
-     * @return
+     * @return The distance between the points
      */
     public static double pythagoras(Point pointOne, Point pointTwo) {
 
@@ -35,16 +43,18 @@ public class MathUtils extends Utils {
     }
 
     /**
+     * Calculates the distance between two represented as {@code x} and {@code y}
+     * coordinates.
      * 
-     * @param x1
+     * @param x1 X coordinate for the first point
      * 
-     * @param y1
+     * @param y1 Y coordinate for the first point
      * 
-     * @param x2
+     * @param x2 X coordinate for the second point
      * 
-     * @param y2
+     * @param y2 Y coordinate for the second point
      * 
-     * @return
+     * @return The distance between the points
      */
     public static double pythagoras(int x1, int y1, int x2, int y2) {
 

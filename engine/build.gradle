@@ -19,6 +19,9 @@ java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(25)
     }
+    
+    withSourcesJar()
+    withJavadocJar()
 }
 
 tasks.named('test') {
@@ -30,4 +33,8 @@ import org.gradle.api.file.DuplicatesStrategy
 tasks.shadowJar {
     archiveClassifier.set('all')
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
+
+tasks.withType(JavaCompile) {
+    options.compilerArgs += '-parameters'
 }

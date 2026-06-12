@@ -34,6 +34,11 @@ import utils.GraphicsUtils;
 
 public class CursorManager implements CursorDrawable, Updatable {
 
+    @SuppressWarnings("unused")
+    private CursorManager() {
+        throw new AssertionError("No instances allowed");
+    }
+
     private static String defaultCursorPath = "cursors/Adwaita 96x96/";
 
     private static AnimatedCursor rawCursorData = new AnimatedCursor(null);
@@ -109,12 +114,18 @@ public class CursorManager implements CursorDrawable, Updatable {
         if (overriding)
             return false;
 
-        Path currentCursorPath = Path.of(cursorType.path());
-        File resource = currentCursorPath.toFile();
+        String localDefaultCursorPath;
+
+        if (cursorType.builtIn())
+            localDefaultCursorPath = defaultCursorPath;
+        else
+            localDefaultCursorPath = "";
+
+        File resource = Path.of(cursorType.path()).toFile();
 
         if (resource.toString().contains(".png")) {
             // Loads in a static cursor image
-            Path cursor = Path.of(defaultCursorPath.toString() + resource.toString());
+            Path cursor = Path.of(localDefaultCursorPath + resource.toString());
 
             if (state.data().debug)
                 System.out.println(
@@ -136,13 +147,13 @@ public class CursorManager implements CursorDrawable, Updatable {
 
             // Populate frameDataArray from meta.json
             rawCursorData.importJSON(AnimatedCursorData.class,
-                    "src/" + defaultCursorPath + resource.toString() + "/meta.json");
+                    "src/" + localDefaultCursorPath + resource.toString() + "/meta.json");
 
             frameDataArray = rawCursorData.data().getFrames().toArray(new Frame[0]);
 
             if (frameDataArray != null) {
                 for (Frame frame : frameDataArray) {
-                    Path imagePath = Path.of(defaultCursorPath
+                    Path imagePath = Path.of(localDefaultCursorPath
                             + resource.getName() + "/"
                             + frame.getImagePath());
 
@@ -160,7 +171,7 @@ public class CursorManager implements CursorDrawable, Updatable {
                 }
 
                 // Get scale for hotspot calculation.
-                Path imagePath = Path.of(defaultCursorPath
+                Path imagePath = Path.of(localDefaultCursorPath
                         + resource.getName() + "/"
                         + frameDataArray[0].getImagePath());
 

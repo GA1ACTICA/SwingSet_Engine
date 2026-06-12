@@ -11,31 +11,63 @@
 
 package utils;
 
+/**
+ * Utility methods for exception operations.
+ */
 public class ErrorManagement extends Utils {
-
-    /**
-     * @param exception
-     * @param message
-     * 
-     */
-    public static void throwError(Exception exception, String message) {
-        System.err.println(
-                '\n' + Utils.RED + message + ": " + Utils.YELLOW + exception.getMessage()
-                        + Utils.RESET + '\n');
-
-        exception.printStackTrace();
-        System.exit(1);
+    private ErrorManagement() {
     }
 
     /**
-     * @param exception
-     * @param message
+     * Throws an exception in a clear to understand manner.
+     * <p>
+     * Throws an exception with highlighting and a extra message on what went wrong
+     * and exits the program with the code {@code 1}.
      * 
+     * @param exception Exception to be thrown
+     * 
+     * @param message   Extra message for clarification
+     * 
+     */
+    public static void throwError(Exception exception, String message) {
+        throwError(exception, message, 1);
+    }
+
+    /**
+     * Throws an exception in a clear to understand manner.
+     * <p>
+     * Throws an exception with highlighting and a extra message on what went wrong
+     * and exits the program.
+     * 
+     * @param exception Exception to be thrown
+     * 
+     * @param message   Extra message for clarification
+     * 
+     * @param exitCode  The exit code the program exits with
+     */
+    private static void throwError(Exception exception, String message, int exitCode) {
+        System.err.println(
+                '\n' + Utils.ConsoleRED + message + ": " + Utils.ConsoleYELLOW + exception.getMessage()
+                        + Utils.ConsoleRESET + '\n');
+
+        exception.printStackTrace();
+        System.exit(exitCode);
+    }
+
+    /**
+     * Reports an error in a clear to understand manner.
+     * <p>
+     * Reports an exception with highlighting and a extra message on what went
+     * wrong.
+     * 
+     * @param exception Exception to be reported
+     * 
+     * @param message   Extra message for clarification
      */
     public static void reportError(Exception exception, String message) {
         System.err.println(
-                '\n' + Utils.RED + message + ": " + Utils.YELLOW + exception.getMessage()
-                        + Utils.RESET + '\n');
+                '\n' + Utils.ConsoleRED + message + ": " + Utils.ConsoleYELLOW + exception.getMessage()
+                        + Utils.ConsoleRESET + '\n');
 
         exception.printStackTrace();
     }

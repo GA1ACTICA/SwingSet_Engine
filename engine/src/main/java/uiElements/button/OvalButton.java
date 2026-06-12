@@ -18,6 +18,9 @@ import gameEngine.engineModules.EngineContext;
 import gameEngine.engineModules.EnginePanel;
 import gameEngine.engineModules.Mouse;
 
+/**
+ * A oval button
+ */
 public class OvalButton extends RectButton {
 
     /**

@@ -17,34 +17,37 @@ import java.awt.font.FontRenderContext;
 import java.awt.font.LineMetrics;
 
 public class Utils {
+    Utils() {
+    }
+
     /**
      * Resets the color used when writing to the terminal
      * <p>
      * This is injected into the string that is being written to the terminal at the
      * desired location
      */
-    public static final String RESET = "\u001B[0m";
+    public static final String ConsoleRESET = "\u001B[0m";
     /**
      * Sets the color used when writing to the terminal to {@code Red}
      * <p>
      * This is injected into the string that is being written to the terminal at the
      * desired location
      */
-    public static final String RED = "\u001B[31m";
+    public static final String ConsoleRED = "\u001B[31m";
     /**
      * Sets the color used when writing to the terminal to {@code Green}
      * <p>
      * This is injected into the string that is being written to the terminal at the
      * desired location
      */
-    public static final String GREEN = "\u001B[32m";
+    public static final String ConsoleGREEN = "\u001B[32m";
     /**
      * Sets the color used when writing to the terminal to {@code Blue}
      * <p>
      * This is injected into the string that is being written to the terminal at the
      * desired location
      */
-    public static final String YELLOW = "\u001B[33m";
+    public static final String ConsoleYELLOW = "\u001B[33m";
 
     /**
      * Returns a resized version of the supplied {@link java.awt.Font Font} whose

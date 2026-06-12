@@ -18,6 +18,9 @@ import gameEngine.engineModules.EngineContext;
 import gameEngine.engineModules.EnginePanel;
 import gameEngine.engineModules.Mouse;
 
+/**
+ * A rounded rectangular button
+ */
 public class RoundRectButton extends RectButton {
 
     /**
