@@ -18,6 +18,11 @@ import gameEngine.engineModules.EngineContext;
 import gameEngine.engineModules.EnginePanel;
 import gameEngine.engineModules.Mouse;
 
+/**
+ * A checkbox rendered using an oval shape.
+ * <p>
+ * Behaves identically to {@link RectCheckbox} but uses an oval appearance.
+ */
 public class OvalCheckbox extends RectCheckbox {
 
     /**

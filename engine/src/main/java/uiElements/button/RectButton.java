@@ -32,7 +32,10 @@ import utils.Utils;
 import utils.GraphicsUtils.MaskType;
 
 /**
- * A rectangular button
+ * Base implementation of a button UI component.
+ * <p>
+ * A button represents a boolean state that can be clicked by the user
+ * and provides common functionality such as rendering, positioning, and sizing.
  */
 public class RectButton implements
         UIDrawable, MenuInterface, MenuSetPosition, MenuSetSize, Clickable, Hoverable {
@@ -238,35 +241,75 @@ public class RectButton implements
     }
 
     // ————————— Set colors ——————————
+    /**
+     * Set the color shown when then button is in the normal state.
+     * 
+     * @param color The color shown when the button is normal
+     */
     public void setColor(Color color) {
         this.color = color;
     }
 
+    /**
+     * Set the color shown when then button is in the hovered state.
+     * 
+     * @param hoverColor The color shown when the button is hovered
+     */
     public void setHoverColor(Color hoverColor) {
         this.hoverColor = hoverColor;
     }
 
+    /**
+     * Set the color shown when then button is in the disabled state.
+     * 
+     * @param disabledColor The color shown when the button is disabled
+     */
     public void setDisabledColor(Color disabledColor) {
         this.disabledColor = disabledColor;
     }
 
+    /**
+     * Set the color shown when then button is in the clicked state.
+     * 
+     * @param clickColor The image color when the button is clicked
+     */
     public void setClickColor(Color clickColor) {
         this.clickColor = clickColor;
     }
 
     // —————————— Set images ——————————
+    /**
+     * Set the image shown when then button is in the normal state.
+     * 
+     * @param image The image shown when the button is normal
+     */
     public void setImage(Image image) {
         this.image = image;
     }
 
+    /**
+     * Set the image shown when then button is in the hovered state.
+     * 
+     * @param hoverImage The image shown when the button is hovered
+     */
     public void setHoverImage(Image hoverImage) {
         this.hoverImage = hoverImage;
     }
 
+    /**
+     * Set the image shown when then button is in the disabled state.
+     * 
+     * @param disabledImage The image shown when the button is disabled
+     */
     public void setDisabledImage(Image disabledImage) {
         this.disabledImage = disabledImage;
     }
 
+    /**
+     * Set the image shown when then button is in the clicked state.
+     * 
+     * @param clickImage The image shown when the button is clicked
+     */
     public void setClickImage(Image clickImage) {
         this.clickImage = clickImage;
     }
@@ -309,7 +352,8 @@ public class RectButton implements
      * Enables or disables the visual click effect (color or image change)
      * when the button is pressed.
      *
-     * @param clickEffect true to enable the click effect, false to disable it
+     * @param clickEffect {@code true} to enable the click effect,
+     *                    {@code false} to disable it
      */
     public void setClickEffectEnabled(boolean clickEffect) {
         showPress = clickEffect;
@@ -319,12 +363,22 @@ public class RectButton implements
      * Enables or disables the visual hover effect (color or image change)
      * when the button is hovered.
      *
-     * @param hoverEffect true to enable the hover effect, false to disable it
+     * @param hoverEffect {@code true} to enable the hover effect,
+     *                    {@code false} to disable it
      */
     public void setHoverEffectEnabled(boolean hoverEffect) {
         showHover = hoverEffect;
     }
 
+    /**
+     * Set the ability to interact with the checkbox. This also changes the
+     * appearances to the disabled state.
+     * 
+     * @param isEnabled true to disable the checkbox, false to enable it
+     * 
+     * @see #setDisabledColor(Color)
+     * @see #setDisabledImage(Image)
+     */
     public void setEnabled(boolean isEnabled) {
         this.isEnabled = isEnabled;
     }
@@ -334,30 +388,56 @@ public class RectButton implements
         return isEnabled;
     }
 
+    /**
+     * Returns the X coordinate in screen coordinates (untransformed).
+     * 
+     * @return The X coordinates
+     */
     public int getX() {
         return x;
     }
 
+    /**
+     * Returns the Y coordinate in screen coordinates (untransformed).
+     * 
+     * @return The Y coordinates
+     */
     public int getY() {
         return y;
     }
 
+    /**
+     * Returns the width of the checkbox.
+     * 
+     * @return the width
+     */
     public int getWidth() {
         return width;
     }
 
+    /**
+     * Returns the height of the checkbox.
+     * 
+     * @return the height
+     */
     public int getHeight() {
         return height;
     }
 
+    /**
+     * Returns the center of the checkbox.
+     * 
+     * @return the center {@link Point}
+     */
     public Point getCenter() {
         return new Point(x + width / 2, y + height / 2);
     }
 
-    public Color getColor() {
-        return color;
-    }
-
+    /**
+     * Returns the checkbox angle.
+     * 
+     * @return the angle
+     */
     public double getAngle() {
         return angle;
     }
@@ -474,10 +554,26 @@ public class RectButton implements
         clicked = false;
     }
 
+    /**
+     * Returns whether or not the button is currently being pressed.
+     * 
+     * @return {@code true} if the button is pressed,
+     *         {@code false} otherwise
+     * 
+     * @see #isReleased()
+     */
     public boolean isPressed() {
         return clicked;
     }
 
+    /**
+     * Returns whether or not the button is currently not being pressed.
+     * 
+     * @return {@code true} if the button is not pressed,
+     *         {@code false} otherwise
+     * 
+     * @see #isPressed()
+     */
     public boolean isReleased() {
         return !clicked;
     }

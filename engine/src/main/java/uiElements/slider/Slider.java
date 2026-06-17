@@ -38,8 +38,8 @@ public class Slider implements UIDrawable, Updatable, MenuInterface {
 
     // Slider looks
     private Point pointOne, pointTwo;
-    private Color sliderColor = new Color(60, 60, 60, 153); // ~60% transparency
-    private int sliderWidth = 5;
+    private Color trackColor = new Color(60, 60, 60, 153); // ~60% transparency
+    private int trackWidth = 5;
 
     // Slider values
     private double sliderPercentage = 0.50;
@@ -47,7 +47,7 @@ public class Slider implements UIDrawable, Updatable, MenuInterface {
     private int sliderMax = 100;
 
     // handle looks
-    private int handleWidth = sliderWidth + 8;
+    private int handleWidth = trackWidth + 8;
     private int handleHeight = 25;
     private double handleAngle;
 
@@ -130,8 +130,8 @@ public class Slider implements UIDrawable, Updatable, MenuInterface {
         return sliderPercentage;
     }
 
-    public Color getSliderColor() {
-        return sliderColor;
+    public Color gettrackColor() {
+        return trackColor;
     }
 
     /**
@@ -146,16 +146,35 @@ public class Slider implements UIDrawable, Updatable, MenuInterface {
         return handle;
     }
 
+    /**
+     * Returns the first {@link Point} initialized in the constructor,
+     * {@link #setSliderPoints(Point, Point)} or
+     * {@link #setSliderPoints(Point, Point, boolean)}
+     * 
+     * @return the first point
+     */
     public Point getPointOne() {
         return pointOne;
     }
 
+    /**
+     * Returns the second {@link Point} initialized in the constructor,
+     * {@link #setSliderPoints(Point, Point)} or
+     * {@link #setSliderPoints(Point, Point, boolean)}
+     * 
+     * @return the second point
+     */
     public Point getPointTwo() {
         return pointTwo;
     }
 
-    public void setColor(Color sliderColor) {
-        this.sliderColor = sliderColor;
+    /**
+     * Sets the color of the track the handle slides along
+     * 
+     * @param trackColor the new color of the track
+     */
+    public void setColor(Color trackColor) {
+        this.trackColor = trackColor;
     }
 
     /**
@@ -239,8 +258,13 @@ public class Slider implements UIDrawable, Updatable, MenuInterface {
         this.sliderMin = sliderMin;
     }
 
-    public void setSliderWidth(int sliderWidth) {
-        this.sliderWidth = sliderWidth;
+    /**
+     * Sets the track width which the handle slider along.
+     * 
+     * @param trackWidth the width of the track
+     */
+    public void settTackWidth(int trackWidth) {
+        this.trackWidth = trackWidth;
     }
 
     /**
@@ -329,10 +353,10 @@ public class Slider implements UIDrawable, Updatable, MenuInterface {
 
         Graphics2D g2d = (Graphics2D) g;
 
-        g2d.setColor(sliderColor);
+        g2d.setColor(trackColor);
 
-        // Draws a line with thickness "sliderWidth"
-        g2d.setStroke(new BasicStroke(sliderWidth));
+        // Draws a line with thickness "trackWidth"
+        g2d.setStroke(new BasicStroke(trackWidth));
         g2d.draw(new Line2D.Float(pointOne, pointTwo));
 
     }

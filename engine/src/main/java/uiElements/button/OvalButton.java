@@ -19,7 +19,9 @@ import gameEngine.engineModules.EnginePanel;
 import gameEngine.engineModules.Mouse;
 
 /**
- * A oval button
+ * A button rendered using an oval shape.
+ * <p>
+ * Behaves identically to {@link RectButton} but uses an oval appearance.
  */
 public class OvalButton extends RectButton {
 

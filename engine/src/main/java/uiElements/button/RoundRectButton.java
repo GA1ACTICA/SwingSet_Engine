@@ -19,7 +19,10 @@ import gameEngine.engineModules.EnginePanel;
 import gameEngine.engineModules.Mouse;
 
 /**
- * A rounded rectangular button
+ * A button rendered using a rounded rectangle shape.
+ * <p>
+ * Behaves identically to {@link RectButton} but uses a rounded rectangle
+ * appearance.
  */
 public class RoundRectButton extends RectButton {
 

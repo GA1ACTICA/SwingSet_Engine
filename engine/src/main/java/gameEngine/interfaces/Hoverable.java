@@ -32,7 +32,8 @@ public interface Hoverable extends ZIndexable {
      * <p>
      * This method is typically called by the engine during mouse processing.
      *
-     * @param isHovered {@code true} if the element is hovered
+     * @param isHovered {@code true} if the element is hovered,
+     *                  {@code false} otherwise
      */
     void setHovered(boolean isHovered);
 
@@ -52,9 +53,16 @@ public interface Hoverable extends ZIndexable {
      * 
      * @param mouseY the y-coordinate of the point
      * 
-     * @return true if the point is inside the clickable area, false otherwise
+     * @return {@code true} if the point is inside the clickable area,
+     *         {@code false} otherwise
      */
     boolean contains(int mouseX, int mouseY);
 
+    /**
+     * Returns if the element is visible.
+     * 
+     * @return {@code true} if the element is visible,
+     *         {@code false} otherwise
+     */
     boolean isVisible();
 }

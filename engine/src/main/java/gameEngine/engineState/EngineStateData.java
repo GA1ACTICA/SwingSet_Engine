@@ -13,7 +13,7 @@ package gameEngine.engineState;
 
 import java.awt.Color;
 
-public class EngineStateData {
+public final class EngineStateData {
 
     public boolean debug = false;
     public boolean debugVerbose = false;

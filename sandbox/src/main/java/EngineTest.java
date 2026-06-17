@@ -16,7 +16,9 @@ public class EngineTest implements Drawable {
             @Override
             protected void init() {
                 new EngineTest(context);
+                state.exportJson("test.json");
             }
+
         };
     }
 

@@ -41,7 +41,7 @@ public class CursorManager implements CursorDrawable, Updatable {
 
     private static String defaultCursorPath = "cursors/Adwaita 96x96/";
 
-    private static AnimatedCursor rawCursorData = new AnimatedCursor(null);
+    private static AnimatedCursor rawCursorData;
     private static Frame[] frameDataArray = null;
 
     private static boolean show = true;
@@ -66,8 +66,10 @@ public class CursorManager implements CursorDrawable, Updatable {
 
     public CursorManager(EngineContext context, EnginePanel panel, Mouse mouse, EngineState state) {
         CursorManager.state = state;
-        this.mouse = mouse;
         ClassFactory.create(this, context);
+
+        rawCursorData = new AnimatedCursor(new AnimatedCursorData(), state);
+        this.mouse = mouse;
 
         // Hide system cursor
         panel.setCursor(
@@ -146,7 +148,7 @@ public class CursorManager implements CursorDrawable, Updatable {
             // Loads in a animated cursor collection with the information from meta.json
 
             // Populate frameDataArray from meta.json
-            rawCursorData.importJSON(AnimatedCursorData.class,
+            rawCursorData.importJson(
                     "src/" + localDefaultCursorPath + resource.toString() + "/meta.json");
 
             frameDataArray = rawCursorData.data().getFrames().toArray(new Frame[0]);

@@ -287,30 +287,77 @@ public final class Mouse implements MouseMotionListener, MouseListener, MouseWhe
         }
     }
 
+    /**
+     * Returns {@code true} or {@code false} depending on if the left mouse button
+     * is pressed.
+     * 
+     * @return {@code true} if the left mouse button is pressed, {@code false}
+     *         otherwise
+     */
     public boolean leftDown() {
         return leftDown;
     }
 
+    /**
+     * Returns {@code true} or {@code false} depending on if the middle mouse button
+     * is pressed.
+     * 
+     * @return {@code true} if the middle mouse button is pressed, {@code false}
+     *         otherwise
+     */
     public boolean middleDown() {
         return middleDown;
     }
 
+    /**
+     * Returns {@code true} or {@code false} depending on if the right mouse button
+     * is pressed.
+     * 
+     * @return {@code true} if the right mouse button is pressed, {@code false}
+     *         otherwise
+     */
     public boolean rightDown() {
         return rightDown;
     }
 
+    /**
+     * Returns {@code true} or {@code false} depending on if the mouse is on the
+     * screen.
+     * 
+     * @return {@code true} if the mouse is on the screen, {@code false}
+     *         otherwise
+     */
     public boolean onScreen() {
         return onScreen;
     }
 
+    /**
+     * Returns the distance traveled on the {@code X} axis in screen coordinates
+     * (untransformed) since the last frame.
+     * 
+     * @return The distance traveled this frame on the X axis
+     */
     public int getDeltaX() {
         return deltaX;
     }
 
+    /**
+     * Returns the distance traveled on the {@code Y} axis in screen coordinates
+     * (untransformed) since the last frame.
+     * 
+     * @return The distance traveled this frame on the Y axis
+     */
     public int getDeltaY() {
         return deltaY;
     }
 
+    /**
+     * Returns the mouse wheel movement since the previous frame.
+     * See {@link MouseWheelEvent#getPreciseWheelRotation()} for the
+     * definition of the returned unit.
+     *
+     * @return the mouse wheel movement during the current frame
+     */
     public float getMouseWheelDelta() {
         return mouseWheelDelta;
     }

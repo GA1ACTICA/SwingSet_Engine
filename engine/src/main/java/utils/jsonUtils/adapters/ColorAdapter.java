@@ -28,9 +28,12 @@ public class ColorAdapter extends TypeAdapter<Color> {
             writer.nullValue();
             return;
         }
-
-        String rgba = color.getRed() + "," + color.getGreen() + "," + color.getBlue() + "," + color.getAlpha();
-        writer.value(rgba);
+        writer.beginArray();
+        writer.value(color.getRed());
+        writer.value(color.getGreen());
+        writer.value(color.getBlue());
+        writer.value(color.getAlpha());
+        writer.endArray();
     }
 
     @Override
@@ -40,12 +43,11 @@ public class ColorAdapter extends TypeAdapter<Color> {
             return null;
         }
 
-        String[] parts = in.nextString().split(",");
+        int rgba[] = new int[4];
 
-        int[] rgba = new int[4];
-        for (int index = 0; index < 4; index++) {
-            rgba[index] = Integer.parseInt(parts[index]);
-        }
+        in.beginArray();
+        for (int i = 0; i < rgba.length; i++)
+            rgba[i] = in.nextInt();
 
         return new Color(rgba[0], rgba[1], rgba[2], rgba[3]);
     }

@@ -36,6 +36,12 @@ import utils.GraphicsUtils;
 import utils.GraphicsUtils.MaskType;
 import utils.Utils;
 
+/**
+ * Base implementation of a checkbox UI component.
+ * <p>
+ * A checkbox represents a boolean state that can be toggled by the user
+ * and provides common functionality such as rendering, positioning, and sizing.
+ */
 public class RectCheckbox implements UIDrawable, MenuInterface, MenuSetPosition, MenuSetSize, Clickable, Hoverable {
 
     private int zIndex = 0;
@@ -44,7 +50,17 @@ public class RectCheckbox implements UIDrawable, MenuInterface, MenuSetPosition,
     private double angle = 0;
     private boolean show = false;
 
+    /**
+     * The base shape used for calculations
+     * 
+     * @see #rotatedShape
+     */
     protected RectangularShape baseShape;
+    /**
+     * The derived shape used for rendering
+     * 
+     * @see #baseShape
+     */
     protected Shape rotatedShape;
 
     private Color color = Color.GREEN;
@@ -246,46 +262,82 @@ public class RectCheckbox implements UIDrawable, MenuInterface, MenuSetPosition,
     }
 
     // ————————— Set colors ——————————
+    /**
+     * Set the color shown when then checkbox is in the normal state.
+     * 
+     * @param color The color shown when the checkbox is normal
+     */
     public void setColor(Color color) {
         this.color = color;
     }
 
+    /**
+     * Set the color shown when then checkbox is in the toggled state.
+     * 
+     * @param toggleColor The color shown when the checkbox is toggled
+     */
     public void setToggleColor(Color toggleColor) {
         this.toggleColor = toggleColor;
     }
 
-    public void setHoverColor(Color hoveColor) {
-        this.hoverColor = hoveColor;
+    /**
+     * Set the color shown when then checkbox is in the hovered state.
+     * 
+     * @param hoverColor The color shown when the checkbox is hovered
+     */
+    public void setHoverColor(Color hoverColor) {
+        this.hoverColor = hoverColor;
     }
 
+    /**
+     * Set the color shown when then checkbox is in the disabled state.
+     * 
+     * @param disabledColor The color shown when the checkbox is disabled
+     */
     public void setDisabledColor(Color disabledColor) {
         this.disabledColor = disabledColor;
     }
 
-    public void setClickColor(Color clickColor) {
-        this.clickColor = clickColor;
-    }
-
     // —————————— Set images ——————————
+    /**
+     * Set the image shown when then checkbox is in the normal state.
+     * 
+     * @param image The image shown when the checkbox is normal
+     */
     public void setImage(Image image) {
         this.image = image;
     }
 
+    /**
+     * Set the image shown when then checkbox is in the toggled state.
+     * 
+     * @param toggleImage The image shown when the checkbox is toggled
+     */
     public void setToggleImage(Image toggleImage) {
         this.toggleImage = toggleImage;
     }
 
+    /**
+     * Set the image shown when then checkbox is in the hovered state.
+     * 
+     * @param hoverImage The image shown when the checkbox is hovered
+     */
     public void setHoverImage(Image hoverImage) {
         this.hoverImage = hoverImage;
     }
 
+    /**
+     * Set the image shown when then checkbox is in the disabled state.
+     * 
+     * @param disabledImage The image shown when the checkbox is disabled
+     */
     public void setDisabledImage(Image disabledImage) {
         this.disabledImage = disabledImage;
     }
     // ————————————————————————————————
 
     /**
-     * Sets the center position of the button. This recalculates the
+     * Sets the center position of the checkbox. This recalculates the
      * top-left coordinates based on the current width and height,
      * updates the base shape, and refreshes the rotated shape.
      *
@@ -300,7 +352,7 @@ public class RectCheckbox implements UIDrawable, MenuInterface, MenuSetPosition,
     }
 
     /**
-     * Sets the rotation of the button.
+     * Sets the rotation of the checkbox.
      * Positive angles rotate clockwise, negative angles rotate counterclockwise.
      *
      * <p>
@@ -318,9 +370,10 @@ public class RectCheckbox implements UIDrawable, MenuInterface, MenuSetPosition,
 
     /**
      * Enables or disables the visual click effect (color or image change)
-     * when the button is pressed.
+     * when the checkbox is pressed.
      *
-     * @param clickEffect true to enable the click effect, false to disable it
+     * @param clickEffect {@code true} to enable the click effect,
+     *                    {@code false} to disable it
      */
     public void setClickEffectEnabled(boolean clickEffect) {
         showPress = clickEffect;
@@ -328,9 +381,10 @@ public class RectCheckbox implements UIDrawable, MenuInterface, MenuSetPosition,
 
     /**
      * Enables or disables the visual hover effect (color or image change)
-     * when the button is hovered.
+     * when the checkbox is hovered.
      *
-     * @param hoverEffect true to enable the hover effect, false to disable it
+     * @param hoverEffect {@code true} to enable the hover effect,
+     *                    {@code false} to disable it
      */
     public void setHoverEffectEnabled(boolean hoverEffect) {
         showHover = hoverEffect;
@@ -350,9 +404,9 @@ public class RectCheckbox implements UIDrawable, MenuInterface, MenuSetPosition,
     }
 
     /**
-     * Set the state of the toggleButton to either pressed or not pressed
+     * Set the state of the checkbox to either pressed or not pressed
      * 
-     * @param state {@code True} to set the checkbox state to pressed, {@code false}
+     * @param state {@code true} to set the checkbox state to pressed, {@code false}
      *              otherwise
      */
     public void setCheckboxState(boolean state) {
@@ -366,32 +420,58 @@ public class RectCheckbox implements UIDrawable, MenuInterface, MenuSetPosition,
         return isEnabled;
     }
 
+    /**
+     * Returns the X coordinate in screen coordinates (untransformed).
+     * 
+     * @return The X coordinates
+     */
     public int getX() {
         return x;
     }
 
+    /**
+     * Returns the Y coordinate in screen coordinates (untransformed).
+     * 
+     * @return The Y coordinates
+     */
     public int getY() {
         return y;
     }
 
+    /**
+     * Returns the width of the checkbox.
+     * 
+     * @return the width
+     */
     public int getWidth() {
         return width;
     }
 
+    /**
+     * Returns the height of the checkbox.
+     * 
+     * @return the height
+     */
     public int getHeight() {
         return height;
     }
 
+    /**
+     * Returns the center of the checkbox.
+     * 
+     * @return the center {@link Point}
+     */
     public Point getCenter() {
         return new Point(x + width / 2, y + height / 2);
     }
 
+    /**
+     * Returns the checkbox angle.
+     * 
+     * @return the angle
+     */
     public double getAngle() {
         return angle;
-    }
-
-    public Color getColor() {
-        return color;
     }
 
     @Override
@@ -399,6 +479,14 @@ public class RectCheckbox implements UIDrawable, MenuInterface, MenuSetPosition,
         return isHovered;
     }
 
+    /**
+     * Returns the current checkbox state.
+     * 
+     * @return {@code true} if the checkbox is toggled,
+     *         {@code false} otherwise
+     * 
+     * @see #setCheckboxState(boolean)
+     */
     public boolean getCheckboxState() {
         return toggled;
     }

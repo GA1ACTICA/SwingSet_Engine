@@ -18,6 +18,12 @@ import gameEngine.engineModules.EngineContext;
 import gameEngine.engineModules.EnginePanel;
 import gameEngine.engineModules.Mouse;
 
+/**
+ * A checkbox rendered using a rounded rectangle shape.
+ * <p>
+ * Behaves identically to {@link RectCheckbox} but uses a rounded rectangle
+ * appearance.
+ */
 public class RoundRectCheckbox extends RectCheckbox {
 
     /**
