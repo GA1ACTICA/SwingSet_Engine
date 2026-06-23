@@ -43,7 +43,8 @@ import utils.GraphicsUtils;
 import utils.GraphicsUtils.MaskType;
 
 public class TextField
-        implements MouseNotifier, KeyNotifier, Clickable, Hoverable, UIDrawable, Updatable, MenuInterface, MenuSetSize,
+        implements MouseNotifier, KeyNotifier, Clickable, Hoverable, UIDrawable, Updatable, VisibleMenuInterface,
+        MenuSetSize,
         MenuSetPosition {
 
     private int zIndex = 0;

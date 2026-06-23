@@ -24,13 +24,13 @@ import utils.MathUtils;
 import gameEngine.engineModules.EngineContext;
 import gameEngine.engineModules.EnginePanel;
 import gameEngine.engineModules.Mouse;
-import gameEngine.interfaces.MenuInterface;
+import gameEngine.interfaces.MenuInterface.VisibleMenuInterface;
 import gameEngine.interfaces.Updatable;
 import gameEngine.interfaces.drawables.UIDrawable;
 import gameEngine.records.FixResult;
 import uiElements.button.RectButton;
 
-public class Slider implements UIDrawable, Updatable, MenuInterface {
+public class Slider implements UIDrawable, Updatable, VisibleMenuInterface {
 
     private boolean show = false;
 
@@ -118,19 +118,40 @@ public class Slider implements UIDrawable, Updatable, MenuInterface {
         return sliderPercentage * sliderMax;
     }
 
+    /**
+     * Returns the lowest value the slider can represent.
+     * 
+     * @return The minimum value
+     */
     public int getSliderMin() {
         return sliderMin;
     }
 
+    /**
+     * Returns the highest value the slider can represent.
+     * 
+     * @return The maximum value
+     */
     public int getSliderMax() {
         return sliderMax;
     }
 
+    /**
+     * Returns the slider handle's position as a percentage of the track length.
+     * The value is in the range {@code 0.0} to {@code 1.0}.
+     *
+     * @return the slider handle's position as a percentage of the track length
+     */
     public double getSliderPercentage() {
         return sliderPercentage;
     }
 
-    public Color gettrackColor() {
+    /**
+     * Returns the color used for painting the track the handle slides along.
+     * 
+     * @return The color used for the track
+     */
+    public Color getTrackColor() {
         return trackColor;
     }
 

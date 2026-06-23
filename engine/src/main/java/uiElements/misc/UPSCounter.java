@@ -18,12 +18,11 @@ import java.awt.Point;
 
 import gameEngine.engineModules.ClassFactory;
 import gameEngine.engineModules.EngineContext;
-import gameEngine.interfaces.MenuInterface;
 import gameEngine.interfaces.MenuInterface.*;
 import gameEngine.interfaces.Updatable;
 import gameEngine.interfaces.drawables.UIDrawable;
 
-public class UPSCounter implements UIDrawable, Updatable, MenuInterface, MenuSetPosition {
+public class UPSCounter implements UIDrawable, Updatable, VisibleMenuInterface, MenuSetPosition {
 
     private boolean show = false;
 
@@ -49,7 +48,7 @@ public class UPSCounter implements UIDrawable, Updatable, MenuInterface, MenuSet
      * update calls per second (UPS). If rendering occurs on every update, this
      * value can be used as an approximation of the frame rate (FPS).
      *
-     * @param context the engine context containing components related to rendering,
+     * @param context the engine context containing elements related to rendering,
      *                updating, and input handling
      */
     public UPSCounter(EngineContext context) {

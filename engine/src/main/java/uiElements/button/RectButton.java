@@ -32,13 +32,13 @@ import utils.Utils;
 import utils.GraphicsUtils.MaskType;
 
 /**
- * Base implementation of a button UI component.
+ * Base implementation of a button UI element.
  * <p>
  * A button represents a boolean state that can be clicked by the user
  * and provides common functionality such as rendering, positioning, and sizing.
  */
 public class RectButton implements
-        UIDrawable, MenuInterface, MenuSetPosition, MenuSetSize, Clickable, Hoverable {
+        UIDrawable, VisibleMenuInterface, MenuSetPosition, MenuSetSize, Clickable, Hoverable {
 
     private int zIndex = 0; // default zIndex
 

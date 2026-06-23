@@ -24,7 +24,7 @@ public class UIContainer implements MenuInterface, MenuSetSize, MenuSetPosition 
     private List<MenuInterface> items = new ArrayList<>();
 
     /**
-     * Adds a {@link MenuInterface} item to this component.
+     * Adds a {@link MenuInterface} item to this element.
      * <p>
      * All added items support basic visibility control via
      * {@link MenuInterface#show()} and {@link MenuInterface#hide()}.

@@ -29,7 +29,6 @@ import gameEngine.engineModules.cursor.CursorManager;
 import gameEngine.engineModules.cursor.CursorType;
 import gameEngine.interfaces.Clickable;
 import gameEngine.interfaces.Hoverable;
-import gameEngine.interfaces.MenuInterface;
 import gameEngine.interfaces.MenuInterface.*;
 import gameEngine.interfaces.drawables.UIDrawable;
 import utils.GraphicsUtils;
@@ -37,12 +36,13 @@ import utils.GraphicsUtils.MaskType;
 import utils.Utils;
 
 /**
- * Base implementation of a checkbox UI component.
+ * Base implementation of a checkbox UI element.
  * <p>
  * A checkbox represents a boolean state that can be toggled by the user
  * and provides common functionality such as rendering, positioning, and sizing.
  */
-public class RectCheckbox implements UIDrawable, MenuInterface, MenuSetPosition, MenuSetSize, Clickable, Hoverable {
+public class RectCheckbox
+        implements UIDrawable, VisibleMenuInterface, MenuSetPosition, MenuSetSize, Clickable, Hoverable {
 
     private int zIndex = 0;
 

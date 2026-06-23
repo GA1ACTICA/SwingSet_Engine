@@ -15,11 +15,12 @@ import java.awt.*;
 
 import gameEngine.engineModules.ClassFactory;
 import gameEngine.engineModules.EngineContext;
+import gameEngine.interfaces.MenuInterface.VisibleMenuInterface;
 import gameEngine.interfaces.Painter;
 import gameEngine.interfaces.drawables.UIDrawable;
 
 public class GraphicalUIContainer extends UIContainer
-        implements UIDrawable {
+        implements UIDrawable, VisibleMenuInterface {
 
     private boolean show;
 
@@ -38,6 +39,11 @@ public class GraphicalUIContainer extends UIContainer
         g.drawString("This is a menu", x + (int) (width / 2), y + (int) (height / 2));
     };
 
+    @Override
+    public boolean isVisible() {
+        return show;
+    }
+
     private EngineContext context;
 
     /**
@@ -45,7 +51,7 @@ public class GraphicalUIContainer extends UIContainer
      * with the engine using the provided context.
      * <p>
      * The menu has a default z-index of -1, placing it behind standard UI
-     * components (which typically use a z-index of 0). This causes it to
+     * elements (which typically use a z-index of 0). This causes it to
      * behave as a background layer.
      *
      * <p>
@@ -130,7 +136,7 @@ public class GraphicalUIContainer extends UIContainer
     /**
      * Sets a custom drawing action used to render the menu background.
      * <p>
-     * Unlike standard UI components, menus may require more flexible or
+     * Unlike standard UI elements, menus may require more flexible or
      * complex rendering. This method allows a custom {@link Painter} to be
      * provided for drawing the menu's background.
      * <p>
