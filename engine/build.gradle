@@ -38,3 +38,7 @@ tasks.shadowJar {
 tasks.withType(JavaCompile) {
     options.compilerArgs += '-parameters'
 }
+
+tasks.withType(Javadoc).configureEach {
+    options.memberLevel = JavadocMemberLevel.PROTECTED
+}

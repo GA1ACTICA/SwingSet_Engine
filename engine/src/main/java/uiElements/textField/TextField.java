@@ -154,6 +154,9 @@ public class TextField
      * @param mouse   The mouse input handler used for interaction with the
      *                textfield.
      * 
+     * @param keys    The keyboard input handler used for interaction with the
+     *                textfield.
+     * 
      * @param middle  The middle point of the rectangle.
      * 
      * @param width   The width of the textfield.
@@ -259,7 +262,7 @@ public class TextField
     /**
      * Set the color shown when then textfield is in the focused state.
      * 
-     * @param color The color shown when the textfield's state is focused
+     * @param focusedColor The color shown when the textfield's state is focused
      */
     public void setFocusedColor(Color focusedColor) {
         this.focusedColor = focusedColor;
@@ -268,7 +271,7 @@ public class TextField
     /**
      * Set the color shown when then textfield is in the unfocused state.
      * 
-     * @param color The color shown when the textfield's state is unfocused
+     * @param unFocusedColor The color shown when the textfield's state is unfocused
      */
     public void setUnFocusedColor(Color unFocusedColor) {
         this.unFocusedColor = unFocusedColor;
@@ -382,27 +385,56 @@ public class TextField
             fieldFont = font;
     }
 
-    // Get methods
+    /**
+     * Returns the X coordinate in screen coordinates (untransformed).
+     * 
+     * @return The X coordinates
+     */
     public int getX() {
         return x;
     }
 
+    /**
+     * Returns the Y coordinate in screen coordinates (untransformed).
+     * 
+     * @return The Y coordinates
+     */
     public int getY() {
         return y;
     }
 
+    /**
+     * Returns the width of the checkbox.
+     * 
+     * @return the width
+     */
     public int getWidth() {
         return width;
     }
 
+    /**
+     * Returns the height of the checkbox.
+     * 
+     * @return the height
+     */
     public int getHeight() {
         return height;
     }
 
-    public Point getMiddlePoint() {
+    /**
+     * Returns the center of the checkbox.
+     * 
+     * @return the center {@link Point}
+     */
+    public Point getCenter() {
         return new Point(x + width / 2, y + height / 2);
     }
 
+    /**
+     * Returns the checkbox angle.
+     * 
+     * @return the angle
+     */
     public double getAngle() {
         return angle;
     }
@@ -420,7 +452,7 @@ public class TextField
 
         Graphics2D g2d = (Graphics2D) g;
 
-        GraphicsUtils.rotateGraphics(g2d, angle, getMiddlePoint(), (gRotate) -> {
+        GraphicsUtils.rotateGraphics(g2d, angle, getCenter(), (gRotate) -> {
 
             GraphicsUtils.createMask(gRotate, baseShape, MaskType.INSIDE,
                     (gMask) -> {
@@ -488,7 +520,7 @@ public class TextField
     private void updateRotatedShape() {
 
         AffineTransform transform = new AffineTransform();
-        Point middle = getMiddlePoint();
+        Point middle = getCenter();
 
         transform.rotate(Math.toRadians(angle), middle.x, middle.y);
         rotatedShape = transform.createTransformedShape(baseShape);

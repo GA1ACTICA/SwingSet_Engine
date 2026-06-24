@@ -23,18 +23,33 @@ import java.awt.*;
 
 public final class EnginePanel extends JPanel {
 
-    // logical space dimension
+    /**
+     * The logical width of the coordinate system used by {@link Drawable}.
+     */
     public final int logicalWidth = 1000;
+    /**
+     * The logical height of the coordinate system used by {@link Drawable}.
+     */
     public final int logicalHeight = 1000;
 
+    /**
+     * FIXME: Javadoc warning for private field!?
+     */
     private EngineState state;
+    /**
+     * FIXME: Javadoc warning for private field!?
+     */
     private EngineContext context;
-
+    /**
+     * FIXME: Javadoc warning for private field!?
+     */
     private boolean exceptionReported;
-
+    /**
+     * FIXME: Javadoc warning for private field!?
+     */
     private AffineTransform viewportTransform;
 
-    public EnginePanel(EngineState state, EngineContext context) {
+    EnginePanel(EngineState state, EngineContext context) {
         this.state = state;
         this.context = context;
 
@@ -116,8 +131,8 @@ public final class EnginePanel extends JPanel {
      * The transform is equivalent to:
      *
      * <pre>{@code
-     * double scaleX = getWidth() / (double) logicalWidth;
-     * double scaleY = getHeight() / (double) logicalHeight;
+     * double scaleX = panel.getWidth() / (double) panel.logicalWidth;
+     * double scaleY = panel.getHeight() / (double) panel.logicalHeight;
      * double scale = Math.min(scaleX, scaleY);
      *
      * g2d.translate(

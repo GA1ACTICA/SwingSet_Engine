@@ -16,6 +16,14 @@ import java.awt.Font;
 import java.awt.font.FontRenderContext;
 import java.awt.font.LineMetrics;
 
+/**
+ * Base class containing generic utility methods.
+ * 
+ * @see GraphicsUtils
+ * @see FileUtils
+ * @see MathUtils
+ * @see ErrorManagement
+ */
 public class Utils {
     Utils() {
     }
@@ -135,16 +143,39 @@ public class Utils {
         return new Color(r, g, b);
     }
 
-    public static Color mergeRGBColor(Color primaryColor, Color secondaryColor) {
-        return new Color(Math.round((primaryColor.getRed() + secondaryColor.getRed()) / 2),
-                Math.round((primaryColor.getGreen() + secondaryColor.getGreen()) / 2),
-                Math.round((primaryColor.getBlue() + secondaryColor.getBlue()) / 2));
+    /**
+     * Merges two colors by dividing the sum of each color component and the
+     * rounding the answer to the nearest integer.
+     * <p>
+     * <b>Note:</b> The alpha is ignored from the two colors and is instead always
+     * {@code 255}.
+     * 
+     * @param firstColor     The fist color
+     * 
+     * @param secondaryColor The second color
+     * 
+     * @return The merged colors
+     */
+    public static Color mergeRGBColor(Color firstColor, Color secondaryColor) {
+        return new Color(Math.round((firstColor.getRed() + secondaryColor.getRed()) / 2),
+                Math.round((firstColor.getGreen() + secondaryColor.getGreen()) / 2),
+                Math.round((firstColor.getBlue() + secondaryColor.getBlue()) / 2));
     }
 
-    public static Color mergeRGBAColor(Color primaryColor, Color secondaryColor) {
-        return new Color(Math.round((primaryColor.getRed() + secondaryColor.getRed()) / 2),
-                Math.round((primaryColor.getGreen() + secondaryColor.getGreen()) / 2),
-                Math.round((primaryColor.getBlue() + secondaryColor.getBlue()) / 2),
-                Math.round((primaryColor.getAlpha() + secondaryColor.getAlpha()) / 2));
+    /**
+     * Merges two colors by dividing the sum of each color component and the
+     * rounding the answer to the nearest integer.
+     * 
+     * @param firstColor     The fist color
+     * 
+     * @param secondaryColor The second color
+     * 
+     * @return The merged colors
+     */
+    public static Color mergeRGBAColor(Color firstColor, Color secondaryColor) {
+        return new Color(Math.round((firstColor.getRed() + secondaryColor.getRed()) / 2),
+                Math.round((firstColor.getGreen() + secondaryColor.getGreen()) / 2),
+                Math.round((firstColor.getBlue() + secondaryColor.getBlue()) / 2),
+                Math.round((firstColor.getAlpha() + secondaryColor.getAlpha()) / 2));
     }
 }

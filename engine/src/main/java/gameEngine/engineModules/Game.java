@@ -19,18 +19,39 @@ import gameEngine.engineState.EngineState;
 
 public abstract class Game {
 
+    /**
+     * The engine's main configuration and state.
+     */
     protected final EngineState state;
 
+    /**
+     * The engine context containing collections used for rendering, updating,
+     * and other engine operations.
+     */
     protected final EngineContext context;
+
+    /**
+     * The engine panel responsible for the main rendering loop.
+     * <p>
+     * In addition to its role as a Swing panel, it provides rendering-related
+     * functionality such as {@link EnginePanel#getViewportTransform()}.
+     */
     protected final EnginePanel panel;
+
+    /**
+     * The {@link JFrame} that contains the {@link EnginePanel}.
+     */
     protected final JFrame frame;
 
+    /**
+     * The keyboard input handler.
+     */
     protected final Keys keys;
+
+    /**
+     * The mouse input handler.
+     */
     protected final Mouse mouse;
-
-    protected final CursorManager cursor;
-
-    protected final GameUpdate gu;
 
     public Game() {
         this("Game_Title");
@@ -46,9 +67,8 @@ public abstract class Game {
         keys = new Keys(state, context);
         mouse = new Mouse(state, context, panel);
 
-        cursor = new CursorManager(context, panel, mouse, state);
-
-        gu = new GameUpdate(keys,
+        new CursorManager(context, panel, mouse, state);
+        final GameUpdate gu = new GameUpdate(keys,
                 mouse,
                 state,
                 panel,
