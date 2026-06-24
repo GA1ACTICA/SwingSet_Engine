@@ -1,11 +1,15 @@
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Point;
 
 import gameEngine.engineModules.ClassFactory;
 import gameEngine.engineModules.EngineContext;
 import gameEngine.engineModules.Game;
 import gameEngine.interfaces.drawables.Drawable;
+import uiElements.button.RectButton;
+import uiElements.checkBox.RectCheckbox;
+import uiElements.textField.TextField;
 import utils.GraphicsUtils;
 
 public class EngineTest implements Drawable {
@@ -16,7 +20,16 @@ public class EngineTest implements Drawable {
             @Override
             protected void init() {
                 new EngineTest(context);
-                state.exportJson("test.json");
+
+                RectButton b = new RectButton(context, mouse, new Point(250, 250), new Point(300, 300));
+                RectCheckbox c = new RectCheckbox(context, mouse, new Point(350, 350), new Point(400, 400));
+                TextField t = new TextField(context, mouse, keys, new Point(400, 450), new Point(700, 500));
+
+                state.data().backgroundColor = Color.pink;
+
+                b.show();
+                c.show();
+                t.show();
             }
 
         };

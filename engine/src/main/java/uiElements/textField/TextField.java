@@ -11,9 +11,7 @@
 
 package uiElements.textField;
 
-import java.awt.AlphaComposite;
 import java.awt.Color;
-import java.awt.Composite;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
@@ -61,14 +59,15 @@ public class TextField
     private RectangularShape baseShape;
     private Shape rotatedShape;
     // Colors
-    private Color color = GraphicsUtils.rgb(187, 187, 187);
-    private Color hoverColor = GraphicsUtils.rgb(209, 209, 209);
-    private Color pressedColor = GraphicsUtils.rgb(230, 230, 230);
+    private Color focusedColor = GraphicsUtils.rgb(187, 187, 187);
+    private Color unFocusedColor = GraphicsUtils.rgb(172, 172, 172);
+    private Color disabledColor = GraphicsUtils.rgb(172, 48, 48);
+    private Color highlightColor = GraphicsUtils.rgba(0, 123, 218, 0.25);
 
     // Images
-    private Image image;
-    private Image hoverImage;
-    private Image pressedImage;
+    private Image focusedImage;
+    private Image unFocusedImage;
+    private Image disabledImage;
 
     private Font fieldFont = new Font(Font.SANS_SERIF, Font.PLAIN, 0);
     private StringBuffer text = new StringBuffer("");
@@ -82,11 +81,7 @@ public class TextField
     // Behavioral variables
     private boolean isHovered;
     private boolean isFocused;
-    private boolean isEnabled;
-    private boolean isPressed;
-
-    private boolean showPress = true;
-    private boolean showHover = true;
+    private boolean isEnabled = true; // TODO: implement disabled state
 
     private int caretOffset;
     private int highlightStartX = 0;
@@ -96,20 +91,21 @@ public class TextField
 
     /**
      * 
-     * Important: TextField class is currently under development and is not to be
-     * used!
+     * Creates and registers a textfield with the specified dimensions.
      * 
-     * @param mouse
+     * @param context The engine context containing objects involved in rendering,
+     *                updating, and input handling.
      * 
-     * @param context
+     * @param mouse   The mouse input handler used for interaction with the
+     *                textfield.
      * 
-     * @param x
+     * @param x       The x-coordinate of the textfield's topLeft point.
      * 
-     * @param y
+     * @param y       The y-coordinate of the textfield's topLeft point.
      * 
-     * @param width
+     * @param width   The width of the textfield.
      * 
-     * @param height
+     * @param height  The height of the textfield.
      */
     public TextField(EngineContext context, Mouse mouse, Keys keys, int x, int y, int width,
             int height) {
@@ -124,17 +120,17 @@ public class TextField
     }
 
     /**
+     * Creates and registers a textfield with the specified {@link Point Points}.
      * 
-     * Important: TextField class is currently under development and is not to be
-     * used!
+     * @param context     The engine context containing objects involved in
+     *                    rendering, updating, and input handling.
      * 
-     * @param mouse
+     * @param mouse       The mouse input handler used for interaction with the
+     *                    textfield.
      * 
-     * @param context
+     * @param topLeft     The top left point of the rectangle.
      * 
-     * @param topLeft
-     * 
-     * @param bottomRight
+     * @param bottomRight The bottom left point of the rectangle.
      */
     public TextField(EngineContext context, Mouse mouse, Keys keys, Point topLeft,
             Point bottomRight) {
@@ -149,19 +145,20 @@ public class TextField
     }
 
     /**
+     * Creates and registers a textfield with the specified dimensions
+     * and center {@link Point}.
      * 
-     * Important: TextField class is currently under development and is not to be
-     * used!
+     * @param context The engine context containing objects involved in
+     *                rendering, updating, and input handling.
      * 
-     * @param mouse
+     * @param mouse   The mouse input handler used for interaction with the
+     *                textfield.
      * 
-     * @param context
+     * @param middle  The middle point of the rectangle.
      * 
-     * @param middle
+     * @param width   The width of the textfield.
      * 
-     * @param width
-     * 
-     * @param height
+     * @param height  The height of the textfield.
      */
     public TextField(EngineContext context, Mouse mouse, Keys keys, Point middle, int width,
             int height) {
@@ -187,6 +184,7 @@ public class TextField
                 height - 2);
     }
 
+    @Override
     public boolean isVisible() {
         return show;
     }
@@ -257,59 +255,131 @@ public class TextField
         updateRotatedShape();
     }
 
-    public void setColor(Color color) {
-        this.color = color;
+    // ————————— Set colors ——————————
+    /**
+     * Set the color shown when then textfield is in the focused state.
+     * 
+     * @param color The color shown when the textfield's state is focused
+     */
+    public void setFocusedColor(Color focusedColor) {
+        this.focusedColor = focusedColor;
     }
 
-    public void setHoverColor(Color hoverColor) {
-        this.hoverColor = hoverColor;
+    /**
+     * Set the color shown when then textfield is in the unfocused state.
+     * 
+     * @param color The color shown when the textfield's state is unfocused
+     */
+    public void setUnFocusedColor(Color unFocusedColor) {
+        this.unFocusedColor = unFocusedColor;
     }
 
-    public void setImage(Image image) {
-        this.image = image;
+    /**
+     * Set the color shown when then textfield is in the disabled state.
+     * 
+     * @param disabledColor The color shown when the textfield is disabled
+     */
+    public void setDisabledColor(Color disabledColor) {
+        this.disabledColor = disabledColor;
     }
 
-    public void setHoverImage(Image hoverImage) {
-        this.hoverImage = hoverImage;
+    // —————————— Set images ——————————
+    /**
+     * Set the image shown when then textfield is in the focused state.
+     * 
+     * @param focusedImage The image shown when the textfield's state is focused
+     */
+    public void setFocusedImage(Image focusedImage) {
+        this.focusedImage = focusedImage;
     }
 
-    public void setMiddle(Point middle) {
-        x = (int) middle.getX() - width / 2;
-        y = (int) middle.getY() - height / 2;
+    /**
+     * Set the image shown when then textfield is in the unfocused state.
+     * 
+     * @param unFocusedImage The image shown when the textfield's state is unfocused
+     */
+    public void setUnFocusedImage(Image unFocusedImage) {
+        this.unFocusedImage = unFocusedImage;
+    }
+
+    /**
+     * Set the image shown when then textfield is in the disabled state.
+     * 
+     * @param disabledImage The image shown when the textfield is disabled
+     */
+    public void setDisabledImage(Image disabledImage) {
+        this.disabledImage = disabledImage;
+    }
+
+    // ————————————————————————————————
+
+    /**
+     * Sets the center position of the textfield. This recalculates the
+     * top-left coordinates based on the current width and height,
+     * updates the base shape, and refreshes the rotated shape.
+     *
+     * @param center the new center position
+     */
+    public void setCenter(Point center) {
+        x = (int) Math.round(center.getX() - width / 2);
+        y = (int) Math.round(center.getY() - height / 2);
         baseShape.setFrame(x, y, width, height);
 
         updateRotatedShape();
     }
 
+    /**
+     * Sets the rotation of the textfield.
+     * Positive angles rotate clockwise, negative angles rotate counterclockwise.
+     * <p>
+     * <b>Note:</b> Positioning methods return values based on the unrotated
+     * shape, not the visually rotated one.
+     * </p>
+     *
+     * @param angle the rotation angle in degrees
+     */
     public void setRotation(double angle) {
         this.angle = angle;
 
         updateRotatedShape();
     }
 
-    public void setFont(Font font) {
-        fieldFont = GraphicsUtils.matchFontToHeight(fieldFont, "ÅÄÖgjpqÉÁÂÂÂÂ",
-                height - 2);
+    /**
+     * Set the ability to interact with the textfield. This also changes the
+     * appearances to the disabled state.
+     * 
+     * @param isEnabled {@code false} to disable the textfield, {@code true} to
+     *                  enable it
+     * 
+     * @see #setDisabledColor(Color)
+     * @see #setDisabledImage(Image)
+     */
+    public void setEnabled(boolean isEnabled) {
+        this.isEnabled = isEnabled;
     }
 
     /**
-     * Enables or disables the visual click effect (color or image change)
-     * when the button is pressed.
-     *
-     * @param isEnabled true to enable the click effect, false to disable it
+     * Sets the font for the textfield.
+     * <p>
+     * If {@code preserveSize} is {@code false}, the font will be resized to
+     * approximately match the height of the text field using
+     * {@link GraphicsUtils#matchFontToHeight(Font, String, int)}
+     * else the font will retain its original size.
+     * <p>
+     * <b>Note:</b> {@link GraphicsUtils#matchFontToHeight(Font, String, int)} uses
+     * the dummyText: "ÅÄÖgjpqÉÁÂÂÂÂ" to get the {@link FontMetrics}.
+     * 
+     * @param font         The new font
+     * 
+     * @param preserveSize {@code true} if the size should be retained,
+     *                     {@code false} otherwise
      */
-    public void setClickEffectEnabled(boolean isEnabled) {
-        showPress = isEnabled;
-    }
-
-    /**
-     * Enables or disables the visual hover effect (color or image change)
-     * when the button is hovered.
-     *
-     * @param hoverEffect true to enable the hover effect, false to disable it
-     */
-    public void setHoverEffectEnabled(boolean hoverEffect) {
-        showHover = hoverEffect;
+    public void setFont(Font font, boolean preserveSize) {
+        if (!preserveSize)
+            fieldFont = GraphicsUtils.matchFontToHeight(font, "ÅÄÖgjpqÉÁÂÂÂÂ",
+                    height - 2);
+        else
+            fieldFont = font;
     }
 
     // Get methods
@@ -337,32 +407,6 @@ public class TextField
         return angle;
     }
 
-    // Get color
-    public Color getColor() {
-        return color;
-    }
-
-    public Color getHoverColor() {
-        return hoverColor;
-    }
-
-    public Color getPressedColor() {
-        return pressedColor;
-    }
-
-    // Get image
-    public Image getImage() {
-        return image;
-    }
-
-    public Image getHoverImage() {
-        return hoverImage;
-    }
-
-    public Image getPressedImage() {
-        return pressedImage;
-    }
-
     public StringBuffer getText() {
         return text;
     }
@@ -377,39 +421,33 @@ public class TextField
         Graphics2D g2d = (Graphics2D) g;
 
         GraphicsUtils.rotateGraphics(g2d, angle, getMiddlePoint(), (gRotate) -> {
-            Image image;
-            Color color;
-
-            if (isPressed && showPress) {
-                color = pressedColor;
-                image = pressedImage;
-
-            } else if (isHovered && showHover) {
-                color = hoverColor;
-                image = hoverImage;
-
-            } else {
-                color = this.color;
-                image = this.image;
-            }
-
-            if (image == null) {
-                gRotate.setColor(color);
-                gRotate.fillRect(x, y, width, height);
-            } else
-                gRotate.drawImage(image, x, y, width, height, null);
 
             GraphicsUtils.createMask(gRotate, baseShape, MaskType.INSIDE,
                     (gMask) -> {
+                        Image image = null;
+                        Color color = null;
 
-                        Composite old = gMask.getComposite();
-                        gMask.setComposite(AlphaComposite.SrcOver);
+                        if (isFocused) {
+                            color = focusedColor;
+                            image = focusedImage;
+                        } else if (!isFocused) {
+                            color = unFocusedColor;
+                            image = unFocusedImage;
+                        }
 
-                        if (isFocused)
-                            gMask.setColor(GraphicsUtils.rgba(0, 174, 255, 0.16));
-                        else
-                            gMask.setColor(GraphicsUtils.rgba(0, 0, 0, 0.16));
+                        if (!isEnabled) {
+                            color = disabledColor;
+                            image = disabledImage;
+                        }
 
+                        if (image != null)
+                            gMask.drawImage(image, x, y, width, height, null);
+                        else {
+                            gMask.setColor(color);
+                            gMask.fillRect(x, y, width, height);
+                        }
+
+                        gMask.setColor(highlightColor);
                         gMask.fillRect(highlightStartX, y, highlightWidth, height);
 
                         if (cursorVisible && isFocused) {
@@ -425,7 +463,6 @@ public class TextField
                         gMask.drawString(text.toString(), x + 10,
                                 y + fontMetrics.getHeight() - fontMetrics.getDescent());
 
-                        gMask.setComposite(old);
                     });
         });
     }
@@ -492,12 +529,6 @@ public class TextField
     @Override
     public void onPressed() {
         isFocused = true;
-        isPressed = true;
-    }
-
-    @Override
-    public void onReleased() {
-        isPressed = false;
     }
 
     @Override

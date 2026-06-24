@@ -47,20 +47,22 @@ public interface Clickable {
     void executeOnClick();
 
     /**
-     * Called when a mouse press is detected on this clickable component.
+     * Called when a mouse press is detected on this clickable element.
      * <p>
      * This method is invoked by the input handling system and should not
      * be called directly by user code.
      */
-    void onPressed();
+    default void onPressed() {
+    };
 
     /**
-     * Called when a mouse release is detected on this clickable component.
+     * Called when a mouse release is detected on this clickable element.
      * <p>
      * This method is invoked by the input handling system and should not
      * be called directly by user code.
      */
-    void onReleased();
+    default void onReleased() {
+    };
 
     boolean isEnabled();
 

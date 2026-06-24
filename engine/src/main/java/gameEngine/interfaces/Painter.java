@@ -19,7 +19,7 @@ import uiElements.menuContainer.GraphicalUIContainer;
  * Functional interface representing a custom drawing action.
  * <p>
  * This interface allows predefining rendering logic that can be executed
- * during a component's draw phase.
+ * during a element's draw phase.
  * <p>
  * Implementations receive a {@link Graphics2D} context and may perform
  * arbitrary drawing operations using it.
@@ -48,5 +48,10 @@ import uiElements.menuContainer.GraphicalUIContainer;
  */
 @FunctionalInterface
 public interface Painter {
+    /**
+     * Defines custom painting behavior using a {@link Graphics2D} context.
+     *
+     * @param g the graphics context used for rendering
+     */
     void paint(Graphics2D g);
 }

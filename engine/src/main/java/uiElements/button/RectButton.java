@@ -46,7 +46,17 @@ public class RectButton implements
     private double angle = 0;
     private boolean show = false;
 
+    /**
+     * The base shape used for calculations
+     * 
+     * @see #rotatedShape
+     */
     protected RectangularShape baseShape;
+    /**
+     * The derived shape used for rendering
+     * 
+     * @see #baseShape
+     */
     protected Shape rotatedShape;
 
     private Color color = Color.GREEN;
@@ -78,8 +88,6 @@ public class RectButton implements
      * @param context The engine context containing objects involved in rendering,
      *                updating, and input handling.
      * 
-     * @param panel   The panel on which the button is drawn to.
-     * 
      * @param mouse   The mouse input handler used for interaction with the
      *                button.
      * 
@@ -91,24 +99,23 @@ public class RectButton implements
      * 
      * @param height  The height of the rectangle.
      */
-    public RectButton(EngineContext context, EnginePanel panel, Mouse mouse, int x, int y, int width, int height) {
+    public RectButton(EngineContext context, Mouse mouse, int x, int y, int width, int height) {
 
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
 
-        this(context, mouse, panel);
+        this(context, mouse);
 
     }
 
     /**
-     * Creates and registers a rectangular button with the specified points.
+     * Creates and registers a rectangular button with the specified {@link Point
+     * Points}.
      * 
      * @param context     The engine context containing objects involved in
      *                    rendering, updating, and input handling.
-     * 
-     * @param panel       The panel on which the button is drawn to.
      * 
      * @param mouse       The mouse input handler used for interaction with the
      *                    button.
@@ -117,25 +124,23 @@ public class RectButton implements
      * 
      * @param bottomRight The bottom-left point of the rectangle.
      */
-    public RectButton(EngineContext context, EnginePanel panel, Mouse mouse, Point topLeft, Point bottomRight) {
+    public RectButton(EngineContext context, Mouse mouse, Point topLeft, Point bottomRight) {
 
         x = (int) topLeft.getX();
         y = (int) topLeft.getY();
         width = (int) bottomRight.getX() - (int) topLeft.getX();
         height = (int) bottomRight.getY() - (int) topLeft.getY();
 
-        this(context, mouse, panel);
+        this(context, mouse);
 
     }
 
     /**
      * Creates and registers a rectangular button with the specified dimensions and
-     * center point.
+     * center {@link Point}.
      *
      * @param context The engine context containing objects involved in rendering,
      *                updating, and input handling.
-     * 
-     * @param panel   The panel on which the button is drawn to.
      * 
      * @param mouse   The mouse input handler used for interaction with the
      *                button.
@@ -146,18 +151,18 @@ public class RectButton implements
      * 
      * @param height  The height of the rectangle.
      */
-    public RectButton(EngineContext context, EnginePanel panel, Mouse mouse, Point center, int width, int height) {
+    public RectButton(EngineContext context, Mouse mouse, Point center, int width, int height) {
 
         x = (int) center.getX() - width / 2;
         y = (int) center.getY() - height / 2;
         this.width = width;
         this.height = height;
 
-        this(context, mouse, panel);
+        this(context, mouse);
 
     }
 
-    private RectButton(EngineContext context, Mouse mouse, EnginePanel panel) {
+    private RectButton(EngineContext context, Mouse mouse) {
         ClassFactory.create(this, context, zIndex);
 
         this.context = context;
@@ -244,7 +249,7 @@ public class RectButton implements
     /**
      * Set the color shown when then button is in the normal state.
      * 
-     * @param color The color shown when the button is normal
+     * @param color The color shown when the button's state is normal
      */
     public void setColor(Color color) {
         this.color = color;
@@ -462,11 +467,19 @@ public class RectButton implements
 
         // Rotate everything drawn inside
         GraphicsUtils.rotateGraphics(g2d, angle, getCenter(), gRotate -> {
-
             // Pressed state completely overrides everything
-            if (showPress && clicked && clickColor != null) {
-                gRotate.setColor(clickColor);
-                gRotate.fill(baseShape);
+            if (showPress && clicked) {
+                if (clickImage == null) {
+                    if (clickColor == null)
+                        gRotate.setColor(Utils.mergeRGBColor(hoverColor, Utils.rgba(255, 255, 255, 0.5)));
+                    else
+                        gRotate.setColor(clickColor);
+
+                    gRotate.fill(baseShape);
+                } else {
+                    GraphicsUtils.createMask(gRotate, baseShape, MaskType.INSIDE,
+                            gMask -> gMask.drawImage(clickImage, x, y, width, height, null));
+                }
                 return;
             }
 
@@ -493,16 +506,6 @@ public class RectButton implements
                         gMask -> gMask.drawImage(image, x, y, width, height, null));
             }
 
-            // Draw pressed overlay
-            if (showPress && clicked) {
-                if (clickImage == null) {
-                    gRotate.setColor(Utils.mergeRGBColor(hoverColor, Utils.rgba(255, 255, 255, 0.5)));
-                    gRotate.fill(baseShape);
-                } else {
-                    GraphicsUtils.createMask(gRotate, baseShape, MaskType.INSIDE,
-                            gMask -> gMask.drawImage(clickImage, x, y, width, height, null));
-                }
-            }
         });
     }
 

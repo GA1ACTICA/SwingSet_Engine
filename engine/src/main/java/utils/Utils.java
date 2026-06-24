@@ -42,7 +42,7 @@ public class Utils {
      */
     public static final String ConsoleGREEN = "\u001B[32m";
     /**
-     * Sets the color used when writing to the terminal to {@code Blue}
+     * Sets the color used when writing to the terminal to {@code Yellow}
      * <p>
      * This is injected into the string that is being written to the terminal at the
      * desired location

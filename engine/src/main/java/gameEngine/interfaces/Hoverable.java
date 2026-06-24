@@ -38,7 +38,7 @@ public interface Hoverable extends ZIndexable {
     void setHovered(boolean isHovered);
 
     /**
-     * Checks whether the specified point is within this clickable component.
+     * Checks whether the specified point is within this clickable element.
      *
      * <p>
      * <b>Note:</b> This method does not concern itself if other objects overlap.
@@ -46,7 +46,7 @@ public interface Hoverable extends ZIndexable {
      * 
      * <p>
      * This method is used by the input handling system to determine whether
-     * the component should respond to mouse interactions.
+     * the element should respond to mouse interactions.
      * </p>
      *
      * @param mouseX the x-coordinate of the point

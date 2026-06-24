@@ -22,7 +22,6 @@ import java.util.Objects;
 import gameEngine.engineModules.ClassFactory;
 import utils.MathUtils;
 import gameEngine.engineModules.EngineContext;
-import gameEngine.engineModules.EnginePanel;
 import gameEngine.engineModules.Mouse;
 import gameEngine.interfaces.MenuInterface.VisibleMenuInterface;
 import gameEngine.interfaces.Updatable;
@@ -56,7 +55,21 @@ public class Slider implements UIDrawable, Updatable, VisibleMenuInterface {
 
     private EngineContext context;
 
-    public Slider(EngineContext context, EnginePanel panel, Mouse mouse, Point pointOne, Point pointTwo) {
+    /**
+     * Creates and registers a slider between the specified two {@link Point
+     * Points}.
+     * 
+     * @param context  The engine context containing objects involved in rendering,
+     *                 updating, and input handling.
+     * 
+     * @param mouse    The mouse input handler used for interaction with the
+     *                 handle.
+     * 
+     * @param pointOne The first point for the track.
+     * 
+     * @param pointTwo The second point of the track.
+     */
+    public Slider(EngineContext context, Mouse mouse, Point pointOne, Point pointTwo) {
         ClassFactory.create(this, context);
         this.mouse = mouse;
         this.pointOne = pointOne;
@@ -65,7 +78,7 @@ public class Slider implements UIDrawable, Updatable, VisibleMenuInterface {
 
         Point middle = new Point(((pointOne.x + pointTwo.x) / 2), ((pointOne.y + pointTwo.y) / 2));
 
-        handle = new RectButton(context, panel, mouse, middle,
+        handle = new RectButton(context, mouse, middle,
                 handleWidth, handleHeight);
 
         handleAngle = Math.toDegrees(Math.atan2(
@@ -104,6 +117,13 @@ public class Slider implements UIDrawable, Updatable, VisibleMenuInterface {
         handle.hide();
     }
 
+    /**
+     * Returns the length between the two {@link Point Points} that define the
+     * beginning
+     * and the end of the track.
+     * 
+     * @return the length between the points
+     */
     public double getLength() {
         return MathUtils.pythagoras(pointOne, pointTwo);
     }

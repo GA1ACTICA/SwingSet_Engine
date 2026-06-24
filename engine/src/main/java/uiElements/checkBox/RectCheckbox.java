@@ -23,7 +23,6 @@ import java.awt.geom.RectangularShape;
 
 import gameEngine.engineModules.ClassFactory;
 import gameEngine.engineModules.EngineContext;
-import gameEngine.engineModules.EnginePanel;
 import gameEngine.engineModules.Mouse;
 import gameEngine.engineModules.cursor.CursorManager;
 import gameEngine.engineModules.cursor.CursorType;
@@ -67,7 +66,7 @@ public class RectCheckbox
     private Color hoverColor = Color.ORANGE;
     private Color toggleColor = Color.RED;
     private Color disabledColor = Color.LIGHT_GRAY;
-    private Color clickColor = new Color(255, 255, 255, 150);
+    private Color clickColor; // Used to override the default white overlay
 
     private Image image;
     private Image hoverImage;
@@ -98,8 +97,6 @@ public class RectCheckbox
      * @param context The engine context containing objects involved in rendering,
      *                updating, and input handling.
      * 
-     * @param panel   The panel on which the checkbox is drawn to.
-     * 
      * @param mouse   The mouse input handler used for interaction with the
      *                checkbox.
      * 
@@ -111,24 +108,23 @@ public class RectCheckbox
      * 
      * @param height  The height of the rectangle.
      */
-    public RectCheckbox(EngineContext context, EnginePanel panel, Mouse mouse, int x, int y, int width, int height) {
+    public RectCheckbox(EngineContext context, Mouse mouse, int x, int y, int width, int height) {
 
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
 
-        this(context, mouse, panel);
+        this(context, mouse);
 
     }
 
     /**
-     * Creates and registers a rectangular checkbox with the specified points.
+     * Creates and registers a rectangular checkbox with the specified {@link Point
+     * Points}.
      * 
      * @param context     The engine context containing objects involved in
      *                    rendering, updating, and input handling.
-     * 
-     * @param panel       The panel on which the checkbox is drawn to.
      * 
      * @param mouse       The mouse input handler used for interaction with the
      *                    checkbox.
@@ -137,26 +133,23 @@ public class RectCheckbox
      * 
      * @param bottomRight The bottom left point of the rectangle.
      */
-    public RectCheckbox(EngineContext context, EnginePanel panel, Mouse mouse, Point topLeft, Point bottomRight) {
+    public RectCheckbox(EngineContext context, Mouse mouse, Point topLeft, Point bottomRight) {
 
         x = (int) topLeft.getX();
         y = (int) topLeft.getY();
         width = (int) bottomRight.getX() - (int) topLeft.getX();
         height = (int) bottomRight.getY() - (int) topLeft.getY();
 
-        this(context, mouse, panel);
+        this(context, mouse);
 
     }
 
     /**
      * Creates and registers a rectangular checkbox with the specified dimensions
-     * and
-     * center point.
+     * and center {@link Point}.
      *
      * @param context The engine context containing objects involved in rendering,
      *                updating, and input handling.
-     * 
-     * @param panel   The panel on which the checkbox is drawn to.
      * 
      * @param mouse   The mouse input handler used for interaction with the
      *                checkbox.
@@ -167,18 +160,17 @@ public class RectCheckbox
      * 
      * @param height  The height of the rectangle.
      */
-    public RectCheckbox(EngineContext context, EnginePanel panel, Mouse mouse, Point center, int width, int height) {
+    public RectCheckbox(EngineContext context, Mouse mouse, Point center, int width, int height) {
 
         x = (int) center.getX() - width / 2;
         y = (int) center.getY() - height / 2;
         this.width = width;
         this.height = height;
 
-        this(context, mouse, panel);
-
+        this(context, mouse);
     }
 
-    private RectCheckbox(EngineContext context, Mouse mouse, EnginePanel panel) {
+    private RectCheckbox(EngineContext context, Mouse mouse) {
         ClassFactory.create(this, context, zIndex);
 
         this.mouse = mouse;
@@ -265,7 +257,7 @@ public class RectCheckbox
     /**
      * Set the color shown when then checkbox is in the normal state.
      * 
-     * @param color The color shown when the checkbox is normal
+     * @param color The color shown when the checkbox state is normal
      */
     public void setColor(Color color) {
         this.color = color;
@@ -394,7 +386,8 @@ public class RectCheckbox
      * Set the ability to interact with the checkbox. This also changes the
      * appearances to the disabled state.
      * 
-     * @param isEnabled true to disable the checkbox, false to enable it
+     * @param isEnabled {@code true} to enable the checkbox, {@code false} to
+     *                  disable it
      * 
      * @see #setDisabledColor(Color)
      * @see #setDisabledImage(Image)
@@ -560,10 +553,19 @@ public class RectCheckbox
 
         // Rotate everything drawn inside
         GraphicsUtils.rotateGraphics(g2d, angle, getCenter(), (gRotate) -> {
+            // Pressed state completely overrides everything
+            if (showPress && clicked) {
+                if (clickImage == null) {
+                    if (clickColor == null)
+                        gRotate.setColor(Utils.mergeRGBColor(hoverColor, Utils.rgba(255, 255, 255, 0.5)));
+                    else
+                        gRotate.setColor(clickColor);
 
-            if (showPress && clicked && clickColor != null) {
-                gRotate.setColor(clickColor);
-                gRotate.fill(baseShape);
+                    gRotate.fill(baseShape);
+                } else {
+                    GraphicsUtils.createMask(gRotate, baseShape, MaskType.INSIDE,
+                            gMask -> gMask.drawImage(clickImage, x, y, width, height, null));
+                }
                 return;
             }
 
@@ -600,16 +602,6 @@ public class RectCheckbox
                         gMask -> gMask.drawImage(image, x, y, width, height, null));
             }
 
-            // Draw pressed overlay
-            if (showPress && clicked) {
-                if (clickImage == null) {
-                    gRotate.setColor(Utils.mergeRGBColor(hoverColor, Utils.rgba(255, 255, 255, 0.5)));
-                    gRotate.fill(baseShape);
-                } else {
-                    GraphicsUtils.createMask(gRotate, baseShape, MaskType.INSIDE,
-                            gMask -> gMask.drawImage(clickImage, x, y, width, height, null));
-                }
-            }
         });
     }
 
