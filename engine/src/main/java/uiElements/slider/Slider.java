@@ -23,13 +23,13 @@ import gameEngine.engineModules.ClassFactory;
 import utils.MathUtils;
 import gameEngine.engineModules.EngineContext;
 import gameEngine.engineModules.Mouse;
-import gameEngine.interfaces.MenuInterface.VisibleMenuInterface;
+import gameEngine.interfaces.MenuInterface;
 import gameEngine.interfaces.Updatable;
 import gameEngine.interfaces.drawables.UIDrawable;
 import gameEngine.records.FixResult;
 import uiElements.button.RectButton;
 
-public class Slider implements UIDrawable, Updatable, VisibleMenuInterface {
+public class Slider implements UIDrawable, Updatable, MenuInterface {
 
     private boolean show = false;
 

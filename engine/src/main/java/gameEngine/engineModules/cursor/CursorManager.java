@@ -32,6 +32,11 @@ import gameEngine.interfaces.drawables.CursorDrawable;
 import utils.FileUtils;
 import utils.GraphicsUtils;
 
+/**
+ * Manages setting and rendering of build-in or custom cursors.
+ * 
+ * @see CursorType
+ */
 public class CursorManager implements CursorDrawable, Updatable {
 
     @SuppressWarnings("unused")

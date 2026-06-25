@@ -18,11 +18,12 @@ import java.awt.Point;
 
 import gameEngine.engineModules.ClassFactory;
 import gameEngine.engineModules.EngineContext;
-import gameEngine.interfaces.MenuInterface.*;
+import gameEngine.interfaces.MenuInterface;
+import gameEngine.interfaces.MenuInterface.MenuSetPosition;
 import gameEngine.interfaces.Updatable;
 import gameEngine.interfaces.drawables.UIDrawable;
 
-public class UPSCounter implements UIDrawable, Updatable, VisibleMenuInterface, MenuSetPosition {
+public class UPSCounter implements UIDrawable, Updatable, MenuInterface, MenuSetPosition {
 
     private boolean show = false;
 
@@ -103,18 +104,38 @@ public class UPSCounter implements UIDrawable, Updatable, VisibleMenuInterface, 
         this.color = color;
     }
 
+    /**
+     * Sets the font for the displayed text and value.
+     * 
+     * @param font The font for the UPS counter
+     */
     public void setFont(Font font) {
         this.font = font;
     }
 
+    /**
+     * Returns the X coordinate in screen coordinates (untransformed).
+     * 
+     * @return The X coordinates
+     */
     public int getX() {
         return x;
     }
 
+    /**
+     * Returns the Y coordinate in screen coordinates (untransformed).
+     * 
+     * @return The Y coordinates
+     */
     public int getY() {
         return y;
     }
 
+    /**
+     * Returns the current updates per second measured during this interval.
+     * 
+     * @return the UPS
+     */
     public int getUPS() {
         return ups;
     }

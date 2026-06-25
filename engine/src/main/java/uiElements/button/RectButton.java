@@ -25,7 +25,8 @@ import gameEngine.engineModules.*;
 import gameEngine.engineModules.cursor.CursorManager;
 import gameEngine.engineModules.cursor.CursorType;
 import gameEngine.interfaces.*;
-import gameEngine.interfaces.MenuInterface.*;
+import gameEngine.interfaces.MenuInterface.MenuSetPosition;
+import gameEngine.interfaces.MenuInterface.MenuSetSize;
 import gameEngine.interfaces.drawables.UIDrawable;
 import utils.GraphicsUtils;
 import utils.Utils;
@@ -38,7 +39,7 @@ import utils.GraphicsUtils.MaskType;
  * and provides common functionality such as rendering, positioning, and sizing.
  */
 public class RectButton implements
-        UIDrawable, VisibleMenuInterface, MenuSetPosition, MenuSetSize, Clickable, Hoverable {
+        UIDrawable, MenuInterface, MenuSetPosition, MenuSetSize, Clickable, Hoverable {
 
     private int zIndex = 0; // default zIndex
 

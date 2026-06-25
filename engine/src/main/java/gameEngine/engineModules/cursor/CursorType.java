@@ -14,20 +14,13 @@ package gameEngine.engineModules.cursor;
 import java.awt.Point;
 
 /**
- * Creates a new instance of CursorType
- * 
- * You can override a builtin CursorType since they are mutable and therefore
- * add your
- * own custom cursor images instead.
+ * Represents a mouse cursor definition.
  * <p>
- * <b>Note:</b> Consider setting hotspot to {@code null} when creating a
- * animated cursor since the hotspot is derived from the meta.json file located
- * in the cursors directory.
+ * A cursor can either be one of the predefined built-in cursor types or
+ * a custom cursor loaded from an image resource with a specified hotspot.
+ * Instances of this class are immutable.
  * 
- * @param hotspot The hotspot from where click originate
- * 
- * @param path    The path to the image or directory of the cursor
- * 
+ * @see CursorManager
  */
 public final class CursorType {
 
@@ -41,6 +34,21 @@ public final class CursorType {
         this.builtIn = builtIn;
     }
 
+    /**
+     * Creates a new instance of CursorType
+     * 
+     * You can override a builtin CursorType since they are mutable and therefore
+     * add your own custom cursor images instead.
+     * <p>
+     * <b>Note:</b> Consider setting hotspot to {@code null} when creating a
+     * animated cursor since the hotspot is derived from the meta.json file located
+     * in the cursors directory.
+     * 
+     * @param hotspot The hotspot from where click originate
+     * 
+     * @param path    The path to the image or directory of the cursor
+     * 
+     */
     public CursorType(String path, Point hotspot) {
         this.path = path;
         this.hotspot = hotspot;

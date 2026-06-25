@@ -15,12 +15,16 @@ import java.awt.*;
 
 import gameEngine.engineModules.ClassFactory;
 import gameEngine.engineModules.EngineContext;
-import gameEngine.interfaces.MenuInterface.VisibleMenuInterface;
 import gameEngine.interfaces.Painter;
 import gameEngine.interfaces.drawables.UIDrawable;
 
-public class GraphicalUIContainer extends UIContainer
-        implements UIDrawable, VisibleMenuInterface {
+/**
+ * Graphical implementation of {@link UIContainer} providing a {@link Graphics}
+ * context
+ * to draw to.
+ */
+public class GUIContainer extends UIContainer
+        implements UIDrawable {
 
     private boolean show;
 
@@ -39,12 +43,16 @@ public class GraphicalUIContainer extends UIContainer
         g.drawString("This is a menu", x + (int) (width / 2), y + (int) (height / 2));
     };
 
-    @Override
+    private EngineContext context;
+
+    /**
+     * Returns whether or not the menu is visible.
+     * 
+     * @return {@code true} if the menu is visible, {@code false} otherwise
+     */
     public boolean isVisible() {
         return show;
     }
-
-    private EngineContext context;
 
     /**
      * Creates a standalone menu with no initial UI elements and registers it
@@ -61,7 +69,7 @@ public class GraphicalUIContainer extends UIContainer
      * @param context the engine context containing objects used for rendering,
      *                updating, and input handling
      */
-    public GraphicalUIContainer(EngineContext context) {
+    public GUIContainer(EngineContext context) {
         ClassFactory.create(this, context, zIndex);
     };
 

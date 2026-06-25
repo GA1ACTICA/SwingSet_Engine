@@ -19,6 +19,10 @@ import gameEngine.interfaces.MenuInterface;
 import gameEngine.interfaces.MenuInterface.MenuSetPosition;
 import gameEngine.interfaces.MenuInterface.MenuSetSize;
 
+/**
+ * Base implementation of a container managing {@link MenuInterface} UI
+ * elements.
+ */
 public class UIContainer implements MenuInterface, MenuSetSize, MenuSetPosition {
 
     private List<MenuInterface> items = new ArrayList<>();

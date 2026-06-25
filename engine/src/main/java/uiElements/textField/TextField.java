@@ -41,7 +41,7 @@ import utils.GraphicsUtils;
 import utils.GraphicsUtils.MaskType;
 
 public class TextField
-        implements MouseNotifier, KeyNotifier, Clickable, Hoverable, UIDrawable, Updatable, VisibleMenuInterface,
+        implements MouseNotifier, KeyNotifier, Clickable, Hoverable, UIDrawable, Updatable, MenuInterface,
         MenuSetSize,
         MenuSetPosition {
 
@@ -459,17 +459,15 @@ public class TextField
                         Image image = null;
                         Color color = null;
 
-                        if (isFocused) {
+                        if (!isEnabled) {
+                            color = disabledColor;
+                            image = disabledImage;
+                        } else if (isFocused) {
                             color = focusedColor;
                             image = focusedImage;
                         } else if (!isFocused) {
                             color = unFocusedColor;
                             image = unFocusedImage;
-                        }
-
-                        if (!isEnabled) {
-                            color = disabledColor;
-                            image = disabledImage;
                         }
 
                         if (image != null)

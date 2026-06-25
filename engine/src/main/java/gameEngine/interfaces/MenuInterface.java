@@ -29,7 +29,6 @@ import uiElements.misc.UPSCounter;
  * <p>
  * Examples of optional capabilities:
  * <ul>
- * <li>{@link MenuSetColor} — allows changing color</li>
  * <li>{@link MenuSetSize} — allows resizing</li>
  * <li>{@link MenuSetPosition} — allows positioning</li>
  * </ul>
@@ -49,16 +48,6 @@ public interface MenuInterface {
      * Hides the element implementing the {@link MenuInterface}.
      */
     void hide();
-
-    public interface VisibleMenuInterface extends MenuInterface {
-        /**
-         * Returns whether or not the element implementing the {@link MenuInterface}
-         * is visible.
-         * 
-         * @return {@code true} if the element is visible, {@code false} otherwise
-         */
-        boolean isVisible();
-    }
 
     /**
      * Capability for elements that support resizing.
