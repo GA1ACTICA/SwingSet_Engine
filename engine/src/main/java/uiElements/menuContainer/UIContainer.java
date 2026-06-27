@@ -28,6 +28,31 @@ public class UIContainer implements MenuInterface, MenuSetSize, MenuSetPosition 
     private List<MenuInterface> items = new ArrayList<>();
 
     /**
+     * Creates a new empty UIContainer
+     */
+    public UIContainer() {
+
+    }
+
+    /**
+     * Creates a new UIContainer containing the {@link MenuInterface} elements.
+     * 
+     * @param element the list containing all the UI elements
+     */
+    public UIContainer(List<MenuInterface> element) {
+        items = element;
+    }
+
+    /**
+     * Creates a duplicate UI container containing the same UI elements.
+     * 
+     * @param uIContainer
+     */
+    public UIContainer(UIContainer uIContainer) {
+        items = uIContainer.items;
+    }
+
+    /**
      * Adds a {@link MenuInterface} item to this element.
      * <p>
      * All added items support basic visibility control via

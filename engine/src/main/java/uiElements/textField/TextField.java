@@ -40,6 +40,10 @@ import utils.ErrorManagement;
 import utils.GraphicsUtils;
 import utils.GraphicsUtils.MaskType;
 
+/**
+ * Provides a basic implementation of a single-line only text field for
+ * displaying and editing text in a graphical user interface.
+ */
 public class TextField
         implements MouseNotifier, KeyNotifier, Clickable, Hoverable, UIDrawable, Updatable, MenuInterface,
         MenuSetSize,
@@ -439,6 +443,11 @@ public class TextField
         return angle;
     }
 
+    /**
+     * Returns the text currently displayed in the textfield.
+     * 
+     * @return the text in the textfield
+     */
     public StringBuffer getText() {
         return text;
     }

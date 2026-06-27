@@ -16,6 +16,8 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Point;
 
+import javax.swing.JPanel;
+
 import gameEngine.engineModules.ClassFactory;
 import gameEngine.engineModules.EngineContext;
 import gameEngine.interfaces.MenuInterface;
@@ -23,6 +25,11 @@ import gameEngine.interfaces.MenuInterface.MenuSetPosition;
 import gameEngine.interfaces.Updatable;
 import gameEngine.interfaces.drawables.UIDrawable;
 
+/**
+ * A UPS counter to measure the updates per second which could be seen as the
+ * approximate framerate since the framerate cant be directly measured in
+ * {@link JPanel#paintComponents(Graphics)}.
+ */
 public class UPSCounter implements UIDrawable, Updatable, MenuInterface, MenuSetPosition {
 
     private boolean show = false;
@@ -68,6 +75,12 @@ public class UPSCounter implements UIDrawable, Updatable, MenuInterface, MenuSet
         return zIndex;
     }
 
+    /**
+     * Returns if the element is visible.
+     * 
+     * @return {@code true} if the element is visible,
+     *         {@code false} otherwise
+     */
     public boolean isVisible() {
         return show;
     }
@@ -100,6 +113,11 @@ public class UPSCounter implements UIDrawable, Updatable, MenuInterface, MenuSet
         y += dy;
     }
 
+    /**
+     * Sets the color for the displayed text and value.
+     * 
+     * @param color The color for the UPS counter
+     */
     public void setColor(Color color) {
         this.color = color;
     }
