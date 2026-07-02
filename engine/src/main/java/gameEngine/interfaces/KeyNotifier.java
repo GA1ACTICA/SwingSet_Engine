@@ -14,6 +14,12 @@ package gameEngine.interfaces;
 import java.awt.event.KeyEvent;
 import gameEngine.engineModules.Keys;
 
+/**
+ * Receives notifications during special events received in {@link Keys} such as
+ * {@link #keyPressedNotification(KeyEvent)},
+ * {@link #keyPressedNotification(KeyEvent)} and
+ * {@link #keyReleasedNotification(KeyEvent)}.
+ */
 public interface KeyNotifier {
     /**
      * Invoked when a key input produces a printable character.
@@ -53,6 +59,8 @@ public interface KeyNotifier {
      * Invoked when a physical key is released.
      * <p>
      * Intended for gameplay controls and input state handling.
+     * 
+     * @param e The {@link KeyEvent} received from awt
      */
     default void keyReleasedNotification(KeyEvent e) {
     }

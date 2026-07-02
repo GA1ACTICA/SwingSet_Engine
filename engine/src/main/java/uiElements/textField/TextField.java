@@ -31,10 +31,15 @@ import java.awt.geom.Rectangle2D;
 import java.awt.geom.RectangularShape;
 import java.io.IOException;
 
+import gameEngine.engineModules.ClassFactory;
+import gameEngine.engineModules.EngineContext;
+import gameEngine.engineModules.Keys;
+import gameEngine.engineModules.Mouse;
+import gameEngine.engineModules.cursor.CursorManager;
+import gameEngine.engineModules.cursor.CursorType;
 import gameEngine.interfaces.*;
-import gameEngine.engineModules.*;
-import gameEngine.engineModules.cursor.*;
-import gameEngine.interfaces.MenuInterface.*;
+import gameEngine.interfaces.MenuInterface.MenuSetPosition;
+import gameEngine.interfaces.MenuInterface.MenuSetSize;
 import gameEngine.interfaces.drawables.UIDrawable;
 import utils.ErrorManagement;
 import utils.GraphicsUtils;
@@ -45,8 +50,7 @@ import utils.GraphicsUtils.MaskType;
  * displaying and editing text in a graphical user interface.
  */
 public class TextField
-        implements MouseNotifier, KeyNotifier, Clickable, Hoverable, UIDrawable, Updatable, MenuInterface,
-        MenuSetSize,
+        implements MouseNotifier, KeyNotifier, Clickable, Hoverable, UIDrawable, Updatable, MenuSetSize,
         MenuSetPosition {
 
     private int zIndex = 0;
@@ -103,6 +107,9 @@ public class TextField
      * @param mouse   The mouse input handler used for interaction with the
      *                textfield.
      * 
+     * @param keys    The keyboard input handler used for interaction with the
+     *                textfield.
+     * 
      * @param x       The x-coordinate of the textfield's topLeft point.
      * 
      * @param y       The y-coordinate of the textfield's topLeft point.
@@ -130,6 +137,9 @@ public class TextField
      *                    rendering, updating, and input handling.
      * 
      * @param mouse       The mouse input handler used for interaction with the
+     *                    textfield.
+     * 
+     * @param keys        The keyboard input handler used for interaction with the
      *                    textfield.
      * 
      * @param topLeft     The top left point of the rectangle.

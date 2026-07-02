@@ -12,15 +12,30 @@
 package gameEngine.engineModules;
 
 import java.awt.Dimension;
+import java.io.IOException;
+
 import javax.swing.*;
+
+import com.google.gson.JsonSyntaxException;
 
 import gameEngine.engineModules.cursor.CursorManager;
 import gameEngine.engineState.EngineState;
+import utils.ErrorManagement;
+import utils.Utils;
 
+/**
+ * Base class for all games using the engine.
+ * <p>
+ * This class initializes the engine and creates the application's primary
+ * resources, including the window, rendering panel, engine state, and keyboard
+ * and mouse input handlers. It serves as the central entry point for game
+ * initialization, providing subclasses with access to the engine's core
+ * components.
+ */
 public abstract class Game {
 
     /**
-     * The engine's main configuration and state.
+     * The current engine state, containing configuration and runtime properties.
      */
     protected final EngineState state;
 
@@ -53,12 +68,46 @@ public abstract class Game {
      */
     protected final Mouse mouse;
 
-    public Game() {
-        this("Game_Title");
+    /**
+     * Creates a new game with the specified title and resizability.
+     * <p>
+     * <b>Note:</b> The default config path is: config/EngineState.json.
+     * 
+     * @param name      the application and window title
+     * 
+     * @param resizable whether the application window can be resized
+     */
+    public Game(String name, boolean resizable) {
+        this(name, resizable, "");
     }
 
-    public Game(String name) {
+    /**
+     * Creates a new game with the specified title, resizability and config path.
+     * 
+     * @param name       the application and window title
+     * 
+     * @param resizable  whether the application window can be resized
+     * 
+     * @param configPath the path to the config
+     */
+    public Game(String name, boolean resizable, String configPath) {
         state = new EngineState();
+
+        String defaultConfigPath = "config/EngineState.json";
+
+        if (configPath.isEmpty())
+            defaultConfigPath = configPath;
+
+        try {
+            state.importJson(defaultConfigPath);
+        } catch (IOException e) {
+            System.err.println(Utils.ConsoleYELLOW
+                    + "No default engine state found. One can be supplied in \"config/EngineState.json\""
+                    + Utils.ConsoleRESET);
+        } catch (JsonSyntaxException s) {
+            ErrorManagement.throwError(s,
+                    "The provided EngineState.json contains malformed JSON and could thus not be loaded");
+        }
 
         context = new EngineContext();
         panel = new EnginePanel(state, context);
@@ -97,6 +146,14 @@ public abstract class Game {
         new Thread(gu).start();
     }
 
+    /**
+     * Called once on the game thread after the engine has finished initializing and
+     * is ready for use.
+     * <p>
+     * Override this method to perform application initialization, such as
+     * creating the UI, instantiating rendering or drawing classes, and
+     * allocating other resources that depend on the engine being fully initialized.
+     */
     protected abstract void init();
 
     void start() {

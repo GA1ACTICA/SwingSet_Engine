@@ -25,6 +25,12 @@ package gameEngine.interfaces;
  */
 public interface Hoverable extends ZIndexable {
 
+    /**
+     * Returns if the {@link Hoverable} element is hovered.
+     * 
+     * @return {@code true} if the element is hovered,
+     *         {@code false} otherwise
+     */
     boolean isHovered();
 
     /**
@@ -59,7 +65,7 @@ public interface Hoverable extends ZIndexable {
     boolean contains(int mouseX, int mouseY);
 
     /**
-     * Returns if the element is visible.
+     * Returns if the {@link Hoverable} element is visible.
      * 
      * @return {@code true} if the element is visible,
      *         {@code false} otherwise

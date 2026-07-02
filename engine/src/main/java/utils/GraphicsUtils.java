@@ -37,11 +37,16 @@ public class GraphicsUtils extends Utils {
 
     /**
      * What type of mask used with
-     * {@link GraphicsUtils#createMask(Graphics2D, Shape, MaskType, Painter)
-     * createMask(...)}.
+     * {@link GraphicsUtils#createMask(Graphics2D, Shape, MaskType, Painter)}.
      */
     public enum MaskType {
+        /**
+         * Keeps everything inside the mask shape.
+         */
         INSIDE,
+        /**
+         * Keeps everything outside the mask shape.
+         */
         OUTSIDE
     }
 
@@ -383,7 +388,8 @@ public class GraphicsUtils extends Utils {
     /**
      * Set the opacity for the given {@link Painter} and draw its contents.
      * <p>
-     * The {@code opacity} must fall in the range of 0 - 255
+     * The {@code opacity} must fall in the range of 0 - 255 where {@code 0} is
+     * fully transparent and {@code 255} if fully opaque.
      * 
      * @param g2d     The graphics context used when rendering the painter
      * 
@@ -408,7 +414,7 @@ public class GraphicsUtils extends Utils {
         Composite oldComposite = g2d.getComposite();
 
         try {
-            g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OUT, (float) (opacity / 255)));
+            g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, ((float) opacity / 255)));
             painter.paint(g2d);
         } finally {
             g2d.setComposite(oldComposite);

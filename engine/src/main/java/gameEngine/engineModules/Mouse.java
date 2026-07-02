@@ -22,6 +22,9 @@ import gameEngine.interfaces.MouseNotifier;
 import gameEngine.interfaces.Updatable;
 import utils.ErrorManagement;
 
+/**
+ * Handles mouse events received from AWT and notified {@link MouseNotifier}.
+ */
 public final class Mouse implements MouseMotionListener, MouseListener, MouseWheelListener, Updatable {
 
     private boolean leftDown;
@@ -41,9 +44,7 @@ public final class Mouse implements MouseMotionListener, MouseListener, MouseWhe
     private EngineState state;
     private EngineContext context;
 
-    public boolean moved;
-
-    public Mouse(EngineState state, EngineContext context, EnginePanel panel) {
+    Mouse(EngineState state, EngineContext context, EnginePanel panel) {
         ClassFactory.create(this, context);
         this.context = context;
         this.state = state;

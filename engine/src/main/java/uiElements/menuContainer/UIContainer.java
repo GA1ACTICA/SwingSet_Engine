@@ -23,7 +23,7 @@ import gameEngine.interfaces.MenuInterface.MenuSetSize;
  * Base implementation of a container managing {@link MenuInterface} UI
  * elements.
  */
-public class UIContainer implements MenuInterface, MenuSetSize, MenuSetPosition {
+public class UIContainer implements MenuSetSize, MenuSetPosition {
 
     private List<MenuInterface> items = new ArrayList<>();
 
@@ -46,7 +46,7 @@ public class UIContainer implements MenuInterface, MenuSetSize, MenuSetPosition 
     /**
      * Creates a duplicate UI container containing the same UI elements.
      * 
-     * @param uIContainer
+     * @param uIContainer the base UI container
      */
     public UIContainer(UIContainer uIContainer) {
         items = uIContainer.items;
@@ -60,7 +60,7 @@ public class UIContainer implements MenuInterface, MenuSetSize, MenuSetPosition 
      *
      * <p>
      * Items may also implement additional optional capabilities such as
-     * {@link MenuInterface.MenuSetColor} or {@link MenuInterface.MenuSetSize}.
+     * {@link MenuInterface.MenuSetPosition} or {@link MenuInterface.MenuSetSize}.
      * These capabilities are not guaranteed and must be checked before use.
      *
      * <p>

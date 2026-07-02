@@ -21,10 +21,13 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.RectangularShape;
 
-import gameEngine.engineModules.*;
+import gameEngine.engineModules.ClassFactory;
+import gameEngine.engineModules.EngineContext;
+import gameEngine.engineModules.Mouse;
 import gameEngine.engineModules.cursor.CursorManager;
 import gameEngine.engineModules.cursor.CursorType;
-import gameEngine.interfaces.*;
+import gameEngine.interfaces.Clickable;
+import gameEngine.interfaces.Hoverable;
 import gameEngine.interfaces.MenuInterface.MenuSetPosition;
 import gameEngine.interfaces.MenuInterface.MenuSetSize;
 import gameEngine.interfaces.drawables.UIDrawable;
@@ -39,7 +42,7 @@ import utils.GraphicsUtils.MaskType;
  * and provides common functionality such as rendering, positioning, and sizing.
  */
 public class RectButton implements
-        UIDrawable, MenuInterface, MenuSetPosition, MenuSetSize, Clickable, Hoverable {
+        UIDrawable, MenuSetPosition, MenuSetSize, Clickable, Hoverable {
 
     private int zIndex = 0; // default zIndex
 
@@ -541,9 +544,9 @@ public class RectButton implements
     public void setHovered(boolean isHovered) {
         this.isHovered = isHovered;
 
-        if (isHovered)
+        if (isHovered) {
             CursorManager.setCursor(CursorType.POINTER);
-        else
+        } else
             CursorManager.setCursor(CursorType.DEFAULT);
 
     }

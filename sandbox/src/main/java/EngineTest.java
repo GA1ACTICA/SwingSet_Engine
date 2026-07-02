@@ -6,6 +6,8 @@ import java.awt.Point;
 import gameEngine.engineModules.ClassFactory;
 import gameEngine.engineModules.EngineContext;
 import gameEngine.engineModules.Game;
+import gameEngine.engineModules.cursor.CursorManager;
+import gameEngine.engineModules.cursor.CursorType;
 import gameEngine.interfaces.drawables.Drawable;
 import uiElements.button.RectButton;
 import uiElements.checkBox.RectCheckbox;
@@ -15,7 +17,7 @@ import utils.GraphicsUtils;
 public class EngineTest implements Drawable {
 
     public static void main(String[] args) {
-        new Game() {
+        new Game("Test Window", true) {
 
             @Override
             protected void init() {
@@ -25,11 +27,11 @@ public class EngineTest implements Drawable {
                 RectCheckbox c = new RectCheckbox(context, mouse, new Point(350, 350), new Point(400, 400));
                 TextField t = new TextField(context, mouse, keys, new Point(400, 450), new Point(700, 500));
 
-                state.data().backgroundColor = Color.pink;
-
                 b.show();
                 c.show();
                 t.show();
+
+                CursorManager.setCursor(CursorType.WAIT);
             }
 
         };
@@ -56,10 +58,9 @@ public class EngineTest implements Drawable {
 
     @Override
     public void draw(Graphics g) {
-        GraphicsUtils.setOpacityFor((Graphics2D) g, zIndex, (painterG) -> {
-            painterG.setColor(Color.RED);
-            painterG.fillRect(450, 450, 100, 100);
+        GraphicsUtils.setOpacityFor((Graphics2D) g, 10, (painterG) -> {
+            painterG.setColor(Color.BLUE);
+            painterG.fillRect(10, 10, 50, 50);
         });
-
     }
 }

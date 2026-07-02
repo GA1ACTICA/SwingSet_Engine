@@ -20,7 +20,6 @@ import javax.swing.JPanel;
 
 import gameEngine.engineModules.ClassFactory;
 import gameEngine.engineModules.EngineContext;
-import gameEngine.interfaces.MenuInterface;
 import gameEngine.interfaces.MenuInterface.MenuSetPosition;
 import gameEngine.interfaces.Updatable;
 import gameEngine.interfaces.drawables.UIDrawable;
@@ -30,7 +29,7 @@ import gameEngine.interfaces.drawables.UIDrawable;
  * approximate framerate since the framerate cant be directly measured in
  * {@link JPanel#paintComponents(Graphics)}.
  */
-public class UPSCounter implements UIDrawable, Updatable, MenuInterface, MenuSetPosition {
+public class UPSCounter implements UIDrawable, Updatable, MenuSetPosition {
 
     private boolean show = false;
 

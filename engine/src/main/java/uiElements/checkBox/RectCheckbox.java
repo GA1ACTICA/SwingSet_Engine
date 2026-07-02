@@ -28,7 +28,6 @@ import gameEngine.engineModules.cursor.CursorManager;
 import gameEngine.engineModules.cursor.CursorType;
 import gameEngine.interfaces.Clickable;
 import gameEngine.interfaces.Hoverable;
-import gameEngine.interfaces.MenuInterface;
 import gameEngine.interfaces.MenuInterface.MenuSetPosition;
 import gameEngine.interfaces.MenuInterface.MenuSetSize;
 import gameEngine.interfaces.drawables.UIDrawable;
@@ -43,7 +42,7 @@ import utils.Utils;
  * and provides common functionality such as rendering, positioning, and sizing.
  */
 public class RectCheckbox
-        implements UIDrawable, MenuInterface, MenuSetPosition, MenuSetSize, Clickable, Hoverable {
+        implements UIDrawable, MenuSetPosition, MenuSetSize, Clickable, Hoverable {
 
     private int zIndex = 0;
 

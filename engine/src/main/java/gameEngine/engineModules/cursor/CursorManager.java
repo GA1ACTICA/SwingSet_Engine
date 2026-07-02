@@ -16,9 +16,13 @@ import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Objects;
+
+import com.google.gson.JsonSyntaxException;
+
 import java.util.List;
 
 import gameEngine.engineModules.ClassFactory;
@@ -29,6 +33,7 @@ import gameEngine.engineModules.cursor.AnimatedCursorData.Frame;
 import gameEngine.engineState.EngineState;
 import gameEngine.interfaces.Updatable;
 import gameEngine.interfaces.drawables.CursorDrawable;
+import utils.ErrorManagement;
 import utils.FileUtils;
 import utils.GraphicsUtils;
 
@@ -39,9 +44,7 @@ import utils.GraphicsUtils;
  */
 public class CursorManager implements CursorDrawable, Updatable {
 
-    @SuppressWarnings("unused")
     private CursorManager() {
-        throw new AssertionError("No instances allowed");
     }
 
     private static String defaultCursorPath = "cursors/Adwaita 96x96/";
@@ -114,6 +117,8 @@ public class CursorManager implements CursorDrawable, Updatable {
      * @return {@code true} if the cursor was successfully set,
      *         {@code false} if the change was blocked by
      *         {@link #lockCursor()}
+     * 
+     * @throws NullPointerException if {@code CursorType} is {@code null}
      */
     public static boolean setCursor(CursorType cursorType) {
         Objects.requireNonNull(cursorType, "The CursorType must not be null");
@@ -153,8 +158,24 @@ public class CursorManager implements CursorDrawable, Updatable {
             // Loads in a animated cursor collection with the information from meta.json
 
             // Populate frameDataArray from meta.json
-            rawCursorData.importJson(
-                    "src/" + localDefaultCursorPath + resource.toString() + "/meta.json");
+            if (cursorType.builtIn())
+                // Predefined cursors
+                try {
+                    rawCursorData.importJson(Thread.currentThread().getContextClassLoader()
+                            .getResourceAsStream(localDefaultCursorPath + resource.toString() + "/meta.json"));
+                } catch (JsonSyntaxException e) {
+                    ErrorManagement.throwError(e,
+                            "This shouldn't be possible! Pleas submit a issue at https://github.com/GA1ACTICA/SwingSet_Engine");
+                }
+            else
+                // User-created cursors
+                try {
+                    rawCursorData.importJson(resource.toString() + "/meta.json");
+                } catch (IOException e) {
+                    ErrorManagement.throwError(e,
+                            "Unable to open, read or the file: %s was missing."
+                                    .formatted(resource.toString() + "/meta.json"));
+                }
 
             frameDataArray = rawCursorData.data().getFrames().toArray(new Frame[0]);
 
@@ -164,7 +185,7 @@ public class CursorManager implements CursorDrawable, Updatable {
                             + resource.getName() + "/"
                             + frame.getImagePath());
 
-                    if (state.data().debug) {
+                    if (state.data().debugVerbose) {
                         System.out.println("Image path: " + imagePath.toString());
                         System.out.println(
                                 "Image hotspot: [" + frame.getHotspot()[0] + "," + frame.getHotspot()[1] + "]");

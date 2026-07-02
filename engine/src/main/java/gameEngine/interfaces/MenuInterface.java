@@ -54,14 +54,14 @@ public interface MenuInterface {
      * <p>
      * Implemented by elements such as {@link RectButton}
      */
-    public interface MenuSetSize {
+    public interface MenuSetSize extends MenuInterface {
 
         /**
-         * Sets the element's size relative to its current size.
+         * Sets the element's size.
          * 
-         * @param dWidth  the width offset
+         * @param width  the width
          * 
-         * @param dHeight the height offset
+         * @param height the height
          */
         void setSize(int width, int height);
 
@@ -80,7 +80,7 @@ public interface MenuInterface {
      * <p>
      * Implemented by elements such as {@link UPSCounter}
      */
-    public interface MenuSetPosition {
+    public interface MenuSetPosition extends MenuInterface {
 
         /**
          * Sets the element's position with x and y coordinates.

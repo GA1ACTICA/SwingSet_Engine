@@ -29,6 +29,13 @@ import gameEngine.interfaces.drawables.UIDrawable;
 import gameEngine.records.FixResult;
 import uiElements.button.RectButton;
 
+/**
+ * Base implementation of a slider UI element.
+ * <p>
+ * A slider represent a floating point value from 0.0 to 1.0 that can be
+ * changed by the user and provides common functionality such as rendering,
+ * positioning, and sizing.
+ */
 public class Slider implements UIDrawable, Updatable, MenuInterface {
 
     private boolean show = false;
@@ -101,6 +108,12 @@ public class Slider implements UIDrawable, Updatable, MenuInterface {
         return zIndex;
     }
 
+    /**
+     * Returns if the slider is visible.
+     * 
+     * @return {@code true} if the slider is visible,
+     *         {@code false} otherwise
+     */
     public boolean isVisible() {
         return show;
     }

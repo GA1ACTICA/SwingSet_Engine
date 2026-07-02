@@ -18,7 +18,6 @@ import java.awt.Point;
  * <p>
  * A cursor can either be one of the predefined built-in cursor types or
  * a custom cursor loaded from an image resource with a specified hotspot.
- * Instances of this class are immutable.
  * 
  * @see CursorManager
  */
@@ -36,7 +35,7 @@ public final class CursorType {
 
     /**
      * Creates a new instance of CursorType
-     * 
+     * <p>
      * You can override a builtin CursorType since they are mutable and therefore
      * add your own custom cursor images instead.
      * <p>

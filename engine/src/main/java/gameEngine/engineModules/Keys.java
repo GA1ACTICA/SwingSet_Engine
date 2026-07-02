@@ -21,6 +21,9 @@ import java.util.Set;
 import gameEngine.engineState.EngineState;
 import gameEngine.interfaces.KeyNotifier;
 
+/**
+ * Handles key events received from AWT and notifies {@link KeyNotifier}.
+ */
 public final class Keys implements KeyListener {
 
     private Set<Integer> keysPressed = new HashSet<>();
@@ -29,7 +32,7 @@ public final class Keys implements KeyListener {
     private final EngineState state;
     private final EngineContext context;
 
-    public Keys(EngineState state, EngineContext context) {
+    Keys(EngineState state, EngineContext context) {
         this.state = state;
         this.context = context;
     }
