@@ -17,7 +17,6 @@ import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -132,18 +131,17 @@ public class CursorManager implements CursorDrawable, Updatable {
             localDefaultCursorPath = defaultCursorPath;
         else
             localDefaultCursorPath = "";
-
-        File resource = Path.of(cursorType.path()).toFile();
+        File resource = new File(cursorType.path());
 
         if (resource.toString().contains(".png")) {
             // Loads in a static cursor image
-            Path cursor = Path.of(localDefaultCursorPath + resource.toString());
+            String cursor = localDefaultCursorPath + resource.toString();
 
             if (state.data().debug)
                 System.out.println(
                         "Path to image for static cursor: " + cursor);
 
-            BufferedImage originalImage = FileUtils.getBufferedImage(cursor, BufferedImage.TYPE_INT_ARGB);
+            BufferedImage originalImage = FileUtils.getBufferedImage(cursor);
 
             // Get scale for hotspot calculation.
             scaleX = (double) width / originalImage.getWidth(null);
@@ -181,9 +179,9 @@ public class CursorManager implements CursorDrawable, Updatable {
 
             if (frameDataArray != null) {
                 for (Frame frame : frameDataArray) {
-                    Path imagePath = Path.of(localDefaultCursorPath
+                    String imagePath = localDefaultCursorPath
                             + resource.getName() + "/"
-                            + frame.getImagePath());
+                            + frame.getImagePath();
 
                     if (state.data().debugVerbose) {
                         System.out.println("Image path: " + imagePath.toString());
@@ -194,16 +192,16 @@ public class CursorManager implements CursorDrawable, Updatable {
 
                     cursorImageCache.add(
                             GraphicsUtils.downscaleImage(
-                                    FileUtils.getBufferedImage(imagePath, BufferedImage.TYPE_INT_ARGB),
+                                    FileUtils.getBufferedImage(imagePath),
                                     width, height));
                 }
 
                 // Get scale for hotspot calculation.
-                Path imagePath = Path.of(localDefaultCursorPath
+                String imagePath = localDefaultCursorPath
                         + resource.getName() + "/"
-                        + frameDataArray[0].getImagePath());
+                        + frameDataArray[0].getImagePath();
 
-                BufferedImage originalImage = FileUtils.getBufferedImage(imagePath, BufferedImage.TYPE_INT_ARGB);
+                BufferedImage originalImage = FileUtils.getBufferedImage(imagePath);
 
                 scaleX = (double) width / originalImage.getWidth(null);
                 scaleY = (double) height / originalImage.getHeight(null);

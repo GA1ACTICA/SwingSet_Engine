@@ -101,12 +101,15 @@ public abstract class Game {
         try {
             state.importJson(defaultConfigPath);
         } catch (IOException e) {
-            System.err.println(Utils.ConsoleYELLOW
-                    + "No default engine state found. One can be supplied in \"config/EngineState.json\""
-                    + Utils.ConsoleRESET);
+            noConfigFound();
+
         } catch (JsonSyntaxException s) {
-            ErrorManagement.throwError(s,
-                    "The provided EngineState.json contains malformed JSON and could thus not be loaded");
+            if (s.getCause() instanceof IOException)
+                noConfigFound();
+
+            else
+                ErrorManagement.throwError(s,
+                        "The provided EngineState.json contains malformed JSON and could thus not be loaded");
         }
 
         context = new EngineContext();
@@ -158,6 +161,12 @@ public abstract class Game {
 
     void start() {
         init();
+    }
+
+    private void noConfigFound() {
+        System.err.println(Utils.ConsoleYELLOW
+                + "No default engine state found. One can be supplied in \"config/EngineState.json\""
+                + Utils.ConsoleRESET);
     }
 
 }

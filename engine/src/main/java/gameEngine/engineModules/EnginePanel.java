@@ -86,7 +86,7 @@ public final class EnginePanel extends JPanel {
             viewportTransform = g2d.getTransform();
 
             g2d.setColor(state.data().backgroundColor);
-            g2d.fillRect(0, 0, logicalWidth, logicalHeight);
+            g2d.fillRect(0, 0, getWidth(), getHeight());
 
             // Draw game objects in world space
             for (Drawable drawable : context.getWorldDrawables()) {
