@@ -24,6 +24,9 @@ import gameEngine.interfaces.Updatable;
  */
 public final class EngineStateData {
 
+    EngineStateData() {
+    }
+
     /**
      * Basic debug providing minimal engine messages. Good for game debugging.
      */

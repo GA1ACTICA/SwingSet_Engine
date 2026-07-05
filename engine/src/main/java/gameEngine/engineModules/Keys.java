@@ -23,6 +23,9 @@ import gameEngine.interfaces.KeyNotifier;
 
 /**
  * Handles key events received from AWT and notifies {@link KeyNotifier}.
+ * <p>
+ * {@code Keys} is managed by {@link Game} and is not intended to be
+ * instantiated directly.
  */
 public final class Keys implements KeyListener {
 

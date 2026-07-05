@@ -23,11 +23,13 @@ import gameEngine.interfaces.MouseNotifier;
 /**
  * A container for immutable and mutable lists used in rendering, updating and
  * more.
+ * <p>
+ * {@code EngineContext} is managed by {@link Game} and is not intended to be
+ * instantiated directly.
  */
 public final class EngineContext {
 
-    public EngineContext() {
-
+    EngineContext() {
     }
 
     private final List<Drawable> backBufferDrawable = new ArrayList<>();

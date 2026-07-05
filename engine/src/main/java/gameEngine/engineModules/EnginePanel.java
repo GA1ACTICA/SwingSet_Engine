@@ -21,6 +21,12 @@ import gameEngine.interfaces.drawables.Drawable;
 
 import java.awt.*;
 
+/**
+ * Handles the {@link JPanel} and the rendering loop used by the engine.
+ * <p>
+ * {@code EnginePanel} is managed by {@link Game} and is not intended to be
+ * instantiated directly.
+ */
 public final class EnginePanel extends JPanel {
 
     /**

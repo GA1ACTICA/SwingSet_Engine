@@ -14,7 +14,7 @@ package gameEngine.engineModules;
 import java.awt.Dimension;
 import java.io.IOException;
 
-import javax.swing.*;
+import javax.swing.JFrame;
 
 import com.google.gson.JsonSyntaxException;
 
@@ -158,10 +158,6 @@ public abstract class Game {
      * allocating other resources that depend on the engine being fully initialized.
      */
     protected abstract void init();
-
-    void start() {
-        init();
-    }
 
     private void noConfigFound() {
         System.err.println(Utils.ConsoleYELLOW

@@ -46,7 +46,7 @@ public class CursorManager implements CursorDrawable, Updatable {
     private CursorManager() {
     }
 
-    private static String defaultCursorPath = "cursors/Adwaita 96x96/";
+    private static String defaultCursorPath = "cursors/Adwaita/";
 
     private static AnimatedCursor rawCursorData;
     private static Frame[] frameDataArray = null;

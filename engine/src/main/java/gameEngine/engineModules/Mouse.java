@@ -24,6 +24,9 @@ import utils.ErrorManagement;
 
 /**
  * Handles mouse events received from AWT and notified {@link MouseNotifier}.
+ * <p>
+ * {@code Mouse} is managed by {@link Game} and is not intended to be
+ * instantiated directly.
  */
 public final class Mouse implements MouseMotionListener, MouseListener, MouseWheelListener, Updatable {
 

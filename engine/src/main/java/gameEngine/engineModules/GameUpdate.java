@@ -26,7 +26,7 @@ class GameUpdate implements Runnable {
     private final EnginePanel panel;
     private final EngineContext context;
 
-    public GameUpdate(
+    GameUpdate(
             Keys keys,
             Mouse mouse,
             EngineState state,
@@ -38,7 +38,7 @@ class GameUpdate implements Runnable {
         this.panel = panel;
         this.context = context;
 
-        game.start();
+        game.init();
     }
 
     @Override
