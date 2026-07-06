@@ -41,4 +41,11 @@ tasks.withType(JavaCompile) {
 
 tasks.withType(Javadoc).configureEach {
     options.memberLevel = JavadocMemberLevel.PROTECTED
+
+    // doLast {
+    //     copy {
+    //         from 'src/main/resources/cursors/Adwaita'
+    //         into destinationDir.toPath().resolve('cursors/Adwaita').toFile()
+    //     }
+    // }
 }

@@ -339,7 +339,7 @@ public final class Mouse implements MouseMotionListener, MouseListener, MouseWhe
      * Returns the distance traveled on the {@code X} axis in screen coordinates
      * (untransformed) since the last frame.
      * 
-     * @return The distance traveled this frame on the X axis
+     * @return the distance traveled this frame on the X axis
      */
     public int getDeltaX() {
         return deltaX;
@@ -349,7 +349,7 @@ public final class Mouse implements MouseMotionListener, MouseListener, MouseWhe
      * Returns the distance traveled on the {@code Y} axis in screen coordinates
      * (untransformed) since the last frame.
      * 
-     * @return The distance traveled this frame on the Y axis
+     * @return the distance traveled this frame on the Y axis
      */
     public int getDeltaY() {
         return deltaY;

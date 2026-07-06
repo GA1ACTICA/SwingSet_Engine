@@ -27,7 +27,6 @@ import gameEngine.engineModules.Mouse;
 import gameEngine.engineModules.cursor.CursorManager;
 import gameEngine.engineModules.cursor.CursorType;
 import gameEngine.interfaces.Clickable;
-import gameEngine.interfaces.Hoverable;
 import gameEngine.interfaces.MenuInterface.MenuSetPosition;
 import gameEngine.interfaces.MenuInterface.MenuSetSize;
 import gameEngine.interfaces.drawables.UIDrawable;
@@ -42,7 +41,7 @@ import utils.GraphicsUtils.MaskType;
  * and provides common functionality such as rendering, positioning, and sizing.
  */
 public class RectButton implements
-        UIDrawable, MenuSetPosition, MenuSetSize, Clickable, Hoverable {
+        UIDrawable, MenuSetPosition, MenuSetSize, Clickable {
 
     private int zIndex = 0; // default zIndex
 
@@ -89,19 +88,19 @@ public class RectButton implements
     /**
      * Creates and registers a rectangular button with the specified dimensions.
      * 
-     * @param context The engine context containing objects involved in rendering,
+     * @param context the engine context containing objects involved in rendering,
      *                updating, and input handling.
      * 
-     * @param mouse   The mouse input handler used for interaction with the
+     * @param mouse   the mouse input handler used for interaction with the
      *                button.
      * 
-     * @param x       The x-coordinate of the rectangle's top-left point.
+     * @param x       the x-coordinate of the rectangle's top-left point.
      * 
-     * @param y       The y-coordinate of the rectangle's top-left point.
+     * @param y       the y-coordinate of the rectangle's top-left point.
      * 
-     * @param width   The width of the rectangle.
+     * @param width   the width of the rectangle.
      * 
-     * @param height  The height of the rectangle.
+     * @param height  the height of the rectangle.
      */
     public RectButton(EngineContext context, Mouse mouse, int x, int y, int width, int height) {
 
@@ -118,15 +117,15 @@ public class RectButton implements
      * Creates and registers a rectangular button with the specified {@link Point
      * Points}.
      * 
-     * @param context     The engine context containing objects involved in
+     * @param context     the engine context containing objects involved in
      *                    rendering, updating, and input handling.
      * 
-     * @param mouse       The mouse input handler used for interaction with the
+     * @param mouse       the mouse input handler used for interaction with the
      *                    button.
      * 
-     * @param topLeft     The top-left point of the rectangle.
+     * @param topLeft     the top-left point of the rectangle.
      * 
-     * @param bottomRight The bottom-left point of the rectangle.
+     * @param bottomRight the bottom-left point of the rectangle.
      */
     public RectButton(EngineContext context, Mouse mouse, Point topLeft, Point bottomRight) {
 
@@ -143,17 +142,17 @@ public class RectButton implements
      * Creates and registers a rectangular button with the specified dimensions and
      * center {@link Point}.
      *
-     * @param context The engine context containing objects involved in rendering,
+     * @param context the engine context containing objects involved in rendering,
      *                updating, and input handling.
      * 
-     * @param mouse   The mouse input handler used for interaction with the
+     * @param mouse   the mouse input handler used for interaction with the
      *                button.
      * 
-     * @param center  The center point of the rectangle.
+     * @param center  the center point of the rectangle.
      * 
-     * @param width   The width of the rectangle.
+     * @param width   the width of the rectangle.
      * 
-     * @param height  The height of the rectangle.
+     * @param height  the height of the rectangle.
      */
     public RectButton(EngineContext context, Mouse mouse, Point center, int width, int height) {
 
@@ -253,7 +252,7 @@ public class RectButton implements
     /**
      * Set the color shown when then button is in the normal state.
      * 
-     * @param color The color shown when the button's state is normal
+     * @param color the color shown when the button's state is normal
      */
     public void setColor(Color color) {
         this.color = color;
@@ -262,7 +261,7 @@ public class RectButton implements
     /**
      * Set the color shown when then button is in the hovered state.
      * 
-     * @param hoverColor The color shown when the button is hovered
+     * @param hoverColor the color shown when the button is hovered
      */
     public void setHoverColor(Color hoverColor) {
         this.hoverColor = hoverColor;
@@ -271,7 +270,7 @@ public class RectButton implements
     /**
      * Set the color shown when then button is in the disabled state.
      * 
-     * @param disabledColor The color shown when the button is disabled
+     * @param disabledColor the color shown when the button is disabled
      */
     public void setDisabledColor(Color disabledColor) {
         this.disabledColor = disabledColor;
@@ -280,7 +279,7 @@ public class RectButton implements
     /**
      * Set the color shown when then button is in the clicked state.
      * 
-     * @param clickColor The image color when the button is clicked
+     * @param clickColor the image color when the button is clicked
      */
     public void setClickColor(Color clickColor) {
         this.clickColor = clickColor;
@@ -290,7 +289,7 @@ public class RectButton implements
     /**
      * Set the image shown when then button is in the normal state.
      * 
-     * @param image The image shown when the button is normal
+     * @param image the image shown when the button is normal
      */
     public void setImage(Image image) {
         this.image = image;
@@ -299,7 +298,7 @@ public class RectButton implements
     /**
      * Set the image shown when then button is in the hovered state.
      * 
-     * @param hoverImage The image shown when the button is hovered
+     * @param hoverImage the image shown when the button is hovered
      */
     public void setHoverImage(Image hoverImage) {
         this.hoverImage = hoverImage;
@@ -308,7 +307,7 @@ public class RectButton implements
     /**
      * Set the image shown when then button is in the disabled state.
      * 
-     * @param disabledImage The image shown when the button is disabled
+     * @param disabledImage the image shown when the button is disabled
      */
     public void setDisabledImage(Image disabledImage) {
         this.disabledImage = disabledImage;
@@ -317,7 +316,7 @@ public class RectButton implements
     /**
      * Set the image shown when then button is in the clicked state.
      * 
-     * @param clickImage The image shown when the button is clicked
+     * @param clickImage the image shown when the button is clicked
      */
     public void setClickImage(Image clickImage) {
         this.clickImage = clickImage;
@@ -400,7 +399,7 @@ public class RectButton implements
     /**
      * Returns the X coordinate in screen coordinates (untransformed).
      * 
-     * @return The X coordinates
+     * @return the X coordinates
      */
     public int getX() {
         return x;
@@ -409,7 +408,7 @@ public class RectButton implements
     /**
      * Returns the Y coordinate in screen coordinates (untransformed).
      * 
-     * @return The Y coordinates
+     * @return the Y coordinates
      */
     public int getY() {
         return y;

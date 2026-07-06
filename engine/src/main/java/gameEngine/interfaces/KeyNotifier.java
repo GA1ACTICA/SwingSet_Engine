@@ -35,7 +35,7 @@ public interface KeyNotifier {
      * Depending on the platform and user keyboard repeat settings, this method
      * may be invoked repeatedly while a key is held down.
      * 
-     * @param e The {@link KeyEvent} received from awt
+     * @param e the {@link KeyEvent} received from awt
      *
      * @see Keys#pollTypedCharacter() pollTypedCharacter()
      */
@@ -50,7 +50,7 @@ public interface KeyNotifier {
      * This method may repeatedly fire while a key is held down depending on the
      * operating system keyboard repeat settings.
      * 
-     * @param e The {@link KeyEvent} received from awt
+     * @param e the {@link KeyEvent} received from awt
      */
     default void keyPressedNotification(KeyEvent e) {
     }
@@ -60,7 +60,7 @@ public interface KeyNotifier {
      * <p>
      * Intended for gameplay controls and input state handling.
      * 
-     * @param e The {@link KeyEvent} received from awt
+     * @param e the {@link KeyEvent} received from awt
      */
     default void keyReleasedNotification(KeyEvent e) {
     }

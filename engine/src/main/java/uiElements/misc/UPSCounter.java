@@ -115,7 +115,7 @@ public class UPSCounter implements UIDrawable, Updatable, MenuSetPosition {
     /**
      * Sets the color for the displayed text and value.
      * 
-     * @param color The color for the UPS counter
+     * @param color the color for the UPS counter
      */
     public void setColor(Color color) {
         this.color = color;
@@ -124,7 +124,7 @@ public class UPSCounter implements UIDrawable, Updatable, MenuSetPosition {
     /**
      * Sets the font for the displayed text and value.
      * 
-     * @param font The font for the UPS counter
+     * @param font the font for the UPS counter
      */
     public void setFont(Font font) {
         this.font = font;
@@ -133,7 +133,7 @@ public class UPSCounter implements UIDrawable, Updatable, MenuSetPosition {
     /**
      * Returns the X coordinate in screen coordinates (untransformed).
      * 
-     * @return The X coordinates
+     * @return the X coordinates
      */
     public int getX() {
         return x;
@@ -142,7 +142,7 @@ public class UPSCounter implements UIDrawable, Updatable, MenuSetPosition {
     /**
      * Returns the Y coordinate in screen coordinates (untransformed).
      * 
-     * @return The Y coordinates
+     * @return the Y coordinates
      */
     public int getY() {
         return y;

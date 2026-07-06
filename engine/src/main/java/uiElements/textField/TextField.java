@@ -50,7 +50,7 @@ import utils.GraphicsUtils.MaskType;
  * displaying and editing text in a graphical user interface.
  */
 public class TextField
-        implements MouseNotifier, KeyNotifier, Clickable, Hoverable, UIDrawable, Updatable, MenuSetSize,
+        implements MouseNotifier, KeyNotifier, Clickable, UIDrawable, Updatable, MenuSetSize,
         MenuSetPosition {
 
     private int zIndex = 0;
@@ -101,22 +101,22 @@ public class TextField
      * 
      * Creates and registers a textfield with the specified dimensions.
      * 
-     * @param context The engine context containing objects involved in rendering,
+     * @param context the engine context containing objects involved in rendering,
      *                updating, and input handling.
      * 
-     * @param mouse   The mouse input handler used for interaction with the
+     * @param mouse   the mouse input handler used for interaction with the
      *                textfield.
      * 
-     * @param keys    The keyboard input handler used for interaction with the
+     * @param keys    the keyboard input handler used for interaction with the
      *                textfield.
      * 
-     * @param x       The x-coordinate of the textfield's topLeft point.
+     * @param x       the x-coordinate of the textfield's topLeft point.
      * 
-     * @param y       The y-coordinate of the textfield's topLeft point.
+     * @param y       the y-coordinate of the textfield's topLeft point.
      * 
-     * @param width   The width of the textfield.
+     * @param width   the width of the textfield.
      * 
-     * @param height  The height of the textfield.
+     * @param height  the height of the textfield.
      */
     public TextField(EngineContext context, Mouse mouse, Keys keys, int x, int y, int width,
             int height) {
@@ -133,18 +133,18 @@ public class TextField
     /**
      * Creates and registers a textfield with the specified {@link Point Points}.
      * 
-     * @param context     The engine context containing objects involved in
+     * @param context     the engine context containing objects involved in
      *                    rendering, updating, and input handling.
      * 
-     * @param mouse       The mouse input handler used for interaction with the
+     * @param mouse       the mouse input handler used for interaction with the
      *                    textfield.
      * 
-     * @param keys        The keyboard input handler used for interaction with the
+     * @param keys        the keyboard input handler used for interaction with the
      *                    textfield.
      * 
-     * @param topLeft     The top left point of the rectangle.
+     * @param topLeft     the top left point of the rectangle.
      * 
-     * @param bottomRight The bottom left point of the rectangle.
+     * @param bottomRight the bottom left point of the rectangle.
      */
     public TextField(EngineContext context, Mouse mouse, Keys keys, Point topLeft,
             Point bottomRight) {
@@ -162,20 +162,20 @@ public class TextField
      * Creates and registers a textfield with the specified dimensions
      * and center {@link Point}.
      * 
-     * @param context The engine context containing objects involved in
+     * @param context the engine context containing objects involved in
      *                rendering, updating, and input handling.
      * 
-     * @param mouse   The mouse input handler used for interaction with the
+     * @param mouse   the mouse input handler used for interaction with the
      *                textfield.
      * 
-     * @param keys    The keyboard input handler used for interaction with the
+     * @param keys    the keyboard input handler used for interaction with the
      *                textfield.
      * 
-     * @param middle  The middle point of the rectangle.
+     * @param middle  the middle point of the rectangle.
      * 
-     * @param width   The width of the textfield.
+     * @param width   the width of the textfield.
      * 
-     * @param height  The height of the textfield.
+     * @param height  the height of the textfield.
      */
     public TextField(EngineContext context, Mouse mouse, Keys keys, Point middle, int width,
             int height) {
@@ -276,7 +276,7 @@ public class TextField
     /**
      * Set the color shown when then textfield is in the focused state.
      * 
-     * @param focusedColor The color shown when the textfield's state is focused
+     * @param focusedColor the color shown when the textfield's state is focused
      */
     public void setFocusedColor(Color focusedColor) {
         this.focusedColor = focusedColor;
@@ -285,7 +285,7 @@ public class TextField
     /**
      * Set the color shown when then textfield is in the unfocused state.
      * 
-     * @param unFocusedColor The color shown when the textfield's state is unfocused
+     * @param unFocusedColor the color shown when the textfield's state is unfocused
      */
     public void setUnFocusedColor(Color unFocusedColor) {
         this.unFocusedColor = unFocusedColor;
@@ -294,7 +294,7 @@ public class TextField
     /**
      * Set the color shown when then textfield is in the disabled state.
      * 
-     * @param disabledColor The color shown when the textfield is disabled
+     * @param disabledColor the color shown when the textfield is disabled
      */
     public void setDisabledColor(Color disabledColor) {
         this.disabledColor = disabledColor;
@@ -304,7 +304,7 @@ public class TextField
     /**
      * Set the image shown when then textfield is in the focused state.
      * 
-     * @param focusedImage The image shown when the textfield's state is focused
+     * @param focusedImage the image shown when the textfield's state is focused
      */
     public void setFocusedImage(Image focusedImage) {
         this.focusedImage = focusedImage;
@@ -313,7 +313,7 @@ public class TextField
     /**
      * Set the image shown when then textfield is in the unfocused state.
      * 
-     * @param unFocusedImage The image shown when the textfield's state is unfocused
+     * @param unFocusedImage the image shown when the textfield's state is unfocused
      */
     public void setUnFocusedImage(Image unFocusedImage) {
         this.unFocusedImage = unFocusedImage;
@@ -322,7 +322,7 @@ public class TextField
     /**
      * Set the image shown when then textfield is in the disabled state.
      * 
-     * @param disabledImage The image shown when the textfield is disabled
+     * @param disabledImage the image shown when the textfield is disabled
      */
     public void setDisabledImage(Image disabledImage) {
         this.disabledImage = disabledImage;
@@ -386,7 +386,7 @@ public class TextField
      * <b>Note:</b> {@link GraphicsUtils#matchFontToHeight(Font, String, int)} uses
      * the dummyText: "ÅÄÖgjpqÉÁÂÂÂÂ" to get the {@link FontMetrics}.
      * 
-     * @param font         The new font
+     * @param font         the new font
      * 
      * @param preserveSize {@code true} if the size should be retained,
      *                     {@code false} otherwise
@@ -402,7 +402,7 @@ public class TextField
     /**
      * Returns the X coordinate in screen coordinates (untransformed).
      * 
-     * @return The X coordinates
+     * @return the X coordinates
      */
     public int getX() {
         return x;
@@ -411,7 +411,7 @@ public class TextField
     /**
      * Returns the Y coordinate in screen coordinates (untransformed).
      * 
-     * @return The Y coordinates
+     * @return the Y coordinates
      */
     public int getY() {
         return y;

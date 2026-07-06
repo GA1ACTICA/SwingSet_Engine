@@ -24,9 +24,9 @@ public class ErrorManagement extends Utils {
      * Throws an exception with highlighting and a extra message on what went wrong
      * and exits the program with the code {@code 1}.
      * 
-     * @param exception Exception to be thrown
+     * @param exception exception to be thrown
      * 
-     * @param message   Extra message for clarification
+     * @param message   extra message for clarification
      * 
      */
     public static void throwError(Exception exception, String message) {
@@ -39,11 +39,11 @@ public class ErrorManagement extends Utils {
      * Throws an exception with highlighting and a extra message on what went wrong
      * and exits the program.
      * 
-     * @param exception Exception to be thrown
+     * @param exception exception to be thrown
      * 
-     * @param message   Extra message for clarification
+     * @param message   extra message for clarification
      * 
-     * @param exitCode  The exit code the program exits with
+     * @param exitCode  the exit code the program exits with
      */
     private static void throwError(Exception exception, String message, int exitCode) {
         System.err.println(
@@ -60,9 +60,9 @@ public class ErrorManagement extends Utils {
      * Reports an exception with highlighting and a extra message on what went
      * wrong.
      * 
-     * @param exception Exception to be reported
+     * @param exception exception to be reported
      * 
-     * @param message   Extra message for clarification
+     * @param message   extra message for clarification
      */
     public static void reportError(Exception exception, String message) {
         System.err.println(

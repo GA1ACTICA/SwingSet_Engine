@@ -27,20 +27,20 @@ public class OvalCheckbox extends RectCheckbox {
     /**
      * Creates and registers a oval checkbox with the specified dimensions.
      * 
-     * @param context The engine context containing objects involved in rendering,
+     * @param context the engine context containing objects involved in rendering,
      *                updating, and input handling.
      * 
      * 
-     * @param mouse   The mouse input handler used for interaction with the
+     * @param mouse   the mouse input handler used for interaction with the
      *                checkbox.
      * 
-     * @param x       The x-coordinate of the oval's topLeft point.
+     * @param x       the x-coordinate of the oval's topLeft point.
      * 
-     * @param y       The y-coordinate of the oval's topLeft point.
+     * @param y       the y-coordinate of the oval's topLeft point.
      * 
-     * @param width   The width of the oval.
+     * @param width   the width of the oval.
      * 
-     * @param height  The height of the oval.
+     * @param height  the height of the oval.
      */
     public OvalCheckbox(EngineContext context, Mouse mouse, int x, int y, int width, int height) {
         super(context, mouse, x, y, width, height);
@@ -55,16 +55,16 @@ public class OvalCheckbox extends RectCheckbox {
      * Creates and registers a oval checkbox with the specified {@link Point
      * Points}.
      * 
-     * @param context     The engine context containing objects involved in
+     * @param context     the engine context containing objects involved in
      *                    rendering,
      *                    updating, and input handling.
      * 
-     * @param mouse       The mouse input handler used for interaction with the
+     * @param mouse       the mouse input handler used for interaction with the
      *                    checkbox.
      * 
-     * @param topLeft     The top left point of the oval.
+     * @param topLeft     the top left point of the oval.
      * 
-     * @param bottomRight The bottom left point of the oval.
+     * @param bottomRight the bottom left point of the oval.
      */
 
     public OvalCheckbox(EngineContext context, Mouse mouse, Point topLeft, Point bottomRight) {
@@ -86,17 +86,17 @@ public class OvalCheckbox extends RectCheckbox {
      * Creates and registers a oval checkbox with the specified dimensions and
      * center {@link Point}.
      *
-     * @param context The engine context containing objects involved in rendering,
+     * @param context the engine context containing objects involved in rendering,
      *                updating, and input handling.
      * 
-     * @param mouse   The mouse input handler used for interaction with the
+     * @param mouse   the mouse input handler used for interaction with the
      *                checkbox.
      * 
-     * @param center  The center point of the oval.
+     * @param center  the center point of the oval.
      * 
-     * @param width   The width of the oval.
+     * @param width   the width of the oval.
      * 
-     * @param height  The height of the oval.
+     * @param height  the height of the oval.
      */
 
     public OvalCheckbox(EngineContext context, Mouse mouse, Point center, int width, int height) {
@@ -116,15 +116,15 @@ public class OvalCheckbox extends RectCheckbox {
      * Creates and registers a circular checkbox with the specified dimensions and
      * center {@link Point}.
      *
-     * @param context The engine context containing objects involved in rendering,
+     * @param context the engine context containing objects involved in rendering,
      *                updating, and input handling.
      * 
-     * @param mouse   The mouse input handler used for interaction with the
+     * @param mouse   the mouse input handler used for interaction with the
      *                checkbox.
      * 
-     * @param center  The circle's center point.
+     * @param center  the circle's center point.
      * 
-     * @param radius  The circle's radius.
+     * @param radius  the circle's radius.
      */
     public OvalCheckbox(EngineContext context, Mouse mouse, Point center, int radius) {
 

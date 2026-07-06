@@ -32,7 +32,11 @@ import utils.MathUtils;
  * <li>{@code 0.0} corresponds to the start point</li>
  * <li>{@code 1.0} corresponds to the end point</li>
  * </ul>
- * </p>
+ * 
+ * @param point    the calculated point constrained to the line segment
+ * 
+ * @param progress the progress value representing the relative position of that
+ *                 point between the segment's start and end points
  */
 public record FixResult(Point point, double progress) {
 }

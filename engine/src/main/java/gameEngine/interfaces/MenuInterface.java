@@ -85,16 +85,16 @@ public interface MenuInterface {
         /**
          * Sets the element's position with x and y coordinates.
          * 
-         * @param x The X coordinate
+         * @param x the X coordinate
          * 
-         * @param y The Y coordinate
+         * @param y the Y coordinate
          */
         void setPosition(int x, int y);
 
         /**
          * Sets the element's position with the {@link Point Points} position.
          * 
-         * @param position The point
+         * @param position the point
          */
         void setPosition(Point position);
 

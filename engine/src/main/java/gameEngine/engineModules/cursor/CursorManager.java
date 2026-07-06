@@ -20,6 +20,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
 
+import javax.swing.JPanel;
+
 import com.google.gson.JsonSyntaxException;
 
 import java.util.List;
@@ -43,6 +45,7 @@ import utils.GraphicsUtils;
  */
 public class CursorManager implements CursorDrawable, Updatable {
 
+    @SuppressWarnings("unused")
     private CursorManager() {
     }
 
@@ -71,8 +74,27 @@ public class CursorManager implements CursorDrawable, Updatable {
     private static EngineState state;
     private Mouse mouse;
 
-    public CursorManager(EngineContext context, EnginePanel panel, Mouse mouse, EngineState state) {
-        CursorManager.state = state;
+    /**
+     * Creates and registers the {@code CursorManager} with the engine.
+     * <p>
+     * The operating system cursor is hidden, and the engine's own cursor is
+     * rendered instead.
+     * <p>
+     * <b>Note:</b> {@code CursorManager} should only be instantiated by the
+     * engine. Creating additional instances may result in multiple cursors being
+     * rendered.
+     *
+     * @param context     the engine context containing the objects responsible for
+     *                    rendering, updating, and input handling
+     * 
+     * @param panel       the {@link JPanel} managed by the engine
+     * 
+     * @param mouse       the mouse input handler used for cursor position
+     * 
+     * @param engineState the current engine state
+     */
+    public CursorManager(EngineContext context, EnginePanel panel, Mouse mouse, EngineState engineState) {
+        CursorManager.state = engineState;
         ClassFactory.create(this, context);
 
         rawCursorData = new AnimatedCursor(new AnimatedCursorData(), state);
@@ -87,14 +109,29 @@ public class CursorManager implements CursorDrawable, Updatable {
         setCursor(CursorType.DEFAULT);
     }
 
+    /**
+     * Returns if the cursor is visible or not.
+     * 
+     * @return {@code true} if the cursor is visible, {@code false} otherwise
+     */
     public static boolean isVisible() {
         return show;
     }
 
+    /**
+     * Shows the cursor.
+     * <p>
+     * Enables the cursor and allows mouse interactions.
+     */
     public static void show() {
         show = true;
     }
 
+    /**
+     * Hides the cursor.
+     * <p>
+     * Hides the cursor and prevents mouse interactions.
+     */
     public static void hide() {
         show = false;
     }

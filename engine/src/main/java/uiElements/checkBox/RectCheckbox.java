@@ -27,7 +27,6 @@ import gameEngine.engineModules.Mouse;
 import gameEngine.engineModules.cursor.CursorManager;
 import gameEngine.engineModules.cursor.CursorType;
 import gameEngine.interfaces.Clickable;
-import gameEngine.interfaces.Hoverable;
 import gameEngine.interfaces.MenuInterface.MenuSetPosition;
 import gameEngine.interfaces.MenuInterface.MenuSetSize;
 import gameEngine.interfaces.drawables.UIDrawable;
@@ -42,7 +41,7 @@ import utils.Utils;
  * and provides common functionality such as rendering, positioning, and sizing.
  */
 public class RectCheckbox
-        implements UIDrawable, MenuSetPosition, MenuSetSize, Clickable, Hoverable {
+        implements UIDrawable, MenuSetPosition, MenuSetSize, Clickable {
 
     private int zIndex = 0;
 
@@ -95,19 +94,19 @@ public class RectCheckbox
     /**
      * Creates and registers a rectangular checkbox with the specified dimensions.
      * 
-     * @param context The engine context containing objects involved in rendering,
+     * @param context the engine context containing objects involved in rendering,
      *                updating, and input handling.
      * 
-     * @param mouse   The mouse input handler used for interaction with the
+     * @param mouse   the mouse input handler used for interaction with the
      *                checkbox.
      * 
-     * @param x       The x-coordinate of the rectangle's topLeft point.
+     * @param x       the x-coordinate of the rectangle's topLeft point.
      * 
-     * @param y       The y-coordinate of the rectangle's topLeft point.
+     * @param y       the y-coordinate of the rectangle's topLeft point.
      * 
-     * @param width   The width of the rectangle.
+     * @param width   the width of the rectangle.
      * 
-     * @param height  The height of the rectangle.
+     * @param height  the height of the rectangle.
      */
     public RectCheckbox(EngineContext context, Mouse mouse, int x, int y, int width, int height) {
 
@@ -124,15 +123,15 @@ public class RectCheckbox
      * Creates and registers a rectangular checkbox with the specified {@link Point
      * Points}.
      * 
-     * @param context     The engine context containing objects involved in
+     * @param context     the engine context containing objects involved in
      *                    rendering, updating, and input handling.
      * 
-     * @param mouse       The mouse input handler used for interaction with the
+     * @param mouse       the mouse input handler used for interaction with the
      *                    checkbox.
      * 
-     * @param topLeft     The top left point of the rectangle.
+     * @param topLeft     the top left point of the rectangle.
      * 
-     * @param bottomRight The bottom left point of the rectangle.
+     * @param bottomRight the bottom left point of the rectangle.
      */
     public RectCheckbox(EngineContext context, Mouse mouse, Point topLeft, Point bottomRight) {
 
@@ -149,17 +148,17 @@ public class RectCheckbox
      * Creates and registers a rectangular checkbox with the specified dimensions
      * and center {@link Point}.
      *
-     * @param context The engine context containing objects involved in rendering,
+     * @param context the engine context containing objects involved in rendering,
      *                updating, and input handling.
      * 
-     * @param mouse   The mouse input handler used for interaction with the
+     * @param mouse   the mouse input handler used for interaction with the
      *                checkbox.
      * 
-     * @param center  The center point of the rectangle.
+     * @param center  the center point of the rectangle.
      * 
-     * @param width   The width of the rectangle.
+     * @param width   the width of the rectangle.
      * 
-     * @param height  The height of the rectangle.
+     * @param height  the height of the rectangle.
      */
     public RectCheckbox(EngineContext context, Mouse mouse, Point center, int width, int height) {
 
@@ -258,7 +257,7 @@ public class RectCheckbox
     /**
      * Set the color shown when then checkbox is in the normal state.
      * 
-     * @param color The color shown when the checkbox state is normal
+     * @param color the color shown when the checkbox state is normal
      */
     public void setColor(Color color) {
         this.color = color;
@@ -267,7 +266,7 @@ public class RectCheckbox
     /**
      * Set the color shown when then checkbox is in the toggled state.
      * 
-     * @param toggleColor The color shown when the checkbox is toggled
+     * @param toggleColor the color shown when the checkbox is toggled
      */
     public void setToggleColor(Color toggleColor) {
         this.toggleColor = toggleColor;
@@ -276,7 +275,7 @@ public class RectCheckbox
     /**
      * Set the color shown when then checkbox is in the hovered state.
      * 
-     * @param hoverColor The color shown when the checkbox is hovered
+     * @param hoverColor the color shown when the checkbox is hovered
      */
     public void setHoverColor(Color hoverColor) {
         this.hoverColor = hoverColor;
@@ -285,7 +284,7 @@ public class RectCheckbox
     /**
      * Set the color shown when then checkbox is in the disabled state.
      * 
-     * @param disabledColor The color shown when the checkbox is disabled
+     * @param disabledColor the color shown when the checkbox is disabled
      */
     public void setDisabledColor(Color disabledColor) {
         this.disabledColor = disabledColor;
@@ -295,7 +294,7 @@ public class RectCheckbox
     /**
      * Set the image shown when then checkbox is in the normal state.
      * 
-     * @param image The image shown when the checkbox is normal
+     * @param image the image shown when the checkbox is normal
      */
     public void setImage(Image image) {
         this.image = image;
@@ -304,7 +303,7 @@ public class RectCheckbox
     /**
      * Set the image shown when then checkbox is in the toggled state.
      * 
-     * @param toggleImage The image shown when the checkbox is toggled
+     * @param toggleImage the image shown when the checkbox is toggled
      */
     public void setToggleImage(Image toggleImage) {
         this.toggleImage = toggleImage;
@@ -313,7 +312,7 @@ public class RectCheckbox
     /**
      * Set the image shown when then checkbox is in the hovered state.
      * 
-     * @param hoverImage The image shown when the checkbox is hovered
+     * @param hoverImage the image shown when the checkbox is hovered
      */
     public void setHoverImage(Image hoverImage) {
         this.hoverImage = hoverImage;
@@ -322,7 +321,7 @@ public class RectCheckbox
     /**
      * Set the image shown when then checkbox is in the disabled state.
      * 
-     * @param disabledImage The image shown when the checkbox is disabled
+     * @param disabledImage the image shown when the checkbox is disabled
      */
     public void setDisabledImage(Image disabledImage) {
         this.disabledImage = disabledImage;
@@ -417,7 +416,7 @@ public class RectCheckbox
     /**
      * Returns the X coordinate in screen coordinates (untransformed).
      * 
-     * @return The X coordinates
+     * @return the X coordinates
      */
     public int getX() {
         return x;
@@ -426,7 +425,7 @@ public class RectCheckbox
     /**
      * Returns the Y coordinate in screen coordinates (untransformed).
      * 
-     * @return The Y coordinates
+     * @return the Y coordinates
      */
     public int getY() {
         return y;

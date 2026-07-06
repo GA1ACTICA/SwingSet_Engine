@@ -150,11 +150,11 @@ public class Utils {
      * <b>Note:</b> The alpha is ignored from the two colors and is instead always
      * {@code 255}.
      * 
-     * @param firstColor     The fist color
+     * @param firstColor     the fist color
      * 
-     * @param secondaryColor The second color
+     * @param secondaryColor the second color
      * 
-     * @return The merged colors
+     * @return the merged colors
      */
     public static Color mergeRGBColor(Color firstColor, Color secondaryColor) {
         return new Color(Math.round((firstColor.getRed() + secondaryColor.getRed()) / 2),
@@ -166,11 +166,11 @@ public class Utils {
      * Merges two colors by dividing the sum of each color component and the
      * rounding the answer to the nearest integer.
      * 
-     * @param firstColor     The fist color
+     * @param firstColor     the fist color
      * 
-     * @param secondaryColor The second color
+     * @param secondaryColor the second color
      * 
-     * @return The merged colors
+     * @return the merged colors
      */
     public static Color mergeRGBAColor(Color firstColor, Color secondaryColor) {
         return new Color(Math.round((firstColor.getRed() + secondaryColor.getRed()) / 2),

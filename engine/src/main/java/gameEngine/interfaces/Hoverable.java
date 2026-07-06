@@ -34,6 +34,14 @@ public interface Hoverable extends ZIndexable {
     boolean isHovered();
 
     /**
+     * Returns if the {@link Hoverable} element is enabled.
+     * 
+     * @return {@code true} if the element is enabled,
+     *         {@code false} otherwise
+     */
+    boolean isEnabled();
+
+    /**
      * Sets the hovered state of this element.
      * <p>
      * This method is typically called by the engine during mouse processing.

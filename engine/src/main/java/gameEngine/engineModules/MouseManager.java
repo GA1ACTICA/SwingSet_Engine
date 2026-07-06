@@ -13,6 +13,7 @@ package gameEngine.engineModules;
 
 import java.awt.Point;
 
+import gameEngine.engineModules.cursor.CursorManager;
 import gameEngine.interfaces.Clickable;
 import gameEngine.interfaces.Hoverable;
 
@@ -26,6 +27,8 @@ class MouseManager {
     static Clickable currentTopMost = null;
 
     static void handlePriority(EngineContext context, Point mousePoint) {
+        if (!CursorManager.isVisible())
+            return;
 
         // Find the topmost hoverable under the mouse
         for (Hoverable hoverable : context.getHoverables()) {
@@ -43,6 +46,8 @@ class MouseManager {
     }
 
     static void handleClick(EngineContext context, Point mousePoint, boolean mouseState) {
+        if (!CursorManager.isVisible())
+            return;
 
         // mouse DOWN
         if (mouseState) {
@@ -85,6 +90,8 @@ class MouseManager {
     }
 
     static void handleHover(EngineContext context, Point mousePoint) {
+        if (!CursorManager.isVisible())
+            return;
 
         // If hover target changed
         if (lastHovered != topMost) {

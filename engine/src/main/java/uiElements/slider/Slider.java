@@ -66,15 +66,15 @@ public class Slider implements UIDrawable, Updatable, MenuInterface {
      * Creates and registers a slider between the specified two {@link Point
      * Points}.
      * 
-     * @param context  The engine context containing objects involved in rendering,
+     * @param context  the engine context containing objects involved in rendering,
      *                 updating, and input handling.
      * 
-     * @param mouse    The mouse input handler used for interaction with the
+     * @param mouse    the mouse input handler used for interaction with the
      *                 handle.
      * 
-     * @param pointOne The first point for the track.
+     * @param pointOne the first point for the track.
      * 
-     * @param pointTwo The second point of the track.
+     * @param pointTwo the second point of the track.
      */
     public Slider(EngineContext context, Mouse mouse, Point pointOne, Point pointTwo) {
         ClassFactory.create(this, context);
@@ -154,7 +154,7 @@ public class Slider implements UIDrawable, Updatable, MenuInterface {
     /**
      * Returns the lowest value the slider can represent.
      * 
-     * @return The minimum value
+     * @return the minimum value
      */
     public int getSliderMin() {
         return sliderMin;
@@ -163,7 +163,7 @@ public class Slider implements UIDrawable, Updatable, MenuInterface {
     /**
      * Returns the highest value the slider can represent.
      * 
-     * @return The maximum value
+     * @return the maximum value
      */
     public int getSliderMax() {
         return sliderMax;
@@ -182,7 +182,7 @@ public class Slider implements UIDrawable, Updatable, MenuInterface {
     /**
      * Returns the color used for painting the track the handle slides along.
      * 
-     * @return The color used for the track
+     * @return the color used for the track
      */
     public Color getTrackColor() {
         return trackColor;
@@ -379,7 +379,7 @@ public class Slider implements UIDrawable, Updatable, MenuInterface {
      * Both set the slider current percentage and updates the handle's position on
      * the slider.
      * 
-     * @param percentage The new percentage of the slider
+     * @param percentage the new percentage of the slider
      */
     public void setPercentage(double percentage) {
         this.sliderPercentage = percentage;

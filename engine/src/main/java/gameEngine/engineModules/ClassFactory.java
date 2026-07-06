@@ -61,7 +61,7 @@ public final class ClassFactory {
      * <b>Tip:</b> If this method is used outside the object's class, it is
      * generally
      * recommended to use the object's own z-index. This can be retrieved via
-     * {@link gameEngine.Interfaces.ZIndexable#getZIndex()}.
+     * {@link ZIndexable#getZIndex()}.
      *
      * <pre>{@code
      * Entity player = new Entity(...);
@@ -152,7 +152,7 @@ public final class ClassFactory {
      * @param zIndex  the new z-index assigned to the object
      *
      * @throws IllegalArgumentException if {@code object} does not implement
-     *                                  {@link gameEngine.Interfaces.ZIndexable
+     *                                  {@link ZIndexable
      *                                  ZIndexable}
      */
     public static void updatePriority(Object object, EngineContext context, int zIndex)

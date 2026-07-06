@@ -26,7 +26,6 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
 
 import gameEngine.interfaces.JsonNotifier;
-import utils.jsonUtils.adapters.ColorAdapter;
 
 /**
  * Base class for objects whose state can be persisted to and restored from
@@ -57,6 +56,7 @@ public abstract class JsonBacked<T> {
      * data.
      *
      * @param clazz       the class representing the data type
+     * 
      * @param initialData the initial data object
      */
     protected JsonBacked(Class<T> clazz, T initialData) {

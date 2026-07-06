@@ -28,11 +28,11 @@ public class MathUtils extends Utils {
     /**
      * Calculates the distance between two {@link Point Points}.
      * 
-     * @param pointOne First point
+     * @param pointOne first point
      * 
-     * @param pointTwo Second point
+     * @param pointTwo second point
      * 
-     * @return The distance between the points
+     * @return the distance between the points
      */
     public static double pythagoras(Point pointOne, Point pointTwo) {
 
@@ -46,15 +46,15 @@ public class MathUtils extends Utils {
      * Calculates the distance between two represented as {@code x} and {@code y}
      * coordinates.
      * 
-     * @param x1 X coordinate for the first point
+     * @param x1 x-coordinate for the first point
      * 
-     * @param y1 Y coordinate for the first point
+     * @param y1 y-coordinate for the first point
      * 
-     * @param x2 X coordinate for the second point
+     * @param x2 x-coordinate for the second point
      * 
-     * @param y2 Y coordinate for the second point
+     * @param y2 y-coordinate for the second point
      * 
-     * @return The distance between the points
+     * @return the distance between the points
      */
     public static double pythagoras(int x1, int y1, int x2, int y2) {
 
@@ -75,12 +75,12 @@ public class MathUtils extends Utils {
      * This is commonly used for constraining input (e.g. a mouse position)
      * to move along a fixed line.
      *
-     * @param reference The point to be projected onto the line segment (e.g. mouse
+     * @param reference the point to be projected onto the line segment (e.g. mouse
      *                  position)
      * 
-     * @param pointOne  The start point of the line segment
+     * @param pointOne  the start point of the line segment
      * 
-     * @param pointTwo  The end point of the line segment
+     * @param pointTwo  the end point of the line segment
      *
      * @return a {@link FixResult} containing:
      *         <ul>

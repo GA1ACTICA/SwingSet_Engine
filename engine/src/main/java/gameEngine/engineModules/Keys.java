@@ -140,7 +140,7 @@ public final class Keys implements KeyListener {
      * modifier keys are filtered out and will not trigger character insertion
      * behavior.
      * 
-     * @return The first character in the queue of pressed keys
+     * @return the first character in the queue of pressed keys
      */
     public Character pollTypedCharacter() {
         return typedCharacters.poll();

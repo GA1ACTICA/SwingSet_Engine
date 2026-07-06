@@ -26,9 +26,9 @@ public interface MouseNotifier {
      * <b>Note:</b> These coordinates are untranslated and may not align to
      * different transforms or scales that may be applied to rendering passes.
      * 
-     * @param x The X coordinate
+     * @param x the X coordinate
      * 
-     * @param y The Y coordinate
+     * @param y the Y coordinate
      */
     default void mouseClickNotification(int x, int y) {
     };
@@ -36,7 +36,7 @@ public interface MouseNotifier {
     /**
      * Invoked when a press event is detected on any part of the window.
      * 
-     * @param e The {@link MouseEvent} that happened
+     * @param e the {@link MouseEvent} that happened
      */
     default void mousePressNotification(MouseEvent e) {
     };
@@ -44,7 +44,7 @@ public interface MouseNotifier {
     /**
      * Invoked when a release event is detected on any part of the window.
      * 
-     * @param e The {@link MouseEvent} that happened
+     * @param e the {@link MouseEvent} that happened
      */
     default void mouseReleaseNotification(MouseEvent e) {
     };
@@ -52,7 +52,7 @@ public interface MouseNotifier {
     /**
      * Invoked when a scroll event is detected.
      * 
-     * @param deltaScroll The scrolldistance during this frame
+     * @param deltaScroll the scroll distance during this frame
      */
     default void mouseScrollNotification(float deltaScroll) {
     };
@@ -63,9 +63,9 @@ public interface MouseNotifier {
      * <b>Note:</b> These coordinates are untranslated and may not align to
      * different transforms or scales that may be applied to rendering passes.
      * 
-     * @param x        The X coordinate
+     * @param x        the X coordinate
      * 
-     * @param y        The Y coordinate
+     * @param y        the Y coordinate
      * 
      * @param dragging {@code True} if the mouse is currently held down otherwise
      *                 {@code false}

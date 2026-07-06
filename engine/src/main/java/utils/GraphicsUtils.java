@@ -60,9 +60,9 @@ public class GraphicsUtils extends Utils {
      * The dimensions of the returned image may differ from the original to fully
      * contain the rotated image.
      *
-     * @param image The image to rotate
+     * @param image the image to rotate
      * 
-     * @param angle The rotation angle in degrees
+     * @param angle the rotation angle in degrees
      *
      * @return a new {@code BufferedImage} containing the rotated image
      *
@@ -115,14 +115,14 @@ public class GraphicsUtils extends Utils {
      * The rotation is applied only for the duration of {@code drawAction} and the
      * {@code AffineTransform} is restored after {@code drawAction} is complete.
      *
-     * @param g2d           The {@code Graphics2D} context to rotate
+     * @param g2d           the {@code Graphics2D} context to rotate
      * 
-     * @param angle         The rotation angle in degrees (positive values rotate
+     * @param angle         the rotation angle in degrees (positive values rotate
      *                      clockwise in screen coordinates)
      * 
-     * @param rotationPoint The point around which the graphics context is rotated
+     * @param rotationPoint the point around which the graphics context is rotated
      * 
-     * @param drawAction    The drawing operation to be executed while the rotation
+     * @param drawAction    the drawing operation to be executed while the rotation
      *                      is applied
      * 
      * @throws NullPointerException if {@code rotationPoint} or
@@ -158,13 +158,13 @@ public class GraphicsUtils extends Utils {
      * Creates a mask restricting drawing to either inside or outside of the masks
      * rectangular bounds.
      * 
-     * @param g2d     The graphics context
+     * @param g2d     the graphics context
      * 
-     * @param mask    The shape of the mask
+     * @param mask    the shape of the mask
      * 
-     * @param type    The type of the mask
+     * @param type    the type of the mask
      * 
-     * @param painter The custom drawing action
+     * @param painter the custom drawing action
      * 
      * @throws NullPointerException if {@code mask}, {@code type} or {@code painter}
      *                              is {@code null}
@@ -248,7 +248,9 @@ public class GraphicsUtils extends Utils {
      * scaling across large size differences.
      *
      * @param image        the image to scale
+     * 
      * @param targetWidth  the target width in pixels
+     * 
      * @param targetHeight the target height in pixels
      *
      * @return the scaled image
@@ -334,11 +336,11 @@ public class GraphicsUtils extends Utils {
      * This can be used to visualize coordinates when debugging position related
      * issues.
      * 
-     * @param g The graphics context
+     * @param g the graphics context
      * 
-     * @param x The x coordinate
+     * @param x the x coordinate
      * 
-     * @param y The y coordinate
+     * @param y the y coordinate
      * 
      * @throws NullPointerException if {@code g} is {@code null}.
      * 
@@ -361,13 +363,13 @@ public class GraphicsUtils extends Utils {
      * This can be used to visualize the images size when debugging image and
      * position related issues.
      * 
-     * @param g     The graphics context
+     * @param g     the graphics context
      * 
-     * @param image The image
+     * @param image the image
      * 
-     * @param x     The x coordinate
+     * @param x     the x coordinate
      * 
-     * @param y     The y coordinate
+     * @param y     the y coordinate
      * 
      * @throws NullPointerException if {@code g} or {@code image} is {@code null}.
      */
@@ -391,11 +393,11 @@ public class GraphicsUtils extends Utils {
      * The {@code opacity} must fall in the range of 0 - 255 where {@code 0} is
      * fully transparent and {@code 255} if fully opaque.
      * 
-     * @param g2d     The graphics context used when rendering the painter
+     * @param g2d     the graphics context used when rendering the painter
      * 
-     * @param opacity The opacity for the painters contents
+     * @param opacity the opacity for the painters contents
      * 
-     * @param painter The custom drawing action
+     * @param painter the custom drawing action
      * 
      * @throws IllegalArgumentException if {@code opacity} if outside the range of
      *                                  {@code 0 - 255}
