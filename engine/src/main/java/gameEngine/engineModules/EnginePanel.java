@@ -11,15 +11,16 @@
 
 package gameEngine.engineModules;
 
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.geom.AffineTransform;
 
-import javax.swing.*;
+import javax.swing.JPanel;
 
 import gameEngine.engineState.EngineState;
 import gameEngine.interfaces.drawables.CursorDrawable;
 import gameEngine.interfaces.drawables.Drawable;
-
-import java.awt.*;
 
 /**
  * Handles the {@link JPanel} and the rendering loop used by the engine.
@@ -27,6 +28,7 @@ import java.awt.*;
  * {@code EnginePanel} is managed by {@link Game} and is not intended to be
  * instantiated directly.
  */
+@SuppressWarnings("serial")
 public final class EnginePanel extends JPanel {
 
     /**
@@ -38,22 +40,10 @@ public final class EnginePanel extends JPanel {
      */
     public final int logicalHeight = 1000;
 
-    /**
-     * FIXME: Javadoc warning for private field!?
-     */
-    private EngineState state;
-    /**
-     * FIXME: Javadoc warning for private field!?
-     */
-    private EngineContext context;
-    /**
-     * FIXME: Javadoc warning for private field!?
-     */
-    private boolean exceptionReported;
-    /**
-     * FIXME: Javadoc warning for private field!?
-     */
-    private AffineTransform viewportTransform;
+    private transient EngineState state;
+    private transient EngineContext context;
+    private transient boolean exceptionReported;
+    private transient AffineTransform viewportTransform;
 
     EnginePanel(EngineState state, EngineContext context) {
         this.state = state;
