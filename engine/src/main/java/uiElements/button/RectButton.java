@@ -31,8 +31,8 @@ import gameEngine.interfaces.MenuInterface.MenuSetPosition;
 import gameEngine.interfaces.MenuInterface.MenuSetSize;
 import gameEngine.interfaces.drawables.UIDrawable;
 import utils.GraphicsUtils;
-import utils.Utils;
 import utils.GraphicsUtils.MaskType;
+import utils.Utils;
 
 /**
  * Base implementation of a button UI element.
@@ -65,7 +65,7 @@ public class RectButton implements
     private Color color = Color.GREEN;
     private Color hoverColor = Color.ORANGE;
     private Color clickColor; // Used to override the normal white overlay when clicked
-    private Color disabledColor = Color.LIGHT_GRAY;
+    private Color disabledColor = GraphicsUtils.rgb(116, 116, 116);
 
     private Image image;
     private Image hoverImage;
@@ -78,7 +78,6 @@ public class RectButton implements
 
     private Runnable clickAction;
 
-    // private Runnable hoverAction; // TODO: look into this
     private boolean isHovered = false;
     private boolean showHover = true;
 
@@ -470,37 +469,31 @@ public class RectButton implements
 
         // Rotate everything drawn inside
         GraphicsUtils.rotateGraphics(g2d, angle, getCenter(), gRotate -> {
-            // Pressed state completely overrides everything
-            if (showPress && clicked) {
-                if (clickImage == null) {
-                    if (clickColor == null)
-                        gRotate.setColor(Utils.mergeRGBColor(hoverColor, Utils.rgba(255, 255, 255, 0.5)));
-                    else
-                        gRotate.setColor(clickColor);
-
-                    gRotate.fill(baseShape);
-                } else {
-                    GraphicsUtils.createMask(gRotate, baseShape, MaskType.INSIDE,
-                            gMask -> gMask.drawImage(clickImage, x, y, width, height, null));
-                }
-                return;
-            }
 
             Image image;
             Color color;
 
             if (!isEnabled) {
+                // Disables button
                 image = disabledImage;
                 color = disabledColor;
             } else if (isHovered && showHover) {
+                // Hovered button
                 image = hoverImage;
                 color = hoverColor;
+            } else if (clicked && showPress) {
+                // Pressed button
+                if (clickColor == null)
+                    color = Utils.mergeRGBColor(hoverColor, Utils.rgba(255, 255, 255, 0.5));
+                else
+                    color = clickColor;
+                image = clickImage;
             } else {
+                // Normal button
                 image = this.image;
                 color = this.color;
             }
 
-            // Draw base state
             if (image == null) {
                 gRotate.setColor(color);
                 gRotate.fill(baseShape);
@@ -510,6 +503,7 @@ public class RectButton implements
             }
 
         });
+
     }
 
     /**
@@ -535,6 +529,9 @@ public class RectButton implements
 
     @Override
     public void executeOnClick() {
+        if (!isEnabled)
+            return;
+
         if (clickAction != null)
             clickAction.run();
     }
@@ -543,15 +540,25 @@ public class RectButton implements
     public void setHovered(boolean isHovered) {
         this.isHovered = isHovered;
 
-        if (isHovered) {
+        if (!isEnabled) {
+            if (isHovered)
+                CursorManager.setCursor(CursorType.NOT_ALLOWED);
+            else
+                CursorManager.setCursor(CursorType.DEFAULT);
+            return;
+        }
+
+        if (isHovered)
             CursorManager.setCursor(CursorType.POINTER);
-        } else
+        else
             CursorManager.setCursor(CursorType.DEFAULT);
 
     }
 
     @Override
     public void onPressed() {
+        if (!isEnabled)
+            return;
         clicked = true;
     }
 

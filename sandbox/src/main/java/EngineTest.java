@@ -6,8 +6,6 @@ import java.awt.Point;
 import gameEngine.engineModules.ClassFactory;
 import gameEngine.engineModules.EngineContext;
 import gameEngine.engineModules.Game;
-import gameEngine.engineModules.cursor.CursorManager;
-import gameEngine.engineModules.cursor.CursorType;
 import gameEngine.interfaces.drawables.Drawable;
 import uiElements.button.RectButton;
 import uiElements.checkBox.RectCheckbox;
@@ -30,8 +28,6 @@ public class EngineTest implements Drawable {
                 b.show();
                 c.show();
                 t.show();
-
-                CursorManager.setCursor(CursorType.WAIT);
             }
 
         };

@@ -65,7 +65,7 @@ public class RectCheckbox
     private Color color = Color.GREEN;
     private Color hoverColor = Color.ORANGE;
     private Color toggleColor = Color.RED;
-    private Color disabledColor = Color.LIGHT_GRAY;
+    private Color disabledColor = GraphicsUtils.rgb(116, 116, 116);
     private Color clickColor; // Used to override the default white overlay
 
     private Image image;
@@ -84,7 +84,6 @@ public class RectCheckbox
 
     private boolean toggled = false;
 
-    // private Runnable hoverAction; // TODO: look into this
     private boolean isHovered = false;
     private boolean showHover = true;
 
@@ -554,20 +553,6 @@ public class RectCheckbox
         // Rotate everything drawn inside
         GraphicsUtils.rotateGraphics(g2d, angle, getCenter(), (gRotate) -> {
             // Pressed state completely overrides everything
-            if (showPress && clicked) {
-                if (clickImage == null) {
-                    if (clickColor == null)
-                        gRotate.setColor(Utils.mergeRGBColor(hoverColor, Utils.rgba(255, 255, 255, 0.5)));
-                    else
-                        gRotate.setColor(clickColor);
-
-                    gRotate.fill(baseShape);
-                } else {
-                    GraphicsUtils.createMask(gRotate, baseShape, MaskType.INSIDE,
-                            gMask -> gMask.drawImage(clickImage, x, y, width, height, null));
-                }
-                return;
-            }
 
             Color color;
             Image image;
@@ -581,7 +566,13 @@ public class RectCheckbox
                 // Hovered checkbox
                 image = hoverImage;
                 color = hoverColor;
-
+            } else if (showPress && clicked) {
+                // Clicked checkbox
+                if (clickColor == null)
+                    color = Utils.mergeRGBColor(hoverColor, Utils.rgba(255, 255, 255, 0.5));
+                else
+                    color = clickColor;
+                image = clickImage;
             } else if (toggled) {
                 // Toggled checkbox
                 image = toggleImage;
@@ -603,6 +594,7 @@ public class RectCheckbox
             }
 
         });
+
     }
 
     /**
@@ -628,6 +620,9 @@ public class RectCheckbox
 
     @Override
     public void executeOnClick() {
+        if (!isEnabled)
+            return;
+
         toggled = !toggled;
 
         // Run action if one is set
@@ -648,6 +643,14 @@ public class RectCheckbox
     public void setHovered(boolean isHovered) {
         this.isHovered = isHovered;
 
+        if (!isEnabled) {
+            if (isHovered)
+                CursorManager.setCursor(CursorType.NOT_ALLOWED);
+            else
+                CursorManager.setCursor(CursorType.DEFAULT);
+            return;
+        }
+
         if (isHovered)
             CursorManager.setCursor(CursorType.POINTER);
         else
@@ -656,11 +659,15 @@ public class RectCheckbox
 
     @Override
     public void onReleased() {
+
         clicked = false;
     }
 
     @Override
     public void onPressed() {
+        if (!isEnabled)
+            return;
+
         clicked = true;
     }
 }

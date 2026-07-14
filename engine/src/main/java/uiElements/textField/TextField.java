@@ -69,7 +69,7 @@ public class TextField
     // Colors
     private Color focusedColor = GraphicsUtils.rgb(187, 187, 187);
     private Color unFocusedColor = GraphicsUtils.rgb(172, 172, 172);
-    private Color disabledColor = GraphicsUtils.rgb(172, 48, 48);
+    private Color disabledColor = GraphicsUtils.rgb(116, 116, 116);
     private Color highlightColor = GraphicsUtils.rgba(0, 123, 218, 0.25);
 
     // Images
@@ -373,6 +373,9 @@ public class TextField
      */
     public void setEnabled(boolean isEnabled) {
         this.isEnabled = isEnabled;
+
+        if (!isEnabled)
+            isFocused = false;
     }
 
     /**
@@ -499,7 +502,7 @@ public class TextField
                         gMask.setColor(highlightColor);
                         gMask.fillRect(highlightStartX, y, highlightWidth, height);
 
-                        if (cursorVisible && isFocused) {
+                        if (cursorVisible && isFocused && isEnabled) {
                             gMask.setColor(Color.BLACK);
                             gMask.fillRect(
                                     x + 10 + fontMetrics.stringWidth(text.substring(0, text.length() - caretOffset)),
@@ -552,6 +555,14 @@ public class TextField
     public void setHovered(boolean isHovered) {
         this.isHovered = isHovered;
 
+        if (!isEnabled) {
+            if (isHovered)
+                CursorManager.setCursor(CursorType.NOT_ALLOWED);
+            else
+                CursorManager.setCursor(CursorType.DEFAULT);
+            return;
+        }
+
         if (isHovered)
             CursorManager.setCursor(CursorType.TEXT);
         else
@@ -571,12 +582,18 @@ public class TextField
 
     @Override
     public void executeOnClick() {
+        if (!isEnabled)
+            return;
+
         if (clickAction != null)
             clickAction.run();
     }
 
     @Override
     public void onPressed() {
+        if (!isEnabled)
+            return;
+
         isFocused = true;
     }
 
