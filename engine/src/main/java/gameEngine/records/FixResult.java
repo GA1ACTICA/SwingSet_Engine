@@ -12,7 +12,6 @@
 package gameEngine.records;
 
 import java.awt.Point;
-import java.util.Objects;
 
 import utils.MathUtils;
 
@@ -33,14 +32,11 @@ import utils.MathUtils;
  * <li>{@code 0.0} corresponds to the start point</li>
  * <li>{@code 1.0} corresponds to the end point</li>
  * </ul>
- * </p>
  * 
- * @throws NullPointerException if {@code point} or {@code progress} is
- *                              {@code null}
+ * @param point    the calculated point constrained to the line segment
+ * 
+ * @param progress the progress value representing the relative position of that
+ *                 point between the segment's start and end points
  */
 public record FixResult(Point point, double progress) {
-    public FixResult {
-        Objects.requireNonNull(point, "point must not be null");
-        Objects.requireNonNull(progress, "progress must not be null");
-    }
 }

@@ -23,12 +23,18 @@ package gameEngine.interfaces;
 public interface ZIndexable {
 
     /**
-     * Sets the z-index of this object and updates its rendering priority
+     * Sets the z-index of this {@link ZIndexable} element and updates its rendering
+     * priority
      * within the engine context.
      *
-     * @param zIndex The new z-index value.
+     * @param zIndex the new z-index value.
      */
     void setZIndex(int zIndex);
 
+    /**
+     * Returns the z-index for the {@link ZIndexable} element.
+     * 
+     * @return the z-index
+     */
     int getZIndex();
 }

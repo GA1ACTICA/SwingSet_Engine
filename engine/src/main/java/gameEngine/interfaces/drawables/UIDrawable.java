@@ -11,6 +11,8 @@
 
 package gameEngine.interfaces.drawables;
 
+import gameEngine.interfaces.ZIndexable;
+
 /**
  * Represents a drawable UI element in the engine.
  * <p>

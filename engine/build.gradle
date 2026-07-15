@@ -19,6 +19,9 @@ java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(25)
     }
+    
+    withSourcesJar()
+    withJavadocJar()
 }
 
 tasks.named('test') {
@@ -30,4 +33,71 @@ import org.gradle.api.file.DuplicatesStrategy
 tasks.shadowJar {
     archiveClassifier.set('all')
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
+
+tasks.withType(JavaCompile) {
+    options.compilerArgs += '-parameters'
+}
+
+tasks.withType(Javadoc).configureEach {
+    options.memberLevel = JavadocMemberLevel.PROTECTED
+}
+
+tasks.register("webDoc", Copy) {
+    dependsOn javadoc
+
+    from(layout.buildDirectory.dir("docs/javadoc"))
+
+    from("src/main/resources/cursors/Adwaita/") {
+        into("resource-files/cursors")
+    }
+
+    from("src/main/resources/javadoc-website/theme.js") {
+        into("script-files")
+    }
+
+    from("src/main/resources/javadoc-website/SVG's from SVG Repo.md") {
+        into("legal")
+    }
+
+    from("src/main/resources/javadoc-website/bright-sun-light-svgrepo-com.svg") {
+        into("resource-files")
+    }
+
+    from("src/main/resources/javadoc-website/dark-mode-night-moon-svgrepo-com.svg") {
+        into("resource-files")
+    }
+
+    into(layout.buildDirectory.dir("docs/javadoc-site"))
+
+    def outputDir = layout.buildDirectory.dir("docs/javadoc-site").get().asFile 
+    def htmlFiles = fileTree(outputDir) {
+        include "**/*.html"
+    }
+
+    doLast {
+        def jsFile = new File(outputDir, "theme.js")
+
+        outputDir.eachFileRecurse { htmlFile ->
+            if (!htmlFile.name.endsWith(".html")) {
+                return
+            }
+
+            def relativePath = htmlFile.parentFile.toPath()
+                .relativize(jsFile.parentFile.toPath())
+                .toString()
+                .replace(File.separator, "/")
+
+            def scriptSrc = relativePath ? "${relativePath}/script-files/theme.js" : "script-files/theme.js"
+
+            def text = htmlFile.text
+
+            if (!text.contains(scriptSrc)) {
+                htmlFile.text = text.replace(
+                    "</body>",
+                    "<script defer src=\"${scriptSrc}\"></script>\n</body>"
+            )
+        }
+    }
+}
 }

@@ -33,3 +33,6 @@ replay_pid*
 
 # Ignore Gradle build output directory
 build
+
+# Ignore Gradle bin output directory
+bin

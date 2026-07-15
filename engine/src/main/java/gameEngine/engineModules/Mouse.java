@@ -22,7 +22,13 @@ import gameEngine.interfaces.MouseNotifier;
 import gameEngine.interfaces.Updatable;
 import utils.ErrorManagement;
 
-public class Mouse implements MouseMotionListener, MouseListener, MouseWheelListener, Updatable {
+/**
+ * Handles mouse events received from AWT and notified {@link MouseNotifier}.
+ * <p>
+ * {@code Mouse} is managed by {@link Game} and is not intended to be
+ * instantiated directly.
+ */
+public final class Mouse implements MouseMotionListener, MouseListener, MouseWheelListener, Updatable {
 
     private boolean leftDown;
     private boolean rightDown;
@@ -41,9 +47,7 @@ public class Mouse implements MouseMotionListener, MouseListener, MouseWheelList
     private EngineState state;
     private EngineContext context;
 
-    public boolean moved;
-
-    public Mouse(EngineState state, EngineContext context, EnginePanel panel) {
+    Mouse(EngineState state, EngineContext context, EnginePanel panel) {
         ClassFactory.create(this, context);
         this.context = context;
         this.state = state;
@@ -73,7 +77,7 @@ public class Mouse implements MouseMotionListener, MouseListener, MouseWheelList
         MouseManager.handlePriority(context, getPoint());
         MouseManager.handleHover(context, getPoint());
 
-        for (MouseNotifier object : context.getBackBufferMouseNotifiers()) {
+        for (MouseNotifier object : context.getMouseNotifiers()) {
             object.mouseMovementNotification(x, y, dragging);
         }
     }
@@ -89,7 +93,7 @@ public class Mouse implements MouseMotionListener, MouseListener, MouseWheelList
      */
     @Override
     public void mouseClicked(MouseEvent e) {
-        for (MouseNotifier object : context.getBackBufferMouseNotifiers()) {
+        for (MouseNotifier object : context.getMouseNotifiers()) {
             object.mouseClickNotification(x, y);
         }
     }
@@ -287,30 +291,77 @@ public class Mouse implements MouseMotionListener, MouseListener, MouseWheelList
         }
     }
 
+    /**
+     * Returns {@code true} or {@code false} depending on if the left mouse button
+     * is pressed.
+     * 
+     * @return {@code true} if the left mouse button is pressed, {@code false}
+     *         otherwise
+     */
     public boolean leftDown() {
         return leftDown;
     }
 
+    /**
+     * Returns {@code true} or {@code false} depending on if the middle mouse button
+     * is pressed.
+     * 
+     * @return {@code true} if the middle mouse button is pressed, {@code false}
+     *         otherwise
+     */
     public boolean middleDown() {
         return middleDown;
     }
 
+    /**
+     * Returns {@code true} or {@code false} depending on if the right mouse button
+     * is pressed.
+     * 
+     * @return {@code true} if the right mouse button is pressed, {@code false}
+     *         otherwise
+     */
     public boolean rightDown() {
         return rightDown;
     }
 
+    /**
+     * Returns {@code true} or {@code false} depending on if the mouse is on the
+     * screen.
+     * 
+     * @return {@code true} if the mouse is on the screen, {@code false}
+     *         otherwise
+     */
     public boolean onScreen() {
         return onScreen;
     }
 
+    /**
+     * Returns the distance traveled on the {@code X} axis in screen coordinates
+     * (untransformed) since the last frame.
+     * 
+     * @return the distance traveled this frame on the X axis
+     */
     public int getDeltaX() {
         return deltaX;
     }
 
+    /**
+     * Returns the distance traveled on the {@code Y} axis in screen coordinates
+     * (untransformed) since the last frame.
+     * 
+     * @return the distance traveled this frame on the Y axis
+     */
     public int getDeltaY() {
         return deltaY;
     }
 
+    /**
+     * Returns the mouse wheel movement since the previous frame.
+     * See {@link MouseWheelEvent#getPreciseWheelRotation()} for the
+     * definition of the returned unit.
+     *
+     * @return the mouse wheel movement during the current frame
+     */
     public float getMouseWheelDelta() {
         return mouseWheelDelta;
     }

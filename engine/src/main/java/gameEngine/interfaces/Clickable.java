@@ -11,7 +11,10 @@
 
 package gameEngine.interfaces;
 
-public interface Clickable {
+/**
+ * Represents an element that can be clicked by the mouse cursor.
+ */
+public interface Clickable extends Hoverable {
 
     /**
      * Sets the action to be executed when the clickable object is clicked.
@@ -47,22 +50,22 @@ public interface Clickable {
     void executeOnClick();
 
     /**
-     * Called when a mouse press is detected on this clickable component.
+     * Called when a mouse press is detected on this clickable element.
      * <p>
      * This method is invoked by the input handling system and should not
      * be called directly by user code.
      */
-    void onPressed();
+    default void onPressed() {
+    };
 
     /**
-     * Called when a mouse release is detected on this clickable component.
+     * Called when a mouse release is detected on this clickable element.
      * <p>
      * This method is invoked by the input handling system and should not
      * be called directly by user code.
      */
-    void onReleased();
-
-    boolean isEnabled();
+    default void onReleased() {
+    };
 
     /**
      * Called whenever a click is detected on another {@link Clickable}.

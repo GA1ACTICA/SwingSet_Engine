@@ -22,7 +22,6 @@ import java.util.Objects;
 import gameEngine.engineModules.ClassFactory;
 import utils.MathUtils;
 import gameEngine.engineModules.EngineContext;
-import gameEngine.engineModules.EnginePanel;
 import gameEngine.engineModules.Mouse;
 import gameEngine.interfaces.MenuInterface;
 import gameEngine.interfaces.Updatable;
@@ -30,6 +29,13 @@ import gameEngine.interfaces.drawables.UIDrawable;
 import gameEngine.records.FixResult;
 import uiElements.button.RectButton;
 
+/**
+ * Base implementation of a slider UI element.
+ * <p>
+ * A slider represent a floating point value from 0.0 to 1.0 that can be
+ * changed by the user and provides common functionality such as rendering,
+ * positioning, and sizing.
+ */
 public class Slider implements UIDrawable, Updatable, MenuInterface {
 
     private boolean show = false;
@@ -38,8 +44,8 @@ public class Slider implements UIDrawable, Updatable, MenuInterface {
 
     // Slider looks
     private Point pointOne, pointTwo;
-    private Color sliderColor = new Color(60, 60, 60, 153); // ~60% transparency
-    private int sliderWidth = 5;
+    private Color trackColor = new Color(60, 60, 60, 153); // ~60% transparency
+    private int trackWidth = 5;
 
     // Slider values
     private double sliderPercentage = 0.50;
@@ -47,7 +53,7 @@ public class Slider implements UIDrawable, Updatable, MenuInterface {
     private int sliderMax = 100;
 
     // handle looks
-    private int handleWidth = sliderWidth + 8;
+    private int handleWidth = trackWidth + 8;
     private int handleHeight = 25;
     private double handleAngle;
 
@@ -56,7 +62,21 @@ public class Slider implements UIDrawable, Updatable, MenuInterface {
 
     private EngineContext context;
 
-    public Slider(EngineContext context, EnginePanel panel, Mouse mouse, Point pointOne, Point pointTwo) {
+    /**
+     * Creates and registers a slider between the specified two {@link Point
+     * Points}.
+     * 
+     * @param context  the engine context containing objects involved in rendering,
+     *                 updating, and input handling.
+     * 
+     * @param mouse    the mouse input handler used for interaction with the
+     *                 handle.
+     * 
+     * @param pointOne the first point for the track.
+     * 
+     * @param pointTwo the second point of the track.
+     */
+    public Slider(EngineContext context, Mouse mouse, Point pointOne, Point pointTwo) {
         ClassFactory.create(this, context);
         this.mouse = mouse;
         this.pointOne = pointOne;
@@ -65,7 +85,7 @@ public class Slider implements UIDrawable, Updatable, MenuInterface {
 
         Point middle = new Point(((pointOne.x + pointTwo.x) / 2), ((pointOne.y + pointTwo.y) / 2));
 
-        handle = new RectButton(context, panel, mouse, middle,
+        handle = new RectButton(context, mouse, middle,
                 handleWidth, handleHeight);
 
         handleAngle = Math.toDegrees(Math.atan2(
@@ -88,6 +108,12 @@ public class Slider implements UIDrawable, Updatable, MenuInterface {
         return zIndex;
     }
 
+    /**
+     * Returns if the slider is visible.
+     * 
+     * @return {@code true} if the slider is visible,
+     *         {@code false} otherwise
+     */
     public boolean isVisible() {
         return show;
     }
@@ -104,6 +130,13 @@ public class Slider implements UIDrawable, Updatable, MenuInterface {
         handle.hide();
     }
 
+    /**
+     * Returns the length between the two {@link Point Points} that define the
+     * beginning
+     * and the end of the track.
+     * 
+     * @return the length between the points
+     */
     public double getLength() {
         return MathUtils.pythagoras(pointOne, pointTwo);
     }
@@ -118,20 +151,41 @@ public class Slider implements UIDrawable, Updatable, MenuInterface {
         return sliderPercentage * sliderMax;
     }
 
+    /**
+     * Returns the lowest value the slider can represent.
+     * 
+     * @return the minimum value
+     */
     public int getSliderMin() {
         return sliderMin;
     }
 
+    /**
+     * Returns the highest value the slider can represent.
+     * 
+     * @return the maximum value
+     */
     public int getSliderMax() {
         return sliderMax;
     }
 
+    /**
+     * Returns the slider handle's position as a percentage of the track length.
+     * The value is in the range {@code 0.0} to {@code 1.0}.
+     *
+     * @return the slider handle's position as a percentage of the track length
+     */
     public double getSliderPercentage() {
         return sliderPercentage;
     }
 
-    public Color getSliderColor() {
-        return sliderColor;
+    /**
+     * Returns the color used for painting the track the handle slides along.
+     * 
+     * @return the color used for the track
+     */
+    public Color getTrackColor() {
+        return trackColor;
     }
 
     /**
@@ -146,16 +200,35 @@ public class Slider implements UIDrawable, Updatable, MenuInterface {
         return handle;
     }
 
+    /**
+     * Returns the first {@link Point} initialized in the constructor,
+     * {@link #setSliderPoints(Point, Point)} or
+     * {@link #setSliderPoints(Point, Point, boolean)}
+     * 
+     * @return the first point
+     */
     public Point getPointOne() {
         return pointOne;
     }
 
+    /**
+     * Returns the second {@link Point} initialized in the constructor,
+     * {@link #setSliderPoints(Point, Point)} or
+     * {@link #setSliderPoints(Point, Point, boolean)}
+     * 
+     * @return the second point
+     */
     public Point getPointTwo() {
         return pointTwo;
     }
 
-    public void setColor(Color sliderColor) {
-        this.sliderColor = sliderColor;
+    /**
+     * Sets the color of the track the handle slides along
+     * 
+     * @param trackColor the new color of the track
+     */
+    public void setColor(Color trackColor) {
+        this.trackColor = trackColor;
     }
 
     /**
@@ -239,8 +312,13 @@ public class Slider implements UIDrawable, Updatable, MenuInterface {
         this.sliderMin = sliderMin;
     }
 
-    public void setSliderWidth(int sliderWidth) {
-        this.sliderWidth = sliderWidth;
+    /**
+     * Sets the track width which the handle slider along.
+     * 
+     * @param trackWidth the width of the track
+     */
+    public void settTackWidth(int trackWidth) {
+        this.trackWidth = trackWidth;
     }
 
     /**
@@ -301,7 +379,7 @@ public class Slider implements UIDrawable, Updatable, MenuInterface {
      * Both set the slider current percentage and updates the handle's position on
      * the slider.
      * 
-     * @param value The new percentage of the slider
+     * @param percentage the new percentage of the slider
      */
     public void setPercentage(double percentage) {
         this.sliderPercentage = percentage;
@@ -329,10 +407,10 @@ public class Slider implements UIDrawable, Updatable, MenuInterface {
 
         Graphics2D g2d = (Graphics2D) g;
 
-        g2d.setColor(sliderColor);
+        g2d.setColor(trackColor);
 
-        // Draws a line with thickness "sliderWidth"
-        g2d.setStroke(new BasicStroke(sliderWidth));
+        // Draws a line with thickness "trackWidth"
+        g2d.setStroke(new BasicStroke(trackWidth));
         g2d.draw(new Line2D.Float(pointOne, pointTwo));
 
     }

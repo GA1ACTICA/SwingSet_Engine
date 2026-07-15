@@ -11,21 +11,31 @@
 
 package gameEngine.engineModules.cursor;
 
+import gameEngine.engineState.EngineState;
+import gameEngine.interfaces.JsonNotifier;
+import utils.Utils;
 import utils.jsonUtils.JsonBacked;
 
-public class AnimatedCursor extends JsonBacked<AnimatedCursorData> {
+class AnimatedCursor extends JsonBacked<AnimatedCursorData> implements JsonNotifier {
 
-    protected AnimatedCursor(AnimatedCursorData initialData) {
-        super(new AnimatedCursorData());
+    EngineState state;
+
+    protected AnimatedCursor(AnimatedCursorData initialData, EngineState state) {
+        super(AnimatedCursorData.class, new AnimatedCursorData());
+        this.state = state;
     }
 
     @Override
-    protected void successfulExportLog(AnimatedCursorData object, String path) {
-        System.out.println();
+    public void successfulExportNotification(String path) {
+        if (state.data().debug)
+            System.out.println("%s Successfully exported EngineStateData to %s %s".formatted(Utils.ConsoleGREEN, path,
+                    Utils.ConsoleRESET));
     }
 
     @Override
-    protected void successfulImportLog(AnimatedCursorData data, String path) {
-        System.out.println("Successfully imported" + path + '\n');
+    public void successfulImportNotification(String path) {
+        if (state.data().debug)
+            System.out.println("%s Successfully imported EngineStateData from %s %s".formatted(Utils.ConsoleGREEN, path,
+                    Utils.ConsoleRESET));
     }
 }

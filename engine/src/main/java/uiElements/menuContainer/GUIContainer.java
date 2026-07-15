@@ -18,7 +18,12 @@ import gameEngine.engineModules.EngineContext;
 import gameEngine.interfaces.Painter;
 import gameEngine.interfaces.drawables.UIDrawable;
 
-public class GraphicalUIContainer extends UIContainer
+/**
+ * Graphical implementation of {@link UIContainer} providing a {@link Graphics}
+ * context
+ * to draw to.
+ */
+public class GUIContainer extends UIContainer
         implements UIDrawable {
 
     private boolean show;
@@ -41,11 +46,20 @@ public class GraphicalUIContainer extends UIContainer
     private EngineContext context;
 
     /**
+     * Returns whether or not the menu is visible.
+     * 
+     * @return {@code true} if the menu is visible, {@code false} otherwise
+     */
+    public boolean isVisible() {
+        return show;
+    }
+
+    /**
      * Creates a standalone menu with no initial UI elements and registers it
      * with the engine using the provided context.
      * <p>
      * The menu has a default z-index of -1, placing it behind standard UI
-     * components (which typically use a z-index of 0). This causes it to
+     * elements (which typically use a z-index of 0). This causes it to
      * behave as a background layer.
      *
      * <p>
@@ -55,7 +69,7 @@ public class GraphicalUIContainer extends UIContainer
      * @param context the engine context containing objects used for rendering,
      *                updating, and input handling
      */
-    public GraphicalUIContainer(EngineContext context) {
+    public GUIContainer(EngineContext context) {
         ClassFactory.create(this, context, zIndex);
     };
 
@@ -130,7 +144,7 @@ public class GraphicalUIContainer extends UIContainer
     /**
      * Sets a custom drawing action used to render the menu background.
      * <p>
-     * Unlike standard UI components, menus may require more flexible or
+     * Unlike standard UI elements, menus may require more flexible or
      * complex rendering. This method allows a custom {@link Painter} to be
      * provided for drawing the menu's background.
      * <p>

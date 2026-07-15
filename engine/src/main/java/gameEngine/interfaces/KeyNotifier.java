@@ -12,7 +12,14 @@
 package gameEngine.interfaces;
 
 import java.awt.event.KeyEvent;
+import gameEngine.engineModules.Keys;
 
+/**
+ * Receives notifications during special events received in {@link Keys} such as
+ * {@link #keyPressedNotification(KeyEvent)},
+ * {@link #keyPressedNotification(KeyEvent)} and
+ * {@link #keyReleasedNotification(KeyEvent)}.
+ */
 public interface KeyNotifier {
     /**
      * Invoked when a key input produces a printable character.
@@ -27,11 +34,13 @@ public interface KeyNotifier {
      * <p>
      * Depending on the platform and user keyboard repeat settings, this method
      * may be invoked repeatedly while a key is held down.
+     * 
+     * @param e the {@link KeyEvent} received from awt
      *
-     * @see gameEngine.engineModules.Keys#getKeysTyped()
+     * @see Keys#pollTypedCharacter() pollTypedCharacter()
      */
     default void keyTypedNotification(KeyEvent e) {
-    };
+    }
 
     /**
      * Invoked when a physical key is pressed down.
@@ -40,16 +49,20 @@ public interface KeyNotifier {
      * <p>
      * This method may repeatedly fire while a key is held down depending on the
      * operating system keyboard repeat settings.
+     * 
+     * @param e the {@link KeyEvent} received from awt
      */
     default void keyPressedNotification(KeyEvent e) {
-    };
+    }
 
     /**
      * Invoked when a physical key is released.
      * <p>
      * Intended for gameplay controls and input state handling.
+     * 
+     * @param e the {@link KeyEvent} received from awt
      */
     default void keyReleasedNotification(KeyEvent e) {
-    };
+    }
 
 }

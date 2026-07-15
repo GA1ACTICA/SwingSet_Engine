@@ -17,64 +17,92 @@ import uiElements.button.RectButton;
 import uiElements.misc.UPSCounter;
 
 /**
- * Base interface for all menu components.
+ * Base interface for all menu elements.
  * <p>
- * All menu components support visibility control via {@link #show()} and
+ * All menu elements support visibility control via {@link #show()} and
  * {@link #hide()}.
  *
  * <p>
  * Additional behavior is defined through optional capability interfaces.
- * A component may implement one or more of these to expose extra functionality.
+ * A element may implement one or more of these to expose extra functionality.
  *
  * <p>
  * Examples of optional capabilities:
  * <ul>
- * <li>{@link MenuSetColor} — allows changing color</li>
  * <li>{@link MenuSetSize} — allows resizing</li>
  * <li>{@link MenuSetPosition} — allows positioning</li>
  * </ul>
  *
  * <p>
- * Not all components support all capabilities. Callers should check
- * whether a component implements a capability before using it.
+ * Not all element support all capabilities. Callers should check
+ * whether a element implements a capability before using it.
  */
 public interface MenuInterface {
 
+    /**
+     * Shows the element implementing the {@link MenuInterface}.
+     */
     void show();
 
+    /**
+     * Hides the element implementing the {@link MenuInterface}.
+     */
     void hide();
 
     /**
-     * Capability for components that support resizing.
+     * Capability for elements that support resizing.
      * <p>
-     * Implemented by components such as {@link RectButton}
+     * Implemented by elements such as {@link RectButton}
      */
-    public interface MenuSetSize {
+    public interface MenuSetSize extends MenuInterface {
+
+        /**
+         * Sets the element's size.
+         * 
+         * @param width  the width
+         * 
+         * @param height the height
+         */
         void setSize(int width, int height);
 
         /**
-         * Changes the components size relative to its current size.
+         * Changes the element's size relative to its current size.
          * 
          * @param dWidth  the width offset
+         * 
          * @param dHeight the height offset
          */
         void translateSize(int dWidth, int dHeight);
     }
 
     /**
-     * Capability for components that support positioning.
+     * Capability for elements that support positioning.
      * <p>
-     * Implemented by components such as {@link UPSCounter}
+     * Implemented by elements such as {@link UPSCounter}
      */
-    public interface MenuSetPosition {
+    public interface MenuSetPosition extends MenuInterface {
+
+        /**
+         * Sets the element's position with x and y coordinates.
+         * 
+         * @param x the X coordinate
+         * 
+         * @param y the Y coordinate
+         */
         void setPosition(int x, int y);
 
+        /**
+         * Sets the element's position with the {@link Point Points} position.
+         * 
+         * @param position the point
+         */
         void setPosition(Point position);
 
         /**
-         * Moves the component relative to its current position.
+         * Moves the element relative to its current position.
          *
          * @param dx the horizontal offset
+         * 
          * @param dy the vertical offset
          */
         void translatePosition(int dx, int dy);

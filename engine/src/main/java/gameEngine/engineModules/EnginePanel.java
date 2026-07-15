@@ -11,30 +11,41 @@
 
 package gameEngine.engineModules;
 
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.geom.AffineTransform;
 
-import javax.swing.*;
+import javax.swing.JPanel;
 
 import gameEngine.engineState.EngineState;
 import gameEngine.interfaces.drawables.CursorDrawable;
 import gameEngine.interfaces.drawables.Drawable;
 
-import java.awt.*;
+/**
+ * Handles the {@link JPanel} and the rendering loop used by the engine.
+ * <p>
+ * {@code EnginePanel} is managed by {@link Game} and is not intended to be
+ * instantiated directly.
+ */
+@SuppressWarnings("serial")
+public final class EnginePanel extends JPanel {
 
-public class EnginePanel extends JPanel {
-
-    // logical space dimension
+    /**
+     * The logical width of the coordinate system used by {@link Drawable}.
+     */
     public final int logicalWidth = 1000;
+    /**
+     * The logical height of the coordinate system used by {@link Drawable}.
+     */
     public final int logicalHeight = 1000;
 
-    private EngineState state;
-    private EngineContext context;
+    private transient EngineState state;
+    private transient EngineContext context;
+    private transient boolean exceptionReported;
+    private transient AffineTransform viewportTransform;
 
-    private boolean exceptionReported;
-
-    private AffineTransform viewportTransform;
-
-    public EnginePanel(EngineState state, EngineContext context) {
+    EnginePanel(EngineState state, EngineContext context) {
         this.state = state;
         this.context = context;
 
@@ -71,7 +82,7 @@ public class EnginePanel extends JPanel {
             viewportTransform = g2d.getTransform();
 
             g2d.setColor(state.data().backgroundColor);
-            g2d.fillRect(0, 0, logicalWidth, logicalHeight);
+            g2d.fillRect(0, 0, getWidth(), getHeight());
 
             // Draw game objects in world space
             for (Drawable drawable : context.getWorldDrawables()) {
@@ -116,8 +127,8 @@ public class EnginePanel extends JPanel {
      * The transform is equivalent to:
      *
      * <pre>{@code
-     * double scaleX = getWidth() / (double) logicalWidth;
-     * double scaleY = getHeight() / (double) logicalHeight;
+     * double scaleX = panel.getWidth() / (double) panel.logicalWidth;
+     * double scaleY = panel.getHeight() / (double) panel.logicalHeight;
      * double scale = Math.min(scaleX, scaleY);
      *
      * g2d.translate(

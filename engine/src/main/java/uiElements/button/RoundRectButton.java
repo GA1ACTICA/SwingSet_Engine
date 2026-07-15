@@ -15,42 +15,45 @@ import java.awt.Point;
 import java.awt.geom.RoundRectangle2D;
 
 import gameEngine.engineModules.EngineContext;
-import gameEngine.engineModules.EnginePanel;
 import gameEngine.engineModules.Mouse;
 
+/**
+ * A button rendered using a rounded rectangle shape.
+ * <p>
+ * Behaves identically to {@link RectButton} but uses a rounded rectangle
+ * appearance.
+ */
 public class RoundRectButton extends RectButton {
 
     /**
      * Creates and registers a rounded rectangular button with the specified
      * dimensions and rounded corners.
      * 
-     * @param context   The engine context containing objects involved in rendering,
+     * @param context   the engine context containing objects involved in rendering,
      *                  updating, and input handling.
      * 
-     * @param panel     The panel on which the button is drawn to.
-     * 
-     * @param mouse     The mouse input handler used for interaction with the
+     * @param mouse     the mouse input handler used for interaction with the
      *                  button.
      * 
-     * @param x         The x-coordinate of the rectangle's top-left point.
+     * @param x         the x-coordinate of the rectangle's top-left point.
      * 
-     * @param y         The y-coordinate of the rectangle's top-left point.
+     * @param y         the y-coordinate of the rectangle's top-left point.
      * 
-     * @param width     The width of the rectangle.
+     * @param width     the width of the rectangle.
      * 
-     * @param height    The height of the rectangle.
+     * @param height    the height of the rectangle.
      *
-     * @param arcWidth  The horizontal diameter of the corner arcs. Typically should
+     * @param arcWidth  the horizontal diameter of the corner arcs. Typically should
      *                  not exceed the rectangle's width.
      * 
-     * @param arcHeight The vertical diameter of the corner arcs. Typically should
+     * @param arcHeight the vertical diameter of the corner arcs. Typically should
      *                  not exceed the rectangle's height.
      */
-    public RoundRectButton(EngineContext context, EnginePanel panel, Mouse mouse, int x, int y, int width, int height,
+    public RoundRectButton(EngineContext context, Mouse mouse, int x, int y, int width, int height,
             int arcWidth,
             int arcHeight) {
 
-        super(context, panel, mouse, x, y, width, height);
+        super(context, mouse, x, y, width, height);
 
         this.baseShape = new RoundRectangle2D.Float(x, y, width, height, arcWidth, arcHeight);
         this.rotatedShape = baseShape;
@@ -60,27 +63,26 @@ public class RoundRectButton extends RectButton {
     }
 
     /**
-     * Creates and registers a rectangular button with the specified points.
+     * Creates and registers a rectangular button with the specified {@link Point
+     * Points} and rounded corners.
      * 
-     * @param context     The engine context containing objects involved in
+     * @param context     the engine context containing objects involved in
      *                    rendering, updating, and input handling.
      * 
-     * @param panel       The panel on which the button is drawn to.
-     * 
-     * @param mouse       The mouse input handler used for interaction with the
+     * @param mouse       the mouse input handler used for interaction with the
      *                    button.
      * 
-     * @param topLeft     The top-left point of the rectangle.
+     * @param topLeft     the top-left point of the rectangle.
      * 
-     * @param bottomRight The bottom-left point of the rectangle.
+     * @param bottomRight the bottom-left point of the rectangle.
      * 
-     * @param arcWidth    The horizontal diameter of the corner arcs. Typically
+     * @param arcWidth    the horizontal diameter of the corner arcs. Typically
      *                    should not exceed the rectangle's width.
      * 
-     * @param arcHeight   The vertical diameter of the corner arcs. Typically should
+     * @param arcHeight   the vertical diameter of the corner arcs. Typically should
      *                    not exceed the rectangle's height.
      */
-    public RoundRectButton(EngineContext context, EnginePanel panel, Mouse mouse, Point topLeft, Point bottomRight,
+    public RoundRectButton(EngineContext context, Mouse mouse, Point topLeft, Point bottomRight,
             int arcWidth,
             int arcHeight) {
 
@@ -89,7 +91,7 @@ public class RoundRectButton extends RectButton {
         int width = (int) bottomRight.getX() - (int) topLeft.getX();
         int height = (int) bottomRight.getY() - (int) topLeft.getY();
 
-        super(context, panel, mouse, x, y, width, height);
+        super(context, mouse, x, y, width, height);
 
         this.baseShape = new RoundRectangle2D.Float(x, y, width, height, arcWidth, arcHeight);
         this.rotatedShape = baseShape;
@@ -99,37 +101,35 @@ public class RoundRectButton extends RectButton {
     }
 
     /**
-     * Creates and registers a rectangular button with the specified dimensions and
-     * center point.
+     * Creates and registers a rectangular button with the specified dimensions,
+     * center {@link Point} and rounded corners.
      *
-     * @param context   The engine context containing objects involved in rendering,
+     * @param context   the engine context containing objects involved in rendering,
      *                  updating, and input handling.
      * 
-     * @param panel     The panel on which the button is drawn to.
-     * 
-     * @param mouse     The mouse input handler used for interaction with the
+     * @param mouse     the mouse input handler used for interaction with the
      *                  button.
      * 
-     * @param center    The center point of the rectangle.
+     * @param center    the center point of the rectangle.
      * 
-     * @param width     The width of the rectangle.
+     * @param width     the width of the rectangle.
      * 
-     * @param height    The height of the rectangle.
+     * @param height    the height of the rectangle.
      * 
-     * @param arcWidth  The horizontal diameter of the corner arcs. Typically
+     * @param arcWidth  the horizontal diameter of the corner arcs. Typically
      *                  should not exceed the rectangle's width.
      * 
-     * @param arcHeight The vertical diameter of the corner arcs. Typically should
+     * @param arcHeight the vertical diameter of the corner arcs. Typically should
      *                  not exceed the rectangle's height.
      */
-    public RoundRectButton(EngineContext context, EnginePanel panel, Mouse mouse, Point center, int width, int height,
+    public RoundRectButton(EngineContext context, Mouse mouse, Point center, int width, int height,
             int arcWidth,
             int arcHeight) {
 
         int x = (int) center.getX() - width / 2;
         int y = (int) center.getY() - height / 2;
 
-        super(context, panel, mouse, x, y, width, height);
+        super(context, mouse, x, y, width, height);
 
         this.baseShape = new RoundRectangle2D.Float(x, y, width, height, arcWidth, arcHeight);
         this.rotatedShape = baseShape;
@@ -140,27 +140,25 @@ public class RoundRectButton extends RectButton {
 
     /**
      * Creates and registers a circular button with the specified dimensions and
-     * center point.
+     * center {@link Point}.
      * 
-     * @param context The engine context containing objects involved in rendering,
+     * @param context the engine context containing objects involved in rendering,
      *                updating, and input handling.
      * 
-     * @param panel   The panel on which the button is drawn to.
-     * 
-     * @param mouse   The mouse input handler used for interaction with the
+     * @param mouse   the mouse input handler used for interaction with the
      *                button.
      * 
-     * @param center  The center point from where the circle is created.
+     * @param center  the center point from where the circle is created.
      * 
-     * @param radius  The circles radius.
+     * @param radius  the circles radius.
      */
-    public RoundRectButton(EngineContext context, EnginePanel panel, Mouse mouse, Point center, int radius) {
+    public RoundRectButton(EngineContext context, Mouse mouse, Point center, int radius) {
         int x = center.x - radius;
         int y = center.y - radius;
 
         int length = radius * 2;
 
-        super(context, panel, mouse, x, y, length, length);
+        super(context, mouse, x, y, length, length);
 
         this.baseShape = new RoundRectangle2D.Float(x, y, length, length, length, length);
         this.rotatedShape = baseShape;

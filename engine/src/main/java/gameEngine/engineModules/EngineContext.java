@@ -20,7 +20,17 @@ import gameEngine.interfaces.Hoverable;
 import gameEngine.interfaces.KeyNotifier;
 import gameEngine.interfaces.MouseNotifier;
 
-public class EngineContext {
+/**
+ * A container for immutable and mutable lists used in rendering, updating and
+ * more.
+ * <p>
+ * {@code EngineContext} is managed by {@link Game} and is not intended to be
+ * instantiated directly.
+ */
+public final class EngineContext {
+
+    EngineContext() {
+    }
 
     private final List<Drawable> backBufferDrawable = new ArrayList<>();
     private volatile List<Drawable> frontBufferDrawable = new ArrayList<>();
@@ -122,7 +132,7 @@ public class EngineContext {
      *
      * @return the mutable list of objects implementing MouseNotifier
      */
-    public List<MouseNotifier> getFrontBufferMouseNotifiers() {
+    public List<MouseNotifier> getMouseNotifiers() {
         return frontBufferMouseNotifiers;
     }
 
@@ -146,21 +156,35 @@ public class EngineContext {
         return backBufferHoverables;
     }
 
-    public List<KeyNotifier> getBackBufferKeyNotifiers() {
+    List<KeyNotifier> getBackBufferKeyNotifiers() {
         return backBufferKeyNotifiers;
     }
 
-    public List<MouseNotifier> getBackBufferMouseNotifiers() {
+    List<MouseNotifier> getBackBufferMouseNotifiers() {
         return backBufferMouseNotifiers;
     }
 
     void endFrame() {
-        frontBufferDrawable = List.copyOf(backBufferDrawable);
-        frontBufferUIDrawable = List.copyOf(backBufferUIDrawable);
-        frontBufferCursorDrawable = List.copyOf(backBufferCursorDrawable);
-        frontBufferUpdatables = List.copyOf(backBufferUpdatables);
-        frontBufferHoverables = List.copyOf(backBufferHoverables);
-        frontBufferKeyNotifiers = List.copyOf(backBufferKeyNotifiers);
+        if (frontBufferDrawable != backBufferDrawable)
+            frontBufferDrawable = List.copyOf(backBufferDrawable);
+
+        if (frontBufferUIDrawable != backBufferUIDrawable)
+            frontBufferUIDrawable = List.copyOf(backBufferUIDrawable);
+
+        if (frontBufferCursorDrawable != backBufferCursorDrawable)
+            frontBufferCursorDrawable = List.copyOf(backBufferCursorDrawable);
+
+        if (frontBufferUpdatables != backBufferUpdatables)
+            frontBufferUpdatables = List.copyOf(backBufferUpdatables);
+
+        if (frontBufferHoverables != backBufferHoverables)
+            frontBufferHoverables = List.copyOf(backBufferHoverables);
+
+        if (frontBufferKeyNotifiers != backBufferKeyNotifiers)
+            frontBufferKeyNotifiers = List.copyOf(backBufferKeyNotifiers);
+
+        if (frontBufferMouseNotifiers != backBufferMouseNotifiers)
+            frontBufferMouseNotifiers = List.copyOf(backBufferMouseNotifiers);
     }
 
 }

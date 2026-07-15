@@ -13,22 +13,53 @@ package gameEngine.engineState;
 
 import java.awt.Color;
 
-public class EngineStateData {
+import gameEngine.interfaces.Updatable;
 
-    // here you can store variables that you use
-    // for you game that should also be accessible in other classes
+/**
+ * 
+ * Contains fields that govern how the engine behaves that also can be loaded
+ * from JSON.
+ * 
+ * @see EngineState
+ */
+public final class EngineStateData {
 
-    public boolean debug = false;
-    public boolean debugVerbose = false; // used in Keys.java and Mouse.java
+    EngineStateData() {
+    }
 
     /**
-     * An example update interval expressed in nanoseconds
+     * Basic debug providing minimal engine messages. Good for game debugging.
      */
-    public float exampleUpdateInterval = 1000000000 / 60; // ≈60fps expressed in nanoseconds
+    public boolean debug = false;
+
+    /**
+     * Let me know everything debug. Good when you want your terminal filled with
+     * information about everything happening.
+     */
+    public boolean debugVerbose = false;
+
+    /**
+     * The update interval that is invoking {@link Updatable#update(float)}.
+     * <p>
+     * {@code 1000000000 / 60} is around 60 ups.
+     */
+    public float updateInterval = 1000000000 / 60;
+
+    /**
+     * The background color used for the window.
+     * <p>
+     * <b>Note:</b> Transparent colors has varied compatibility depending on
+     * platform.
+     */
     public Color backgroundColor = Color.WHITE;
 
-    // first used to set window dimension and then later used for window scaling
-    // and drawing alignment
+    /**
+     * The initial window width.
+     */
     public int width = 1000;
+
+    /**
+     * The initial window height.
+     */
     public int height = 1000;
 }

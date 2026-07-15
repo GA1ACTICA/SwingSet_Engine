@@ -11,30 +11,44 @@
 
 package gameEngine.engineState;
 
+import gameEngine.interfaces.JsonNotifier;
+import utils.Utils;
 import utils.jsonUtils.JsonBacked;
+import gameEngine.engineModules.Game;
 
-public class EngineState extends JsonBacked<EngineStateData> {
+/**
+ * Manages the application's {@link EngineStateData} instance, providing
+ * JSON-backed access to the engine's persistent state.
+ * <p>
+ * {@code EngineState} is managed by {@link Game} and is not intended to be
+ * instantiated directly.
+ */
+public final class EngineState extends JsonBacked<EngineStateData> implements JsonNotifier {
 
-    EngineState state;
-
+    /**
+     * Creates a new {@link EngineState} with a new {@link EngineStateData}
+     * instance.
+     * <p>
+     * This constructor is intended only for internal initialization. Creating
+     * additional instances may result in state becoming inconsistent with the
+     * shared {@link EngineState} managed by {@link Game}.
+     */
     public EngineState() {
-        super(new EngineStateData());
-    }
-
-    public void setGameStateData(EngineState state) {
-        this.state = state;
+        super(EngineStateData.class, new EngineStateData());
     }
 
     @Override
-    protected void successfulExportLog(EngineStateData object, String path) {
-        if (state.data().debug)
-            System.out.println('\n' + "Successfully exported ('%s') to %s".formatted(object, path));
+    public void successfulExportNotification(String path) {
+        if (data().debug)
+            System.out.println("%s Successfully exported EngineStateData to %s %s".formatted(Utils.ConsoleGREEN, path,
+                    Utils.ConsoleRESET));
     }
 
     @Override
-    protected void successfulImportLog(EngineStateData object, String path) {
-        if (state.data().debug)
-            System.out.println('\n' + "Successfully imported ('%s') to %s".formatted(path, object));
+    public void successfulImportNotification(String path) {
+        if (data().debug)
+            System.out.println("%s Successfully imported EngineStateData from %s %s".formatted(Utils.ConsoleGREEN, path,
+                    Utils.ConsoleRESET));
     }
 
 }

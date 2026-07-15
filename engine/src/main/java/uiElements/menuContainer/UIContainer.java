@@ -19,19 +19,48 @@ import gameEngine.interfaces.MenuInterface;
 import gameEngine.interfaces.MenuInterface.MenuSetPosition;
 import gameEngine.interfaces.MenuInterface.MenuSetSize;
 
-public class UIContainer implements MenuInterface, MenuSetSize, MenuSetPosition {
+/**
+ * Base implementation of a container managing {@link MenuInterface} UI
+ * elements.
+ */
+public class UIContainer implements MenuSetSize, MenuSetPosition {
 
     private List<MenuInterface> items = new ArrayList<>();
 
     /**
-     * Adds a {@link MenuInterface} item to this component.
+     * Creates a new empty UIContainer
+     */
+    public UIContainer() {
+
+    }
+
+    /**
+     * Creates a new UIContainer containing the {@link MenuInterface} elements.
+     * 
+     * @param element the list containing all the UI elements
+     */
+    public UIContainer(List<MenuInterface> element) {
+        items = element;
+    }
+
+    /**
+     * Creates a duplicate UI container containing the same UI elements.
+     * 
+     * @param uIContainer the base UI container
+     */
+    public UIContainer(UIContainer uIContainer) {
+        items = uIContainer.items;
+    }
+
+    /**
+     * Adds a {@link MenuInterface} item to this element.
      * <p>
      * All added items support basic visibility control via
      * {@link MenuInterface#show()} and {@link MenuInterface#hide()}.
      *
      * <p>
      * Items may also implement additional optional capabilities such as
-     * {@link MenuInterface.MenuSetColor} or {@link MenuInterface.MenuSetSize}.
+     * {@link MenuInterface.MenuSetPosition} or {@link MenuInterface.MenuSetSize}.
      * These capabilities are not guaranteed and must be checked before use.
      *
      * <p>

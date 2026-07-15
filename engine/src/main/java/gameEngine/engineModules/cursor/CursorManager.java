@@ -16,9 +16,14 @@ import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.nio.file.Path;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
+
+import javax.swing.JPanel;
+
+import com.google.gson.JsonSyntaxException;
+
 import java.util.List;
 
 import gameEngine.engineModules.ClassFactory;
@@ -29,14 +34,24 @@ import gameEngine.engineModules.cursor.AnimatedCursorData.Frame;
 import gameEngine.engineState.EngineState;
 import gameEngine.interfaces.Updatable;
 import gameEngine.interfaces.drawables.CursorDrawable;
+import utils.ErrorManagement;
 import utils.FileUtils;
 import utils.GraphicsUtils;
 
+/**
+ * Manages setting and rendering of build-in or custom cursors.
+ * 
+ * @see CursorType
+ */
 public class CursorManager implements CursorDrawable, Updatable {
 
-    private static String defaultCursorPath = "cursors/Adwaita 96x96/";
+    @SuppressWarnings("unused")
+    private CursorManager() {
+    }
 
-    private static AnimatedCursor rawCursorData = new AnimatedCursor(null);
+    private static String defaultCursorPath = "cursors/Adwaita/";
+
+    private static AnimatedCursor rawCursorData;
     private static Frame[] frameDataArray = null;
 
     private static boolean show = true;
@@ -59,10 +74,31 @@ public class CursorManager implements CursorDrawable, Updatable {
     private static EngineState state;
     private Mouse mouse;
 
-    public CursorManager(EngineContext context, EnginePanel panel, Mouse mouse, EngineState state) {
-        CursorManager.state = state;
-        this.mouse = mouse;
+    /**
+     * Creates and registers the {@code CursorManager} with the engine.
+     * <p>
+     * The operating system cursor is hidden, and the engine's own cursor is
+     * rendered instead.
+     * <p>
+     * <b>Note:</b> {@code CursorManager} should only be instantiated by the
+     * engine. Creating additional instances may result in multiple cursors being
+     * rendered.
+     *
+     * @param context     the engine context containing the objects responsible for
+     *                    rendering, updating, and input handling
+     * 
+     * @param panel       the {@link JPanel} managed by the engine
+     * 
+     * @param mouse       the mouse input handler used for cursor position
+     * 
+     * @param engineState the current engine state
+     */
+    public CursorManager(EngineContext context, EnginePanel panel, Mouse mouse, EngineState engineState) {
+        CursorManager.state = engineState;
         ClassFactory.create(this, context);
+
+        rawCursorData = new AnimatedCursor(new AnimatedCursorData(), state);
+        this.mouse = mouse;
 
         // Hide system cursor
         panel.setCursor(
@@ -73,14 +109,29 @@ public class CursorManager implements CursorDrawable, Updatable {
         setCursor(CursorType.DEFAULT);
     }
 
+    /**
+     * Returns if the cursor is visible or not.
+     * 
+     * @return {@code true} if the cursor is visible, {@code false} otherwise
+     */
     public static boolean isVisible() {
         return show;
     }
 
+    /**
+     * Shows the cursor.
+     * <p>
+     * Enables the cursor and allows mouse interactions.
+     */
     public static void show() {
         show = true;
     }
 
+    /**
+     * Hides the cursor.
+     * <p>
+     * Hides the cursor and prevents mouse interactions.
+     */
     public static void hide() {
         show = false;
     }
@@ -102,6 +153,8 @@ public class CursorManager implements CursorDrawable, Updatable {
      * @return {@code true} if the cursor was successfully set,
      *         {@code false} if the change was blocked by
      *         {@link #lockCursor()}
+     * 
+     * @throws NullPointerException if {@code CursorType} is {@code null}
      */
     public static boolean setCursor(CursorType cursorType) {
         Objects.requireNonNull(cursorType, "The CursorType must not be null");
@@ -109,18 +162,23 @@ public class CursorManager implements CursorDrawable, Updatable {
         if (overriding)
             return false;
 
-        Path currentCursorPath = Path.of(cursorType.path());
-        File resource = currentCursorPath.toFile();
+        String localDefaultCursorPath;
+
+        if (cursorType.builtIn())
+            localDefaultCursorPath = defaultCursorPath;
+        else
+            localDefaultCursorPath = "";
+        File resource = new File(cursorType.path());
 
         if (resource.toString().contains(".png")) {
             // Loads in a static cursor image
-            Path cursor = Path.of(defaultCursorPath.toString() + resource.toString());
+            String cursor = localDefaultCursorPath + resource.toString();
 
             if (state.data().debug)
                 System.out.println(
                         "Path to image for static cursor: " + cursor);
 
-            BufferedImage originalImage = FileUtils.getBufferedImage(cursor, BufferedImage.TYPE_INT_ARGB);
+            BufferedImage originalImage = FileUtils.getBufferedImage(cursor);
 
             // Get scale for hotspot calculation.
             scaleX = (double) width / originalImage.getWidth(null);
@@ -135,18 +193,34 @@ public class CursorManager implements CursorDrawable, Updatable {
             // Loads in a animated cursor collection with the information from meta.json
 
             // Populate frameDataArray from meta.json
-            rawCursorData.importJSON(AnimatedCursorData.class,
-                    "src/" + defaultCursorPath + resource.toString() + "/meta.json");
+            if (cursorType.builtIn())
+                // Predefined cursors
+                try {
+                    rawCursorData.importJson(Thread.currentThread().getContextClassLoader()
+                            .getResourceAsStream(localDefaultCursorPath + resource.toString() + "/meta.json"));
+                } catch (JsonSyntaxException e) {
+                    ErrorManagement.throwError(e,
+                            "This shouldn't be possible! Pleas submit a issue at https://github.com/GA1ACTICA/SwingSet_Engine");
+                }
+            else
+                // User-created cursors
+                try {
+                    rawCursorData.importJson(resource.toString() + "/meta.json");
+                } catch (IOException e) {
+                    ErrorManagement.throwError(e,
+                            "Unable to open, read or the file: %s was missing."
+                                    .formatted(resource.toString() + "/meta.json"));
+                }
 
             frameDataArray = rawCursorData.data().getFrames().toArray(new Frame[0]);
 
             if (frameDataArray != null) {
                 for (Frame frame : frameDataArray) {
-                    Path imagePath = Path.of(defaultCursorPath
+                    String imagePath = localDefaultCursorPath
                             + resource.getName() + "/"
-                            + frame.getImagePath());
+                            + frame.getImagePath();
 
-                    if (state.data().debug) {
+                    if (state.data().debugVerbose) {
                         System.out.println("Image path: " + imagePath.toString());
                         System.out.println(
                                 "Image hotspot: [" + frame.getHotspot()[0] + "," + frame.getHotspot()[1] + "]");
@@ -155,16 +229,16 @@ public class CursorManager implements CursorDrawable, Updatable {
 
                     cursorImageCache.add(
                             GraphicsUtils.downscaleImage(
-                                    FileUtils.getBufferedImage(imagePath, BufferedImage.TYPE_INT_ARGB),
+                                    FileUtils.getBufferedImage(imagePath),
                                     width, height));
                 }
 
                 // Get scale for hotspot calculation.
-                Path imagePath = Path.of(defaultCursorPath
+                String imagePath = localDefaultCursorPath
                         + resource.getName() + "/"
-                        + frameDataArray[0].getImagePath());
+                        + frameDataArray[0].getImagePath();
 
-                BufferedImage originalImage = FileUtils.getBufferedImage(imagePath, BufferedImage.TYPE_INT_ARGB);
+                BufferedImage originalImage = FileUtils.getBufferedImage(imagePath);
 
                 scaleX = (double) width / originalImage.getWidth(null);
                 scaleY = (double) height / originalImage.getHeight(null);

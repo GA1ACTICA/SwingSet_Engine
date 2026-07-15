@@ -15,32 +15,35 @@ import java.awt.Point;
 import java.awt.geom.Ellipse2D;
 
 import gameEngine.engineModules.EngineContext;
-import gameEngine.engineModules.EnginePanel;
 import gameEngine.engineModules.Mouse;
 
+/**
+ * A checkbox rendered using an oval shape.
+ * <p>
+ * Behaves identically to {@link RectCheckbox} but uses an oval appearance.
+ */
 public class OvalCheckbox extends RectCheckbox {
 
     /**
      * Creates and registers a oval checkbox with the specified dimensions.
      * 
-     * @param context The engine context containing objects involved in rendering,
+     * @param context the engine context containing objects involved in rendering,
      *                updating, and input handling.
      * 
-     * @param panel   The panel on which the checkbox is drawn to.
      * 
-     * @param mouse   The mouse input handler used for interaction with the
+     * @param mouse   the mouse input handler used for interaction with the
      *                checkbox.
      * 
-     * @param x       The x-coordinate of the oval's topLeft point.
+     * @param x       the x-coordinate of the oval's topLeft point.
      * 
-     * @param y       The y-coordinate of the oval's topLeft point.
+     * @param y       the y-coordinate of the oval's topLeft point.
      * 
-     * @param width   The width of the oval.
+     * @param width   the width of the oval.
      * 
-     * @param height  The height of the oval.
+     * @param height  the height of the oval.
      */
-    public OvalCheckbox(EngineContext context, EnginePanel panel, Mouse mouse, int x, int y, int width, int height) {
-        super(context, panel, mouse, x, y, width, height);
+    public OvalCheckbox(EngineContext context, Mouse mouse, int x, int y, int width, int height) {
+        super(context, mouse, x, y, width, height);
 
         this.baseShape = new Ellipse2D.Float(x, y, width, height);
         this.rotatedShape = baseShape;
@@ -49,30 +52,29 @@ public class OvalCheckbox extends RectCheckbox {
     }
 
     /**
-     * Creates and registers a oval checkbox with the specified points.
+     * Creates and registers a oval checkbox with the specified {@link Point
+     * Points}.
      * 
-     * @param context     The engine context containing objects involved in
+     * @param context     the engine context containing objects involved in
      *                    rendering,
      *                    updating, and input handling.
      * 
-     * @param panel       The panel on which the checkbox is drawn to.
-     * 
-     * @param mouse       The mouse input handler used for interaction with the
+     * @param mouse       the mouse input handler used for interaction with the
      *                    checkbox.
      * 
-     * @param topLeft     The top left point of the oval.
+     * @param topLeft     the top left point of the oval.
      * 
-     * @param bottomRight The bottom left point of the oval.
+     * @param bottomRight the bottom left point of the oval.
      */
 
-    public OvalCheckbox(EngineContext context, EnginePanel panel, Mouse mouse, Point topLeft, Point bottomRight) {
+    public OvalCheckbox(EngineContext context, Mouse mouse, Point topLeft, Point bottomRight) {
 
         int x = (int) topLeft.getX();
         int y = (int) topLeft.getY();
         int width = (int) bottomRight.getX();
         int height = (int) bottomRight.getY();
 
-        super(context, panel, mouse, x, y, width, height);
+        super(context, mouse, x, y, width, height);
 
         this.baseShape = new Ellipse2D.Float(x, y, width, height);
         this.rotatedShape = baseShape;
@@ -82,30 +84,27 @@ public class OvalCheckbox extends RectCheckbox {
 
     /**
      * Creates and registers a oval checkbox with the specified dimensions and
-     * center
-     * point.
+     * center {@link Point}.
      *
-     * @param context The engine context containing objects involved in rendering,
+     * @param context the engine context containing objects involved in rendering,
      *                updating, and input handling.
      * 
-     * @param panel   The panel on which the checkbox is drawn to.
-     * 
-     * @param mouse   The mouse input handler used for interaction with the
+     * @param mouse   the mouse input handler used for interaction with the
      *                checkbox.
      * 
-     * @param center  The center point of the oval.
+     * @param center  the center point of the oval.
      * 
-     * @param width   The width of the oval.
+     * @param width   the width of the oval.
      * 
-     * @param height  The height of the oval.
+     * @param height  the height of the oval.
      */
 
-    public OvalCheckbox(EngineContext context, EnginePanel panel, Mouse mouse, Point center, int width, int height) {
+    public OvalCheckbox(EngineContext context, Mouse mouse, Point center, int width, int height) {
 
         int x = (int) center.getX() - width / 2;
         int y = (int) center.getY() - height / 2;
 
-        super(context, panel, mouse, x, y, width, height);
+        super(context, mouse, x, y, width, height);
 
         this.baseShape = new Ellipse2D.Float(x, y, width, height);
         this.rotatedShape = baseShape;
@@ -115,28 +114,26 @@ public class OvalCheckbox extends RectCheckbox {
 
     /**
      * Creates and registers a circular checkbox with the specified dimensions and
-     * center point.
+     * center {@link Point}.
      *
-     * @param context The engine context containing objects involved in rendering,
+     * @param context the engine context containing objects involved in rendering,
      *                updating, and input handling.
      * 
-     * @param panel   The panel on which the checkbox is drawn to.
-     * 
-     * @param mouse   The mouse input handler used for interaction with the
+     * @param mouse   the mouse input handler used for interaction with the
      *                checkbox.
      * 
-     * @param center  The circle's center point.
+     * @param center  the circle's center point.
      * 
-     * @param radius  The circle's radius.
+     * @param radius  the circle's radius.
      */
-    public OvalCheckbox(EngineContext context, EnginePanel panel, Mouse mouse, Point center, int radius) {
+    public OvalCheckbox(EngineContext context, Mouse mouse, Point center, int radius) {
 
         int x = (int) center.getX() - radius;
         int y = (int) center.getY() - radius;
 
         int length = radius * 2;
 
-        super(context, panel, mouse, x, y, length, length);
+        super(context, mouse, x, y, length, length);
 
         this.baseShape = new Ellipse2D.Float(x, y, length, length);
         this.rotatedShape = baseShape;

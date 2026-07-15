@@ -16,14 +16,20 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Point;
 
+import javax.swing.JPanel;
+
 import gameEngine.engineModules.ClassFactory;
 import gameEngine.engineModules.EngineContext;
-import gameEngine.interfaces.MenuInterface;
-import gameEngine.interfaces.MenuInterface.*;
+import gameEngine.interfaces.MenuInterface.MenuSetPosition;
 import gameEngine.interfaces.Updatable;
 import gameEngine.interfaces.drawables.UIDrawable;
 
-public class UPSCounter implements UIDrawable, Updatable, MenuInterface, MenuSetPosition {
+/**
+ * A UPS counter to measure the updates per second which could be seen as the
+ * approximate framerate since the framerate cant be directly measured in
+ * {@link JPanel#paintComponents(Graphics)}.
+ */
+public class UPSCounter implements UIDrawable, Updatable, MenuSetPosition {
 
     private boolean show = false;
 
@@ -49,7 +55,7 @@ public class UPSCounter implements UIDrawable, Updatable, MenuInterface, MenuSet
      * update calls per second (UPS). If rendering occurs on every update, this
      * value can be used as an approximation of the frame rate (FPS).
      *
-     * @param context the engine context containing components related to rendering,
+     * @param context the engine context containing elements related to rendering,
      *                updating, and input handling
      */
     public UPSCounter(EngineContext context) {
@@ -68,6 +74,12 @@ public class UPSCounter implements UIDrawable, Updatable, MenuInterface, MenuSet
         return zIndex;
     }
 
+    /**
+     * Returns if the element is visible.
+     * 
+     * @return {@code true} if the element is visible,
+     *         {@code false} otherwise
+     */
     public boolean isVisible() {
         return show;
     }
@@ -100,22 +112,47 @@ public class UPSCounter implements UIDrawable, Updatable, MenuInterface, MenuSet
         y += dy;
     }
 
+    /**
+     * Sets the color for the displayed text and value.
+     * 
+     * @param color the color for the UPS counter
+     */
     public void setColor(Color color) {
         this.color = color;
     }
 
+    /**
+     * Sets the font for the displayed text and value.
+     * 
+     * @param font the font for the UPS counter
+     */
     public void setFont(Font font) {
         this.font = font;
     }
 
+    /**
+     * Returns the X coordinate in screen coordinates (untransformed).
+     * 
+     * @return the X coordinates
+     */
     public int getX() {
         return x;
     }
 
+    /**
+     * Returns the Y coordinate in screen coordinates (untransformed).
+     * 
+     * @return the Y coordinates
+     */
     public int getY() {
         return y;
     }
 
+    /**
+     * Returns the current updates per second measured during this interval.
+     * 
+     * @return the UPS
+     */
     public int getUPS() {
         return ups;
     }

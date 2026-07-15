@@ -21,7 +21,13 @@ import java.util.Set;
 import gameEngine.engineState.EngineState;
 import gameEngine.interfaces.KeyNotifier;
 
-public class Keys implements KeyListener {
+/**
+ * Handles key events received from AWT and notifies {@link KeyNotifier}.
+ * <p>
+ * {@code Keys} is managed by {@link Game} and is not intended to be
+ * instantiated directly.
+ */
+public final class Keys implements KeyListener {
 
     private Set<Integer> keysPressed = new HashSet<>();
     private final Queue<Character> typedCharacters = new LinkedList<>();
@@ -29,7 +35,7 @@ public class Keys implements KeyListener {
     private final EngineState state;
     private final EngineContext context;
 
-    public Keys(EngineState state, EngineContext context) {
+    Keys(EngineState state, EngineContext context) {
         this.state = state;
         this.context = context;
     }
@@ -134,7 +140,7 @@ public class Keys implements KeyListener {
      * modifier keys are filtered out and will not trigger character insertion
      * behavior.
      * 
-     * @return The first character in the queue of pressed keys
+     * @return the first character in the queue of pressed keys
      */
     public Character pollTypedCharacter() {
         return typedCharacters.poll();

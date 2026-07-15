@@ -11,6 +11,8 @@
 
 package gameEngine.interfaces;
 
+import gameEngine.engineState.EngineStateData;
+
 /**
  * Represents an object that participates in the game loop and updates
  * its state every tick/frame.
@@ -24,10 +26,10 @@ package gameEngine.interfaces;
 public interface Updatable {
     /**
      * Performs a single update step.
-     *
-     * <p>
-     * This method is typically called once per frame by the game loop.
-     * </p>
+     * 
+     * @param deltaTime the time since the last update invocation
+     * 
+     * @see EngineStateData#updateInterval
      */
     void update(float deltaTime);
 }

@@ -16,35 +16,46 @@ import java.awt.Font;
 import java.awt.font.FontRenderContext;
 import java.awt.font.LineMetrics;
 
+/**
+ * Base class containing generic utility methods.
+ * 
+ * @see GraphicsUtils
+ * @see FileUtils
+ * @see MathUtils
+ * @see ErrorManagement
+ */
 public class Utils {
+    Utils() {
+    }
+
     /**
      * Resets the color used when writing to the terminal
      * <p>
      * This is injected into the string that is being written to the terminal at the
      * desired location
      */
-    public static final String RESET = "\u001B[0m";
+    public static final String ConsoleRESET = "\u001B[0m";
     /**
      * Sets the color used when writing to the terminal to {@code Red}
      * <p>
      * This is injected into the string that is being written to the terminal at the
      * desired location
      */
-    public static final String RED = "\u001B[31m";
+    public static final String ConsoleRED = "\u001B[31m";
     /**
      * Sets the color used when writing to the terminal to {@code Green}
      * <p>
      * This is injected into the string that is being written to the terminal at the
      * desired location
      */
-    public static final String GREEN = "\u001B[32m";
+    public static final String ConsoleGREEN = "\u001B[32m";
     /**
-     * Sets the color used when writing to the terminal to {@code Blue}
+     * Sets the color used when writing to the terminal to {@code Yellow}
      * <p>
      * This is injected into the string that is being written to the terminal at the
      * desired location
      */
-    public static final String YELLOW = "\u001B[33m";
+    public static final String ConsoleYELLOW = "\u001B[33m";
 
     /**
      * Returns a resized version of the supplied {@link java.awt.Font Font} whose
@@ -132,16 +143,39 @@ public class Utils {
         return new Color(r, g, b);
     }
 
-    public static Color mergeRGBColor(Color primaryColor, Color secondaryColor) {
-        return new Color(Math.round((primaryColor.getRed() + secondaryColor.getRed()) / 2),
-                Math.round((primaryColor.getGreen() + secondaryColor.getGreen()) / 2),
-                Math.round((primaryColor.getBlue() + secondaryColor.getBlue()) / 2));
+    /**
+     * Merges two colors by dividing the sum of each color component and the
+     * rounding the answer to the nearest integer.
+     * <p>
+     * <b>Note:</b> The alpha is ignored from the two colors and is instead always
+     * {@code 255}.
+     * 
+     * @param firstColor     the fist color
+     * 
+     * @param secondaryColor the second color
+     * 
+     * @return the merged colors
+     */
+    public static Color mergeRGBColor(Color firstColor, Color secondaryColor) {
+        return new Color(Math.round((firstColor.getRed() + secondaryColor.getRed()) / 2),
+                Math.round((firstColor.getGreen() + secondaryColor.getGreen()) / 2),
+                Math.round((firstColor.getBlue() + secondaryColor.getBlue()) / 2));
     }
 
-    public static Color mergeRGBAColor(Color primaryColor, Color secondaryColor) {
-        return new Color(Math.round((primaryColor.getRed() + secondaryColor.getRed()) / 2),
-                Math.round((primaryColor.getGreen() + secondaryColor.getGreen()) / 2),
-                Math.round((primaryColor.getBlue() + secondaryColor.getBlue()) / 2),
-                Math.round((primaryColor.getAlpha() + secondaryColor.getAlpha()) / 2));
+    /**
+     * Merges two colors by dividing the sum of each color component and the
+     * rounding the answer to the nearest integer.
+     * 
+     * @param firstColor     the fist color
+     * 
+     * @param secondaryColor the second color
+     * 
+     * @return the merged colors
+     */
+    public static Color mergeRGBAColor(Color firstColor, Color secondaryColor) {
+        return new Color(Math.round((firstColor.getRed() + secondaryColor.getRed()) / 2),
+                Math.round((firstColor.getGreen() + secondaryColor.getGreen()) / 2),
+                Math.round((firstColor.getBlue() + secondaryColor.getBlue()) / 2),
+                Math.round((firstColor.getAlpha() + secondaryColor.getAlpha()) / 2));
     }
 }

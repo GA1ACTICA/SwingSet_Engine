@@ -23,7 +23,16 @@ import gameEngine.interfaces.drawables.Drawable;
 import gameEngine.interfaces.drawables.UIDrawable;
 import utils.ErrorManagement;
 
-public class ClassFactory {
+/**
+ * Manages the sorting of objects implementing specific interfaces into
+ * different lists in {@link EngineContext}.
+ */
+public final class ClassFactory {
+
+    @SuppressWarnings("unused")
+    private ClassFactory() {
+        throw new AssertionError("No instances allowed");
+    }
 
     /**
      * Adds an object to a reference list, making it eligible to receive drawing,
@@ -52,7 +61,7 @@ public class ClassFactory {
      * <b>Tip:</b> If this method is used outside the object's class, it is
      * generally
      * recommended to use the object's own z-index. This can be retrieved via
-     * {@link gameEngine.Interfaces.ZIndexable#getZIndex()}.
+     * {@link ZIndexable#getZIndex()}.
      *
      * <pre>{@code
      * Entity player = new Entity(...);
@@ -143,7 +152,7 @@ public class ClassFactory {
      * @param zIndex  the new z-index assigned to the object
      *
      * @throws IllegalArgumentException if {@code object} does not implement
-     *                                  {@link gameEngine.Interfaces.ZIndexable
+     *                                  {@link ZIndexable
      *                                  ZIndexable}
      */
     public static void updatePriority(Object object, EngineContext context, int zIndex)

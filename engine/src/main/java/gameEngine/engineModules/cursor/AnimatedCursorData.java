@@ -15,8 +15,7 @@ import java.util.List;
 
 import com.google.gson.annotations.SerializedName;
 
-public class AnimatedCursorData {
-
+final class AnimatedCursorData {
     private List<Frame> frames;
 
     List<Frame> getFrames() {
