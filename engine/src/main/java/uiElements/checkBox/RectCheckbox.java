@@ -90,6 +90,8 @@ public class RectCheckbox
     private Mouse mouse;
     private EngineContext context;
 
+    private UIElementLayout layout = UIElementLayout.NONE;
+
     /**
      * Creates and registers a rectangular checkbox with the specified dimensions.
      * 
@@ -541,6 +543,16 @@ public class RectCheckbox
      */
     public void onToggleFalse(Runnable onToggleFalseAction) {
         this.onToggleFalseAction = onToggleFalseAction;
+    }
+
+    @Override
+    public UIElementLayout getLayout() {
+        return layout;
+    }
+
+    @Override
+    public void setLayout(UIElementLayout layout) {
+        this.layout = layout;
     }
 
     @Override

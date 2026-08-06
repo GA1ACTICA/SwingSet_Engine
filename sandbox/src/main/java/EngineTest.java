@@ -7,6 +7,7 @@ import gameEngine.engineModules.ClassFactory;
 import gameEngine.engineModules.EngineContext;
 import gameEngine.engineModules.Game;
 import gameEngine.interfaces.drawables.Drawable;
+import gameEngine.interfaces.drawables.UIDrawable.UIElementLayout;
 import uiElements.button.RectButton;
 import uiElements.checkBox.RectCheckbox;
 import uiElements.textField.TextField;
@@ -21,9 +22,11 @@ public class EngineTest implements Drawable {
             protected void init() {
                 new EngineTest(context);
 
-                RectButton b = new RectButton(context, mouse, new Point(250, 250), new Point(300, 300));
-                RectCheckbox c = new RectCheckbox(context, mouse, new Point(350, 350), new Point(400, 400));
-                TextField t = new TextField(context, mouse, keys, new Point(400, 450), new Point(700, 500));
+                RectButton b = new RectButton(context, mouse, new Point(475, 0), new Point(525, 50));
+                RectCheckbox c = new RectCheckbox(context, mouse, new Point(300, 300), new Point(350, 350));
+                TextField t = new TextField(context, mouse, keys, new Point(100, 100), new Point(250, 250));
+
+                b.setLayout(UIElementLayout.RIGHT_ALIGNED);
 
                 b.show();
                 c.show();
@@ -54,9 +57,9 @@ public class EngineTest implements Drawable {
 
     @Override
     public void draw(Graphics g) {
-        GraphicsUtils.setOpacityFor((Graphics2D) g, 10, (painterG) -> {
+        GraphicsUtils.setOpacityFor((Graphics2D) g, 255, (painterG) -> {
             painterG.setColor(Color.BLUE);
-            painterG.fillRect(10, 10, 50, 50);
+            painterG.fillRect(0, 0, 1000, 1000);
         });
     }
 }

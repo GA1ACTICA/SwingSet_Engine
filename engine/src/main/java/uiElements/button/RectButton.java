@@ -84,6 +84,8 @@ public class RectButton implements
     private Mouse mouse;
     private EngineContext context;
 
+    private UIElementLayout layout = UIElementLayout.NONE;
+
     /**
      * Creates and registers a rectangular button with the specified dimensions.
      * 
@@ -458,6 +460,16 @@ public class RectButton implements
     public void onClick(Runnable action) {
         this.clickAction = action;
 
+    }
+
+    @Override
+    public UIElementLayout getLayout() {
+        return layout;
+    }
+
+    @Override
+    public void setLayout(UIElementLayout layout) {
+        this.layout = layout;
     }
 
     @Override

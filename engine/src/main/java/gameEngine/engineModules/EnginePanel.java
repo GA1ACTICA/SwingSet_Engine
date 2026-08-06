@@ -21,6 +21,8 @@ import javax.swing.JPanel;
 import gameEngine.engineState.EngineState;
 import gameEngine.interfaces.drawables.CursorDrawable;
 import gameEngine.interfaces.drawables.Drawable;
+import gameEngine.interfaces.drawables.UIDrawable;
+import gameEngine.interfaces.drawables.UIDrawable.UIElementLayout;
 
 /**
  * Handles the {@link JPanel} and the rendering loop used by the engine.
@@ -92,12 +94,40 @@ public final class EnginePanel extends JPanel {
             // Restore transform
             g2d.setTransform(old);
 
-            // TODO: Watch how other games handle UI (This doesn't look good)
-
-            // Draw game objects in UI space
             for (Drawable drawable : context.getUiDrawables()) {
-                drawable.draw(g2d);
+
+                UIDrawable uiDrawable = (UIDrawable) drawable;
+
+                g2d.setTransform(old);
+
+                switch (uiDrawable.getLayout()) {
+                    case UIElementLayout.TOP_ALIGNED:
+                        g2d.translate((getWidth() - logicalWidth) / 2, 0);
+                        break;
+
+                    case UIElementLayout.BOTTOM_ALIGNED:
+                        g2d.translate((getWidth() - logicalWidth) / 2, getHeight() - logicalWidth);
+                        break;
+
+                    case UIElementLayout.LEFT_ALIGNED:
+                        g2d.translate(0, (getHeight() - logicalWidth) / 2);
+                        break;
+
+                    case UIElementLayout.RIGHT_ALIGNED:
+                        g2d.translate(getWidth() - logicalWidth, (getHeight() - logicalWidth) / 2);
+                        break;
+
+                    default:
+                        g2d.translate(
+                                (getWidth() - logicalWidth * scale) / 2,
+                                (getHeight() - logicalHeight * scale) / 2);
+                        break;
+                }
+
+                uiDrawable.draw(g2d);
             }
+
+            g2d.setTransform(old);
 
             // Always draws cursors on top
             for (CursorDrawable d : context.getCursorDrawables()) {

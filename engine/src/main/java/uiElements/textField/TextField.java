@@ -97,6 +97,8 @@ public class TextField
     private Integer highlightStartIndex = null;
     private Integer highlightEndIndex = null;
 
+    private UIElementLayout layout = UIElementLayout.NONE;
+
     /**
      * 
      * Creates and registers a textfield with the specified dimensions.
@@ -402,6 +404,11 @@ public class TextField
             fieldFont = font;
     }
 
+    @Override
+    public void setLayout(UIElementLayout layout) {
+        this.layout = layout;
+    }
+
     /**
      * Returns the X coordinate in screen coordinates (untransformed).
      * 
@@ -454,6 +461,11 @@ public class TextField
      */
     public double getAngle() {
         return angle;
+    }
+
+    @Override
+    public UIElementLayout getLayout() {
+        return layout;
     }
 
     /**

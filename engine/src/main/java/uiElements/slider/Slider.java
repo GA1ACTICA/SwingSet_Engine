@@ -62,6 +62,8 @@ public class Slider implements UIDrawable, Updatable, MenuInterface {
 
     private EngineContext context;
 
+    private UIElementLayout layout = UIElementLayout.NONE;
+
     /**
      * Creates and registers a slider between the specified two {@link Point
      * Points}.
@@ -94,6 +96,16 @@ public class Slider implements UIDrawable, Updatable, MenuInterface {
 
         handle.setRotation(handleAngle);
 
+    }
+
+    @Override
+    public UIElementLayout getLayout() {
+        return layout;
+    }
+
+    @Override
+    public void setLayout(UIElementLayout layout) {
+        this.layout = layout;
     }
 
     @Override
