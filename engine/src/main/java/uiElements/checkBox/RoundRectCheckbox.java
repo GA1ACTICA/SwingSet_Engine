@@ -15,7 +15,6 @@ import java.awt.Point;
 import java.awt.geom.RoundRectangle2D;
 
 import gameEngine.engineModules.EngineContext;
-import gameEngine.engineModules.Mouse;
 
 /**
  * A checkbox rendered using a rounded rectangle shape.
@@ -32,9 +31,6 @@ public class RoundRectCheckbox extends RectCheckbox {
      * @param context   the engine context containing objects involved in rendering,
      *                  updating, and input handling.
      * 
-     * @param mouse     the mouse input handler used for interaction with the
-     *                  checkbox.
-     * 
      * @param x         the x-coordinate of the rectangle's top-left point.
      * 
      * @param y         the y-coordinate of the rectangle's top-left point.
@@ -49,10 +45,10 @@ public class RoundRectCheckbox extends RectCheckbox {
      * @param arcHeight the vertical diameter of the corner arcs. Typically should
      *                  not exceed the rectangle's height.
      */
-    public RoundRectCheckbox(EngineContext context, Mouse mouse, int x, int y, int width, int height,
+    public RoundRectCheckbox(EngineContext context, int x, int y, int width, int height,
             int arcWidth,
             int arcHeight) {
-        super(context, mouse, x, y, width, height);
+        super(context, x, y, width, height);
 
         this.baseShape = new RoundRectangle2D.Float(x, y, width, height, arcWidth, arcHeight);
         this.rotatedShape = baseShape;
@@ -67,9 +63,6 @@ public class RoundRectCheckbox extends RectCheckbox {
      * @param context     the engine context containing objects involved
      *                    in rendering, updating, and input handling.
      * 
-     * @param mouse       the mouse input handler used for interaction with the
-     *                    checkbox.
-     * 
      * @param topLeft     the top-left point of the rectangle.
      * 
      * @param bottomRight the bottom-left point of the rectangle.
@@ -80,7 +73,7 @@ public class RoundRectCheckbox extends RectCheckbox {
      * @param arcHeight   the vertical diameter of the corner arcs. Typically should
      *                    not exceed the rectangle's height.
      */
-    public RoundRectCheckbox(EngineContext context, Mouse mouse, Point topLeft, Point bottomRight,
+    public RoundRectCheckbox(EngineContext context, Point topLeft, Point bottomRight,
             int arcWidth,
             int arcHeight) {
 
@@ -89,7 +82,8 @@ public class RoundRectCheckbox extends RectCheckbox {
         int width = (int) bottomRight.getX();
         int height = (int) bottomRight.getY();
 
-        super(context, mouse, x, y, width, height);
+        super(context, x, y, width, height);
+
         this.baseShape = new RoundRectangle2D.Float(x, y, width, height, arcWidth, arcHeight);
         this.rotatedShape = baseShape;
 
@@ -103,9 +97,6 @@ public class RoundRectCheckbox extends RectCheckbox {
      * @param context   the engine context containing objects involved in rendering,
      *                  updating, and input handling.
      * 
-     * @param mouse     the mouse input handler used for interaction with the
-     *                  checkbox.
-     * 
      * @param center    the center point of the rectangle.
      * 
      * @param width     the width of the rectangle.
@@ -118,14 +109,14 @@ public class RoundRectCheckbox extends RectCheckbox {
      * @param arcHeight the vertical diameter of the corner arcs. Typically should
      *                  not exceed the rectangle's height.
      */
-    public RoundRectCheckbox(EngineContext context, Mouse mouse, Point center, int width, int height,
+    public RoundRectCheckbox(EngineContext context, Point center, int width, int height,
             int arcWidth,
             int arcHeight) {
 
         int x = (int) center.getX() - width / 2;
         int y = (int) center.getY() - height / 2;
 
-        super(context, mouse, x, y, width, height);
+        super(context, x, y, width, height);
 
         this.baseShape = new RoundRectangle2D.Float(x, y, width, height, arcWidth, arcHeight);
         this.rotatedShape = baseShape;
@@ -140,21 +131,17 @@ public class RoundRectCheckbox extends RectCheckbox {
      * @param context the engine context containing objects involved in rendering,
      *                updating, and input handling.
      * 
-     * 
-     * @param mouse   the mouse input handler used for interaction with the
-     *                checkbox.
-     * 
      * @param center  the center point from where the circle is created.
      * 
      * @param radius  the circles radius.
      */
-    public RoundRectCheckbox(EngineContext context, Mouse mouse, Point center, int radius) {
+    public RoundRectCheckbox(EngineContext context, Point center, int radius) {
         int x = center.x - radius;
         int y = center.y - radius;
 
         int length = radius * 2;
 
-        super(context, mouse, x, y, length, length);
+        super(context, x, y, length, length);
 
         this.baseShape = new RoundRectangle2D.Float(x, y, length, length, length, length);
         this.rotatedShape = baseShape;

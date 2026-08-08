@@ -27,6 +27,10 @@ public interface UIDrawable extends Drawable {
         BOTTOM_ALIGNED,
         LEFT_ALIGNED,
         RIGHT_ALIGNED,
+        TOP_LEFT_ALIGNED,
+        BOTTOM_LEFT_ALIGNED,
+        TOP_RIGHT_ALIGNED,
+        BOTTOM_RIGHT_ALIGNED,
         NONE
     }
 

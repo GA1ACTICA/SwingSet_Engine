@@ -17,11 +17,15 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.geom.Line2D;
+import java.awt.geom.Point2D;
 import java.util.Objects;
+
+import javax.swing.JPanel;
 
 import gameEngine.engineModules.ClassFactory;
 import utils.MathUtils;
 import gameEngine.engineModules.EngineContext;
+import gameEngine.engineModules.EnginePanel;
 import gameEngine.engineModules.Mouse;
 import gameEngine.interfaces.MenuInterface;
 import gameEngine.interfaces.Updatable;
@@ -59,6 +63,7 @@ public class Slider implements UIDrawable, Updatable, MenuInterface {
 
     private RectButton handle;
     private final Mouse mouse;
+    private final EnginePanel panel;
 
     private EngineContext context;
 
@@ -71,6 +76,8 @@ public class Slider implements UIDrawable, Updatable, MenuInterface {
      * @param context  the engine context containing objects involved in rendering,
      *                 updating, and input handling.
      * 
+     * @param panel    the {@link JPanel} which contains the main render loop.
+     * 
      * @param mouse    the mouse input handler used for interaction with the
      *                 handle.
      * 
@@ -78,16 +85,17 @@ public class Slider implements UIDrawable, Updatable, MenuInterface {
      * 
      * @param pointTwo the second point of the track.
      */
-    public Slider(EngineContext context, Mouse mouse, Point pointOne, Point pointTwo) {
+    public Slider(EngineContext context, EnginePanel panel, Mouse mouse, Point pointOne, Point pointTwo) {
         ClassFactory.create(this, context);
         this.mouse = mouse;
         this.pointOne = pointOne;
         this.pointTwo = pointTwo;
         this.context = context;
+        this.panel = panel;
 
         Point middle = new Point(((pointOne.x + pointTwo.x) / 2), ((pointOne.y + pointTwo.y) / 2));
 
-        handle = new RectButton(context, mouse, middle,
+        handle = new RectButton(context, middle,
                 handleWidth, handleHeight);
 
         handleAngle = Math.toDegrees(Math.atan2(
@@ -106,6 +114,7 @@ public class Slider implements UIDrawable, Updatable, MenuInterface {
     @Override
     public void setLayout(UIElementLayout layout) {
         this.layout = layout;
+        handle.setLayout(layout);
     }
 
     @Override
@@ -435,7 +444,10 @@ public class Slider implements UIDrawable, Updatable, MenuInterface {
         // Only run when holding / dragging
         if (handle.isPressed()) {
 
-            FixResult sliderResult = MathUtils.fixToLine(mouse.getPoint(), pointOne, pointTwo);
+            Point2D point = panel.getTranslatedPoint(mouse.getPoint(), layout);
+
+            FixResult sliderResult = MathUtils.fixToLine(new Point((int) point.getX(), (int) point.getY()),
+                    pointOne, pointTwo);
 
             sliderPercentage = sliderResult.progress();
             handle.setCenter(sliderResult.point());

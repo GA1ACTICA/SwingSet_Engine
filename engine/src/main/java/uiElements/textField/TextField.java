@@ -27,14 +27,17 @@ import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.RectangularShape;
 import java.io.IOException;
 
+import javax.swing.JPanel;
+
 import gameEngine.engineModules.ClassFactory;
 import gameEngine.engineModules.EngineContext;
+import gameEngine.engineModules.EnginePanel;
 import gameEngine.engineModules.Keys;
-import gameEngine.engineModules.Mouse;
 import gameEngine.engineModules.cursor.CursorManager;
 import gameEngine.engineModules.cursor.CursorType;
 import gameEngine.interfaces.*;
@@ -84,6 +87,7 @@ public class TextField
     private Runnable clickAction;
 
     private EngineContext context;
+    private EnginePanel panel;
     private Keys keys;
 
     // Behavioral variables
@@ -106,8 +110,7 @@ public class TextField
      * @param context the engine context containing objects involved in rendering,
      *                updating, and input handling.
      * 
-     * @param mouse   the mouse input handler used for interaction with the
-     *                textfield.
+     * @param panel   the {@link JPanel} which contains the main render loop.
      * 
      * @param keys    the keyboard input handler used for interaction with the
      *                textfield.
@@ -120,16 +123,15 @@ public class TextField
      * 
      * @param height  the height of the textfield.
      */
-    public TextField(EngineContext context, Mouse mouse, Keys keys, int x, int y, int width,
+    public TextField(EngineContext context, EnginePanel panel, Keys keys, int x, int y, int width,
             int height) {
 
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
-        this.keys = keys;
 
-        this(context);
+        this(context, panel, keys);
     }
 
     /**
@@ -138,8 +140,7 @@ public class TextField
      * @param context     the engine context containing objects involved in
      *                    rendering, updating, and input handling.
      * 
-     * @param mouse       the mouse input handler used for interaction with the
-     *                    textfield.
+     * @param panel       the {@link JPanel} which contains the main render loop.
      * 
      * @param keys        the keyboard input handler used for interaction with the
      *                    textfield.
@@ -148,16 +149,15 @@ public class TextField
      * 
      * @param bottomRight the bottom left point of the rectangle.
      */
-    public TextField(EngineContext context, Mouse mouse, Keys keys, Point topLeft,
+    public TextField(EngineContext context, EnginePanel panel, Keys keys, Point topLeft,
             Point bottomRight) {
 
         x = (int) topLeft.getX();
         y = (int) topLeft.getY();
         width = (int) bottomRight.getX() - (int) topLeft.getX();
         height = (int) bottomRight.getY() - (int) topLeft.getY();
-        this.keys = keys;
 
-        this(context);
+        this(context, panel, keys);
     }
 
     /**
@@ -167,8 +167,7 @@ public class TextField
      * @param context the engine context containing objects involved in
      *                rendering, updating, and input handling.
      * 
-     * @param mouse   the mouse input handler used for interaction with the
-     *                textfield.
+     * @param panel   the {@link JPanel} which contains the main render loop.
      * 
      * @param keys    the keyboard input handler used for interaction with the
      *                textfield.
@@ -179,20 +178,19 @@ public class TextField
      * 
      * @param height  the height of the textfield.
      */
-    public TextField(EngineContext context, Mouse mouse, Keys keys, Point middle, int width,
+    public TextField(EngineContext context, EnginePanel panel, Keys keys, Point middle, int width,
             int height) {
 
         x = (int) middle.getX() - width / 2;
         y = (int) middle.getY() - height / 2;
         this.width = width;
         this.height = height;
-        this.keys = keys;
 
-        this(context);
+        this(context, panel, keys);
 
     }
 
-    private TextField(EngineContext context) {
+    private TextField(EngineContext context, EnginePanel panel, Keys keys) {
         ClassFactory.create(this, context);
 
         this.baseShape = new Rectangle2D.Float(x, y, width, height);
@@ -201,6 +199,9 @@ public class TextField
 
         fieldFont = GraphicsUtils.matchFontToHeight(fieldFont, "ÅÄÖgjpqÉÁÂÂÂÂ",
                 height - 2);
+
+        this.keys = keys;
+        this.panel = panel;
     }
 
     @Override
@@ -584,7 +585,7 @@ public class TextField
 
     @Override
     public boolean contains(int mouseX, int mouseY) {
-        return rotatedShape.contains(new Point(mouseX, mouseY));
+        return rotatedShape.contains(mouseX, mouseY);
     }
 
     @Override
@@ -639,9 +640,6 @@ public class TextField
     public void keyPressedNotification(KeyEvent e) {
         if (!isFocused || !show)
             return;
-
-        System.out.println("Start: " + highlightStartIndex + " End: " + highlightEndIndex);
-        System.out.println(highlightStartIndex != highlightEndIndex);
 
         // <Control> dependent combinations
         if (keys.getKeysPressed().contains(KeyEvent.VK_CONTROL)) {
@@ -747,13 +745,18 @@ public class TextField
 
     @Override
     public void mousePressNotification(MouseEvent e) {
-        if (!contains(e.getX(), e.getY()) || !isFocused || !show) {
+        if (!show)
+            return;
+
+        Point2D point = panel.getTranslatedPoint(new Point(e.getX(), e.getY()), layout);
+
+        if (!contains((int) point.getX(), (int) point.getY())) {
             isFocused = false;
             return;
         } else {
             cursorTimer = 0;
             cursorVisible = true;
-            setCaretAt(e.getX(), e.getY());
+            setCaretAt((int) point.getX(), (int) point.getY());
 
             if (keys.getKeysPressed().contains(KeyEvent.VK_SHIFT)) {
                 if (highlightStartIndex == null)
@@ -772,11 +775,13 @@ public class TextField
         if (!isFocused || !show)
             return;
 
+        Point2D point = panel.getTranslatedPoint(new Point(x, y), layout);
+
         if (dragging) {
             cursorTimer = 0;
             cursorVisible = true;
 
-            setCaretAt(x, y);
+            setCaretAt((int) point.getX(), (int) point.getY());
 
             if (highlightStartIndex == null)
                 highlightEndIndex = highlightStartIndex = text.length() - caretOffset;
@@ -876,7 +881,6 @@ public class TextField
             end = highlightEndIndex;
         }
 
-        System.out.println("Start: " + start + " End: " + end);
         text = new StringBuffer(
                 text.substring(0, start) + text.substring(end, text.length()));
 

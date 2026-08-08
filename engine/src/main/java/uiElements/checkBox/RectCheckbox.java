@@ -23,7 +23,6 @@ import java.awt.geom.RectangularShape;
 
 import gameEngine.engineModules.ClassFactory;
 import gameEngine.engineModules.EngineContext;
-import gameEngine.engineModules.Mouse;
 import gameEngine.engineModules.cursor.CursorManager;
 import gameEngine.engineModules.cursor.CursorType;
 import gameEngine.interfaces.Clickable;
@@ -87,7 +86,6 @@ public class RectCheckbox
     private boolean isHovered = false;
     private boolean showHover = true;
 
-    private Mouse mouse;
     private EngineContext context;
 
     private UIElementLayout layout = UIElementLayout.NONE;
@@ -98,9 +96,6 @@ public class RectCheckbox
      * @param context the engine context containing objects involved in rendering,
      *                updating, and input handling.
      * 
-     * @param mouse   the mouse input handler used for interaction with the
-     *                checkbox.
-     * 
      * @param x       the x-coordinate of the rectangle's topLeft point.
      * 
      * @param y       the y-coordinate of the rectangle's topLeft point.
@@ -109,14 +104,14 @@ public class RectCheckbox
      * 
      * @param height  the height of the rectangle.
      */
-    public RectCheckbox(EngineContext context, Mouse mouse, int x, int y, int width, int height) {
+    public RectCheckbox(EngineContext context, int x, int y, int width, int height) {
 
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
 
-        this(context, mouse);
+        this(context);
 
     }
 
@@ -127,21 +122,18 @@ public class RectCheckbox
      * @param context     the engine context containing objects involved in
      *                    rendering, updating, and input handling.
      * 
-     * @param mouse       the mouse input handler used for interaction with the
-     *                    checkbox.
-     * 
      * @param topLeft     the top left point of the rectangle.
      * 
      * @param bottomRight the bottom left point of the rectangle.
      */
-    public RectCheckbox(EngineContext context, Mouse mouse, Point topLeft, Point bottomRight) {
+    public RectCheckbox(EngineContext context, Point topLeft, Point bottomRight) {
 
         x = (int) topLeft.getX();
         y = (int) topLeft.getY();
         width = (int) bottomRight.getX() - (int) topLeft.getX();
         height = (int) bottomRight.getY() - (int) topLeft.getY();
 
-        this(context, mouse);
+        this(context);
 
     }
 
@@ -152,29 +144,25 @@ public class RectCheckbox
      * @param context the engine context containing objects involved in rendering,
      *                updating, and input handling.
      * 
-     * @param mouse   the mouse input handler used for interaction with the
-     *                checkbox.
-     * 
      * @param center  the center point of the rectangle.
      * 
      * @param width   the width of the rectangle.
      * 
      * @param height  the height of the rectangle.
      */
-    public RectCheckbox(EngineContext context, Mouse mouse, Point center, int width, int height) {
+    public RectCheckbox(EngineContext context, Point center, int width, int height) {
 
         x = (int) center.getX() - width / 2;
         y = (int) center.getY() - height / 2;
         this.width = width;
         this.height = height;
 
-        this(context, mouse);
+        this(context);
     }
 
-    private RectCheckbox(EngineContext context, Mouse mouse) {
+    private RectCheckbox(EngineContext context) {
         ClassFactory.create(this, context, zIndex);
 
-        this.mouse = mouse;
         this.context = context;
 
         this.baseShape = new Rectangle2D.Float(x, y, width, height);
@@ -627,7 +615,7 @@ public class RectCheckbox
 
     @Override
     public boolean contains(int mouseX, int mouseY) {
-        return rotatedShape.contains(mouse.getPoint().x, mouse.getPoint().y);
+        return rotatedShape.contains(mouseX, mouseY);
     }
 
     @Override

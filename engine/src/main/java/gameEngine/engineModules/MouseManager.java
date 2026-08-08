@@ -12,10 +12,12 @@
 package gameEngine.engineModules;
 
 import java.awt.Point;
+import java.awt.geom.Point2D;
 
 import gameEngine.engineModules.cursor.CursorManager;
 import gameEngine.interfaces.Clickable;
 import gameEngine.interfaces.Hoverable;
+import gameEngine.interfaces.drawables.UIDrawable;
 
 /**
  * Manages the mouse such as hover priority and click events
@@ -26,7 +28,7 @@ class MouseManager {
     static Hoverable topMost = null;
     static Clickable currentTopMost = null;
 
-    static void handlePriority(EngineContext context, Point mousePoint) {
+    static void handlePriority(EngineContext context, Point mousePoint, EnginePanel panel) {
         if (!CursorManager.isVisible())
             return;
 
@@ -35,8 +37,17 @@ class MouseManager {
             if (!hoverable.isVisible())
                 continue;
 
-            if (hoverable.contains(mousePoint.x, mousePoint.y)) {
+            Point2D translatedMousePoint = mousePoint;
+
+            if (hoverable instanceof UIDrawable uiDrawable)
+                translatedMousePoint = panel.getTranslatedPoint(mousePoint, uiDrawable.getLayout());
+
+            if (hoverable.contains(
+                    (int) translatedMousePoint.getX(),
+                    (int) translatedMousePoint.getY())) {
+
                 topMost = hoverable;
+
                 return;
             } else {
                 topMost = null;
@@ -45,7 +56,7 @@ class MouseManager {
 
     }
 
-    static void handleClick(EngineContext context, Point mousePoint, boolean mouseState) {
+    static void handleClick(EngineContext context, boolean mouseState) {
         if (!CursorManager.isVisible())
             return;
 
@@ -89,7 +100,7 @@ class MouseManager {
 
     }
 
-    static void handleHover(EngineContext context, Point mousePoint) {
+    static void handleHover(EngineContext context) {
         if (!CursorManager.isVisible())
             return;
 
