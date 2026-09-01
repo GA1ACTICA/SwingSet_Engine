@@ -45,6 +45,8 @@ public class GUIContainer extends UIContainer
 
     private EngineContext context;
 
+    private UIElementLayout layout = UIElementLayout.NONE;
+
     /**
      * Returns whether or not the menu is visible.
      * 
@@ -129,6 +131,16 @@ public class GUIContainer extends UIContainer
         x += dx;
         y += dy;
         super.translatePosition(dx, dy);
+    }
+
+    @Override
+    public UIElementLayout getLayout() {
+        return layout;
+    }
+
+    @Override
+    public void setLayout(UIElementLayout layout) {
+        this.layout = layout;
     }
 
     @Override

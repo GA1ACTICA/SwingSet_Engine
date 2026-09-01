@@ -23,7 +23,6 @@ import java.awt.geom.RectangularShape;
 
 import gameEngine.engineModules.ClassFactory;
 import gameEngine.engineModules.EngineContext;
-import gameEngine.engineModules.Mouse;
 import gameEngine.engineModules.cursor.CursorManager;
 import gameEngine.engineModules.cursor.CursorType;
 import gameEngine.interfaces.Clickable;
@@ -81,17 +80,15 @@ public class RectButton implements
     private boolean isHovered = false;
     private boolean showHover = true;
 
-    private Mouse mouse;
     private EngineContext context;
+
+    private UIElementLayout layout = UIElementLayout.NONE;
 
     /**
      * Creates and registers a rectangular button with the specified dimensions.
      * 
      * @param context the engine context containing objects involved in rendering,
      *                updating, and input handling.
-     * 
-     * @param mouse   the mouse input handler used for interaction with the
-     *                button.
      * 
      * @param x       the x-coordinate of the rectangle's top-left point.
      * 
@@ -101,14 +98,14 @@ public class RectButton implements
      * 
      * @param height  the height of the rectangle.
      */
-    public RectButton(EngineContext context, Mouse mouse, int x, int y, int width, int height) {
+    public RectButton(EngineContext context, int x, int y, int width, int height) {
 
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
 
-        this(context, mouse);
+        this(context);
 
     }
 
@@ -119,21 +116,18 @@ public class RectButton implements
      * @param context     the engine context containing objects involved in
      *                    rendering, updating, and input handling.
      * 
-     * @param mouse       the mouse input handler used for interaction with the
-     *                    button.
-     * 
      * @param topLeft     the top-left point of the rectangle.
      * 
      * @param bottomRight the bottom-left point of the rectangle.
      */
-    public RectButton(EngineContext context, Mouse mouse, Point topLeft, Point bottomRight) {
+    public RectButton(EngineContext context, Point topLeft, Point bottomRight) {
 
         x = (int) topLeft.getX();
         y = (int) topLeft.getY();
         width = (int) bottomRight.getX() - (int) topLeft.getX();
         height = (int) bottomRight.getY() - (int) topLeft.getY();
 
-        this(context, mouse);
+        this(context);
 
     }
 
@@ -144,31 +138,27 @@ public class RectButton implements
      * @param context the engine context containing objects involved in rendering,
      *                updating, and input handling.
      * 
-     * @param mouse   the mouse input handler used for interaction with the
-     *                button.
-     * 
      * @param center  the center point of the rectangle.
      * 
      * @param width   the width of the rectangle.
      * 
      * @param height  the height of the rectangle.
      */
-    public RectButton(EngineContext context, Mouse mouse, Point center, int width, int height) {
+    public RectButton(EngineContext context, Point center, int width, int height) {
 
         x = (int) center.getX() - width / 2;
         y = (int) center.getY() - height / 2;
         this.width = width;
         this.height = height;
 
-        this(context, mouse);
+        this(context);
 
     }
 
-    private RectButton(EngineContext context, Mouse mouse) {
+    private RectButton(EngineContext context) {
         ClassFactory.create(this, context, zIndex);
 
         this.context = context;
-        this.mouse = mouse;
 
         this.baseShape = new Rectangle2D.Float(x, y, width, height);
         this.rotatedShape = baseShape;
@@ -461,6 +451,16 @@ public class RectButton implements
     }
 
     @Override
+    public UIElementLayout getLayout() {
+        return layout;
+    }
+
+    @Override
+    public void setLayout(UIElementLayout layout) {
+        this.layout = layout;
+    }
+
+    @Override
     public void draw(Graphics g) {
         if (!show)
             return;
@@ -524,7 +524,7 @@ public class RectButton implements
 
     @Override
     public boolean contains(int mouseX, int mouseY) {
-        return rotatedShape.contains(mouse.getPoint().x, mouse.getPoint().y);
+        return rotatedShape.contains(mouseX, mouseY);
     }
 
     @Override

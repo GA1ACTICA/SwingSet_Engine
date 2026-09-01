@@ -22,4 +22,19 @@ import gameEngine.interfaces.ZIndexable;
  * Draw order is determined by the {@link ZIndexable} interface.
  */
 public interface UIDrawable extends Drawable {
+    public enum UIElementLayout {
+        TOP_ALIGNED,
+        BOTTOM_ALIGNED,
+        LEFT_ALIGNED,
+        RIGHT_ALIGNED,
+        TOP_LEFT_ALIGNED,
+        BOTTOM_LEFT_ALIGNED,
+        TOP_RIGHT_ALIGNED,
+        BOTTOM_RIGHT_ALIGNED,
+        NONE
+    }
+
+    public UIElementLayout getLayout();
+
+    public void setLayout(UIElementLayout layout);
 }

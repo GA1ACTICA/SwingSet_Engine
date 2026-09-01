@@ -46,11 +46,13 @@ public final class Mouse implements MouseMotionListener, MouseListener, MouseWhe
 
     private EngineState state;
     private EngineContext context;
+    private EnginePanel panel;
 
     Mouse(EngineState state, EngineContext context, EnginePanel panel) {
         ClassFactory.create(this, context);
         this.context = context;
         this.state = state;
+        this.panel = panel;
     }
 
     // MouseMotionListener
@@ -74,8 +76,8 @@ public final class Mouse implements MouseMotionListener, MouseListener, MouseWhe
         lastX = x;
         lastY = y;
 
-        MouseManager.handlePriority(context, getPoint());
-        MouseManager.handleHover(context, getPoint());
+        MouseManager.handlePriority(context, getPoint(), panel);
+        MouseManager.handleHover(context);
 
         for (MouseNotifier object : context.getMouseNotifiers()) {
             object.mouseMovementNotification(x, y, dragging);
@@ -162,7 +164,7 @@ public final class Mouse implements MouseMotionListener, MouseListener, MouseWhe
         switch (button) {
             case MouseEvent.BUTTON1:
                 leftDown = down;
-                MouseManager.handleClick(context, getPoint(), down);
+                MouseManager.handleClick(context, down);
                 buttonPrintout(button, down);
                 break;
 

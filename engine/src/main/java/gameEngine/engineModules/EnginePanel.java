@@ -13,14 +13,18 @@ package gameEngine.engineModules;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.RenderingHints;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Point2D;
 
 import javax.swing.JPanel;
 
 import gameEngine.engineState.EngineState;
 import gameEngine.interfaces.drawables.CursorDrawable;
 import gameEngine.interfaces.drawables.Drawable;
+import gameEngine.interfaces.drawables.UIDrawable;
+import gameEngine.interfaces.drawables.UIDrawable.UIElementLayout;
 
 /**
  * Handles the {@link JPanel} and the rendering loop used by the engine.
@@ -92,12 +96,56 @@ public final class EnginePanel extends JPanel {
             // Restore transform
             g2d.setTransform(old);
 
-            // TODO: Watch how other games handle UI (This doesn't look good)
-
-            // Draw game objects in UI space
             for (Drawable drawable : context.getUiDrawables()) {
-                drawable.draw(g2d);
+
+                UIDrawable uiDrawable = (UIDrawable) drawable;
+
+                g2d.setTransform(old);
+
+                switch (uiDrawable.getLayout()) {
+                    case UIElementLayout.TOP_ALIGNED:
+                        g2d.translate((getWidth() - logicalWidth) / 2, 0);
+                        break;
+
+                    case UIElementLayout.BOTTOM_ALIGNED:
+                        g2d.translate((getWidth() - logicalWidth) / 2, getHeight() - logicalHeight);
+                        break;
+
+                    case UIElementLayout.LEFT_ALIGNED:
+                        g2d.translate(0, (getHeight() - logicalHeight) / 2);
+                        break;
+
+                    case UIElementLayout.RIGHT_ALIGNED:
+                        g2d.translate(getWidth() - logicalWidth, (getHeight() - logicalHeight) / 2);
+                        break;
+
+                    case UIElementLayout.TOP_LEFT_ALIGNED:
+                        // Nothing happens
+                        break;
+
+                    case UIElementLayout.BOTTOM_LEFT_ALIGNED:
+                        g2d.translate(0, getHeight() - logicalHeight);
+                        break;
+
+                    case UIElementLayout.TOP_RIGHT_ALIGNED:
+                        g2d.translate(getWidth() - logicalWidth, 0);
+                        break;
+
+                    case UIElementLayout.BOTTOM_RIGHT_ALIGNED:
+                        g2d.translate(getWidth() - logicalWidth, getHeight() - logicalHeight);
+                        break;
+
+                    default:
+                        g2d.translate(
+                                (getWidth() - logicalWidth) / 2,
+                                (getHeight() - logicalHeight) / 2);
+                        break;
+                }
+
+                uiDrawable.draw(g2d);
             }
+
+            g2d.setTransform(old);
 
             // Always draws cursors on top
             for (CursorDrawable d : context.getCursorDrawables()) {
@@ -146,5 +194,54 @@ public final class EnginePanel extends JPanel {
      */
     public AffineTransform getViewportTransform() {
         return viewportTransform;
+    }
+
+    public Point2D getTranslatedPoint(Point ptSrc, UIElementLayout layout) {
+        AffineTransform transform = new AffineTransform();
+
+        switch (layout) {
+            case UIElementLayout.TOP_ALIGNED:
+                transform.translate(-((getWidth() - logicalWidth) / 2), 0);
+                break;
+
+            case UIElementLayout.BOTTOM_ALIGNED:
+                transform.translate(-((getWidth() - logicalWidth) / 2),
+                        -(getHeight() - logicalHeight));
+                break;
+
+            case UIElementLayout.LEFT_ALIGNED:
+                transform.translate(0, -((getHeight() - logicalHeight) / 2));
+                break;
+
+            case UIElementLayout.RIGHT_ALIGNED:
+                transform.translate(-(getWidth() - logicalWidth),
+                        -((getHeight() - logicalHeight) / 2));
+                break;
+
+            case UIElementLayout.TOP_LEFT_ALIGNED:
+                // Nothing happens
+                break;
+
+            case UIElementLayout.BOTTOM_LEFT_ALIGNED:
+                transform.translate(0, -(getHeight() - logicalHeight));
+                break;
+
+            case UIElementLayout.TOP_RIGHT_ALIGNED:
+                transform.translate(-(getWidth() - logicalWidth), 0);
+                break;
+
+            case UIElementLayout.BOTTOM_RIGHT_ALIGNED:
+                transform.translate(-(getWidth() - logicalWidth),
+                        -(getHeight() - logicalHeight));
+                break;
+
+            default:
+                transform.translate(
+                        -((getWidth() - logicalWidth) / 2),
+                        -((getHeight() - logicalHeight) / 2));
+                break;
+        }
+
+        return transform.transform(ptSrc, null);
     }
 }

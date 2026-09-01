@@ -207,10 +207,7 @@ public class GraphicsUtils extends Utils {
         try {
             cg.setRenderingHints(g2d.getRenderingHints());
 
-            AffineTransform tx = g2d.getTransform();
-            cg.setTransform(tx);
             cg.translate(-x, -y);
-
             painter.paint(cg);
         } finally {
             cg.dispose();
