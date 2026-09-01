@@ -101,7 +101,7 @@ public class TextField
     private Integer highlightStartIndex = null;
     private Integer highlightEndIndex = null;
 
-    private UIElementLayout layout = UIElementLayout.NONE;
+    private UIElementLayout layout = UIElementLayout.CENTERED;
 
     /**
      * 

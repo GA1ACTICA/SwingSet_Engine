@@ -47,7 +47,7 @@ public class UPSCounter implements UIDrawable, Updatable, MenuSetPosition {
 
     private EngineContext context;
 
-    private UIElementLayout layout = UIElementLayout.NONE;
+    private UIElementLayout layout = UIElementLayout.CENTERED;
 
     /**
      * Creates and registers an FPS/UPS counter.

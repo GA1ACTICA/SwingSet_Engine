@@ -27,9 +27,9 @@ public class UIDrawableAdapter implements UIDrawable {
 
     /**
      * The default layout for {@link UIDrawableAdapter} is
-     * {@link UIElementLayout.NONE}
+     * {@link UIElementLayout#CENTERED}
      */
-    protected UIElementLayout layout = UIElementLayout.NONE;
+    protected UIElementLayout layout = UIElementLayout.CENTERED;
 
     /**
      * Creates a instance of {@link UIDrawableAdapter}.

@@ -88,7 +88,7 @@ public class RectCheckbox
 
     private EngineContext context;
 
-    private UIElementLayout layout = UIElementLayout.NONE;
+    private UIElementLayout layout = UIElementLayout.CENTERED;
 
     /**
      * Creates and registers a rectangular checkbox with the specified dimensions.

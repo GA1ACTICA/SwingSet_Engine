@@ -196,6 +196,19 @@ public final class EnginePanel extends JPanel {
         return viewportTransform;
     }
 
+    /**
+     * Calculates a {@link Point2D} to the inverse translation of the
+     * {@link UIElementLayout} provided.
+     * <p>
+     * This is needed for translating the mouse point when hovering over a UI
+     * element.
+     * 
+     * @param ptSrc  the source point that is being translated
+     * 
+     * @param layout the layout to transform the point with
+     * 
+     * @return the destination point that has been translated
+     */
     public Point2D getTranslatedPoint(Point ptSrc, UIElementLayout layout) {
         AffineTransform transform = new AffineTransform();
 
