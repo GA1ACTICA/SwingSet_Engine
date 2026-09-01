@@ -82,7 +82,7 @@ public class RectButton implements
 
     private EngineContext context;
 
-    private UIElementLayout layout = UIElementLayout.NONE;
+    private UIElementLayout layout = UIElementLayout.CENTERED;
 
     /**
      * Creates and registers a rectangular button with the specified dimensions.

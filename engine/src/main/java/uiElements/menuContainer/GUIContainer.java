@@ -45,7 +45,7 @@ public class GUIContainer extends UIContainer
 
     private EngineContext context;
 
-    private UIElementLayout layout = UIElementLayout.NONE;
+    private UIElementLayout layout = UIElementLayout.CENTERED;
 
     /**
      * Returns whether or not the menu is visible.

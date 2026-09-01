@@ -67,7 +67,7 @@ public class Slider implements UIDrawable, Updatable, MenuInterface {
 
     private EngineContext context;
 
-    private UIElementLayout layout = UIElementLayout.NONE;
+    private UIElementLayout layout = UIElementLayout.CENTERED;
 
     /**
      * Creates and registers a slider between the specified two {@link Point
