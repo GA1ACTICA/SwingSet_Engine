@@ -95,7 +95,7 @@ public abstract class Game {
 
         String defaultConfigPath = "config/EngineState.json";
 
-        if (configPath.isEmpty())
+        if (!configPath.isEmpty())
             defaultConfigPath = configPath;
 
         try {

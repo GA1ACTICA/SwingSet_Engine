@@ -55,6 +55,7 @@ public class ColorAdapter extends TypeAdapter<Color> {
         in.beginArray();
         for (int i = 0; i < rgba.length; i++)
             rgba[i] = in.nextInt();
+        in.endArray();
 
         return new Color(rgba[0], rgba[1], rgba[2], rgba[3]);
     }
