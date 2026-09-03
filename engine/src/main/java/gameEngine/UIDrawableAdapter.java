@@ -27,12 +27,15 @@ public class UIDrawableAdapter implements UIDrawable {
 
     /**
      * The default layout for {@link UIDrawableAdapter} is
-     *      * {@link UIElementLayout#CENTERED}
+     * {@link UIElementLayout#CENTERED}
      */
     protected UIElementLayout layout = UIElementLayout.CENTERED;
-    /***
-    Creates a instance of {@link UID* <p>
-     * UIDrawing actions can be preformed by overriding the draw     * 
+
+    /**
+     * Creates a instance of {@link UIDrawableAdapter}.
+     * <p>
+     * UIDrawing actions can be preformed by overriding the draw method.
+     * 
      * <pre>
      * {@code
      * @Override
