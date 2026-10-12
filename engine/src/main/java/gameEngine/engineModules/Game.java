@@ -68,6 +68,9 @@ public abstract class Game {
      */
     protected final Mouse mouse;
 
+    private Runnable exitRunnable;
+    private final GameUpdate gu;
+
     /**
      * Creates a new game with the specified title and resizability.
      * <p>
@@ -120,7 +123,7 @@ public abstract class Game {
         mouse = new Mouse(state, context, panel);
 
         new CursorManager(context, panel, mouse, state);
-        final GameUpdate gu = new GameUpdate(keys,
+        gu = new GameUpdate(keys,
                 mouse,
                 state,
                 panel,
@@ -141,7 +144,6 @@ public abstract class Game {
 
         // FRAME setup
         frame.setContentPane(panel);
-        frame.pack();
         frame.setResizable(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
@@ -163,6 +165,38 @@ public abstract class Game {
         System.err.println(Utils.ConsoleYELLOW
                 + "No default engine state found. One can be supplied in \"config/EngineState.json\""
                 + Utils.ConsoleRESET);
+    }
+
+    /**
+     * Stops the application.
+     * <p>
+     * This stops both the main render thread but also the game loop.
+     * <p>
+     * <b>Note:</b> {@link #onExit(Runnable)} runs on the final update cycle before
+     * the application terminates.
+     */
+    public void exit() {
+        gu.exit();
+        frame.dispose();
+    }
+
+    /**
+     * Sets a action to be preformed before exiting.
+     * <p>
+     * The {@link Runnable} is executed after the last update cycle before the
+     * application terminates.
+     * 
+     * @param onExit the action to be preformed
+     */
+    public void onExit(Runnable onExit) {
+        exitRunnable = onExit;
+    }
+
+    /**
+     * Run the exit {@link Runnable}
+     */
+    void executeOnExit() {
+        exitRunnable.run();
     }
 
 }

@@ -25,6 +25,7 @@ class GameUpdate implements Runnable {
     private final EngineState state;
     private final EnginePanel panel;
     private final EngineContext context;
+    private final Game game;
 
     GameUpdate(
             Keys keys,
@@ -37,6 +38,7 @@ class GameUpdate implements Runnable {
         this.state = state;
         this.panel = panel;
         this.context = context;
+        this.game = game;
 
         game.init();
     }
@@ -71,6 +73,12 @@ class GameUpdate implements Runnable {
                 e.printStackTrace();
             }
         }
+
+        game.executeOnExit();
+    }
+
+    void exit() {
+        running = false;
     }
 
 }
