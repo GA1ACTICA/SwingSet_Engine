@@ -104,7 +104,7 @@ tasks.register("webDoc", Copy) {
 }
 
 group = 'io.github.ga1actica'
-version = 'v1.0.2'
+version = 'v1.1.0'
 
 publishing {
     publications {
