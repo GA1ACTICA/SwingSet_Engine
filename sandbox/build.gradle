@@ -7,7 +7,7 @@ repositories {
 }
 
 dependencies {
-    implementation project(':engine')
+    implementation project(':SwingSet_Engine')
 }
 
 java {

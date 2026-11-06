@@ -1,0 +1,333 @@
+/**
+ * Project: SwingSet_Engine
+ *
+ * Author: Galactica
+ *
+ * Licensed under the MIT License.
+ * See LICENSE file in the project root for full license information.
+ *
+ * Copyright © 2026 Galactica
+ */
+
+package io.github.ga1actica.gameEngine.engineModules.cursor;
+
+import java.awt.Graphics;
+import java.awt.Point;
+import java.awt.Toolkit;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Objects;
+
+import javax.swing.JPanel;
+
+import com.google.gson.JsonSyntaxException;
+
+import io.github.ga1actica.gameEngine.engineModules.ClassFactory;
+import io.github.ga1actica.gameEngine.engineModules.EngineContext;
+import io.github.ga1actica.gameEngine.engineModules.EnginePanel;
+import io.github.ga1actica.gameEngine.engineModules.Mouse;
+import io.github.ga1actica.gameEngine.engineModules.cursor.AnimatedCursorData.Frame;
+import io.github.ga1actica.gameEngine.engineState.EngineState;
+import io.github.ga1actica.gameEngine.interfaces.Updatable;
+import io.github.ga1actica.gameEngine.interfaces.drawables.CursorDrawable;
+import io.github.ga1actica.utils.ErrorManagement;
+import io.github.ga1actica.utils.FileUtils;
+import io.github.ga1actica.utils.GraphicsUtils;
+
+import java.util.List;
+
+/**
+ * Manages setting and rendering of build-in or custom cursors.
+ * 
+ * @see CursorType
+ */
+public class CursorManager implements CursorDrawable, Updatable {
+
+    @SuppressWarnings("unused")
+    private CursorManager() {
+    }
+
+    private static String defaultCursorPath = "cursors/Adwaita/";
+
+    private static AnimatedCursor rawCursorData;
+    private static Frame[] frameDataArray = null;
+
+    private static boolean show = true;
+
+    private static boolean overriding = false;
+    private static int width = 24;
+    private static int height = 24;
+    private static double scaleX;
+    private static double scaleY;
+
+    private static List<BufferedImage> cursorImageCache = new ArrayList<BufferedImage>();
+    private static BufferedImage[] cursorImageArray;
+    private static int cursorArrayIndex = 0;
+
+    private static float currentCursorMillis;
+    private static boolean animated = false;
+    private static BufferedImage cursorImage = null;
+    private static Point hotspot = null;
+
+    private static EngineState state;
+    private Mouse mouse;
+
+    /**
+     * Creates and registers the {@code CursorManager} with the engine.
+     * <p>
+     * The operating system cursor is hidden, and the engine's own cursor is
+     * rendered instead.
+     * <p>
+     * <b>Note:</b> {@code CursorManager} should only be instantiated by the
+     * engine. Creating additional instances may result in multiple cursors being
+     * rendered.
+     *
+     * @param context     the engine context containing the objects responsible for
+     *                    rendering, updating, and input handling
+     * 
+     * @param panel       the {@link JPanel} managed by the engine
+     * 
+     * @param mouse       the mouse input handler used for cursor position
+     * 
+     * @param engineState the current engine state
+     */
+    public CursorManager(EngineContext context, EnginePanel panel, Mouse mouse, EngineState engineState) {
+        CursorManager.state = engineState;
+        ClassFactory.create(this, context);
+
+        rawCursorData = new AnimatedCursor(new AnimatedCursorData(), state);
+        this.mouse = mouse;
+
+        // Hide system cursor
+        panel.setCursor(
+                Toolkit.getDefaultToolkit().createCustomCursor(new BufferedImage(1, 1,
+                        BufferedImage.TYPE_INT_ARGB),
+                        new Point(0, 0), "Transparent cursor"));
+
+        setCursor(CursorType.DEFAULT);
+    }
+
+    /**
+     * Returns if the cursor is visible or not.
+     * 
+     * @return {@code true} if the cursor is visible, {@code false} otherwise
+     */
+    public static boolean isVisible() {
+        return show;
+    }
+
+    /**
+     * Shows the cursor.
+     * <p>
+     * Enables the cursor and allows mouse interactions.
+     */
+    public static void show() {
+        show = true;
+    }
+
+    /**
+     * Hides the cursor.
+     * <p>
+     * Hides the cursor and prevents mouse interactions.
+     */
+    public static void hide() {
+        show = false;
+    }
+
+    /**
+     * Sets and displays a cursor.
+     * <p>
+     * Cursors are predefined in {@link CursorType}, but custom cursor types can
+     * also be created by implementing your own {@code CursorType}.
+     * <p>
+     * The cursor can be locked from being changed using {@link #lockCursor()}.
+     * <p>
+     * <b>Note:</b> This method should not be called more often than necessary.
+     * This is especially important for animated cursors, as doing so may load
+     * many images in a short amount of time.
+     *
+     * @param cursorType the cursor type to set
+     *
+     * @return {@code true} if the cursor was successfully set,
+     *         {@code false} if the change was blocked by
+     *         {@link #lockCursor()}
+     * 
+     * @throws NullPointerException if {@code CursorType} is {@code null}
+     */
+    public static boolean setCursor(CursorType cursorType) {
+        Objects.requireNonNull(cursorType, "The CursorType must not be null");
+
+        if (overriding)
+            return false;
+
+        String localDefaultCursorPath;
+
+        if (cursorType.builtIn())
+            localDefaultCursorPath = defaultCursorPath;
+        else
+            localDefaultCursorPath = "";
+        File resource = new File(cursorType.path());
+
+        if (resource.toString().contains(".png")) {
+            // Loads in a static cursor image
+            String cursor = localDefaultCursorPath + resource.toString();
+
+            if (state.data().debug)
+                System.out.println(
+                        "Path to image for static cursor: " + cursor);
+
+            BufferedImage originalImage = FileUtils.getBufferedImage(cursor);
+
+            // Get scale for hotspot calculation.
+            scaleX = (double) width / originalImage.getWidth(null);
+            scaleY = (double) height / originalImage.getHeight(null);
+
+            cursorImage = GraphicsUtils.downscaleImage(originalImage,
+                    width, height);
+            hotspot = cursorType.hotspot();
+            animated = false;
+
+        } else {
+            // Loads in a animated cursor collection with the information from meta.json
+
+            // Populate frameDataArray from meta.json
+            if (cursorType.builtIn())
+                // Predefined cursors
+                try {
+                    rawCursorData.importJson(Thread.currentThread().getContextClassLoader()
+                            .getResourceAsStream(localDefaultCursorPath + resource.toString() + "/meta.json"));
+                } catch (JsonSyntaxException e) {
+                    ErrorManagement.throwError(e,
+                            "This shouldn't be possible! Pleas submit a issue at https://github.com/GA1ACTICA/SwingSet_Engine");
+                }
+            else
+                // User-created cursors
+                try {
+                    rawCursorData.importJson(resource.toString() + "/meta.json");
+                } catch (IOException e) {
+                    ErrorManagement.throwError(e,
+                            "Unable to open, read or the file: %s was missing."
+                                    .formatted(resource.toString() + "/meta.json"));
+                }
+
+            frameDataArray = rawCursorData.data().getFrames().toArray(new Frame[0]);
+
+            if (frameDataArray != null) {
+                for (Frame frame : frameDataArray) {
+                    String imagePath = localDefaultCursorPath
+                            + resource.getName() + "/"
+                            + frame.getImagePath();
+
+                    if (state.data().debugVerbose) {
+                        System.out.println("Image path: " + imagePath.toString());
+                        System.out.println(
+                                "Image hotspot: [" + frame.getHotspot()[0] + "," + frame.getHotspot()[1] + "]");
+                        System.out.println("Delay duration: " + frame.getDurationMs() + '\n');
+                    }
+
+                    cursorImageCache.add(
+                            GraphicsUtils.downscaleImage(
+                                    FileUtils.getBufferedImage(imagePath),
+                                    width, height));
+                }
+
+                // Get scale for hotspot calculation.
+                String imagePath = localDefaultCursorPath
+                        + resource.getName() + "/"
+                        + frameDataArray[0].getImagePath();
+
+                BufferedImage originalImage = FileUtils.getBufferedImage(imagePath);
+
+                scaleX = (double) width / originalImage.getWidth(null);
+                scaleY = (double) height / originalImage.getHeight(null);
+
+                // Transform to a array for easier data handling.
+                cursorImageArray = cursorImageCache.toArray(new BufferedImage[0]);
+                cursorImageCache.clear();
+
+                animated = true;
+                updateCursor();
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * Locks the current cursor preventing it from being changed
+     * via {@link #setCursor(CursorType) setCursor()}.
+     * <p>
+     * While the cursor is locked, calls to {@code setCursor(...)} will have
+     * no effect and return {@code false}.
+     */
+    public static void lockCursor() {
+        overriding = true;
+    }
+
+    /**
+     * Unlocks the cursor, allowing it to be changed via
+     * {@link #setCursor(CursorType) setCursor()}.
+     * <p>
+     * After calling this method, {@code setCursor(...)} will resume normal
+     * behavior and return {@code true}.
+     */
+    public static void unlockCursor() {
+        overriding = false;
+    }
+
+    @Override
+    public void draw(Graphics g) {
+        if (!show || !mouse.onScreen())
+            return;
+
+        int drawX = (int) (mouse.getPoint().x - hotspot.x * scaleX);
+        int drawY = (int) (mouse.getPoint().y - hotspot.y * scaleY);
+
+        g.drawImage(cursorImage, drawX, drawY, width, height, null);
+
+        if (state.data().debug) {
+            GraphicsUtils.imageBoundingBox(g, cursorImage, drawX, drawY);
+            GraphicsUtils.debugShape(g, mouse.getPoint().x, mouse.getPoint().y);
+        }
+    }
+
+    private float timer;
+
+    @Override
+    public void update(float deltaTime) {
+        if (!show || !animated)
+            return;
+
+        // Reset or set the iterator if it was missing
+        if (cursorArrayIndex >= cursorImageArray.length - 1)
+            cursorArrayIndex = 0;
+
+        timer += deltaTime;
+
+        if (timer >= currentCursorMillis) {
+            timer -= currentCursorMillis;
+
+            updateCursor();
+            cursorArrayIndex++;
+        }
+
+    }
+
+    /**
+     * Updates the information about the current animated cursor. (Hotspot, Image
+     * and time delay)
+     */
+    private static void updateCursor() {
+
+        if (state.data().debugVerbose)
+            System.out.println("Updating cursor index: " + cursorArrayIndex);
+
+        cursorImage = cursorImageArray[cursorArrayIndex];
+        currentCursorMillis = frameDataArray[cursorArrayIndex].getDurationMs() * 0.001f;
+        hotspot = new Point(frameDataArray[cursorArrayIndex].getHotspotX(),
+                frameDataArray[cursorArrayIndex].getHotspotY());
+    }
+
+}

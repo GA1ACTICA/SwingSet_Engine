@@ -1,7 +1,7 @@
 import java.awt.Point;
 
-import gameEngine.engineModules.Game;
-import uiElements.button.RectButton;
+import io.github.ga1actica.gameEngine.engineModules.Game;
+import io.github.ga1actica.uiElements.button.RectButton;
 
 public class EngineTest extends Game {
 
