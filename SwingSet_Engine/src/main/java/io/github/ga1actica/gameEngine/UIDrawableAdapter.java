@@ -1,12 +1,3 @@
-<<<<<<< HEAD:engine/src/main/java/gameEngine/UIDrawableAdapter.java
-package gameEngine;
-
-import java.awt.Graphics;
-
-import gameEngine.engineModules.ClassFactory;
-import gameEngine.engineModules.EngineContext;
-import gameEngine.interfaces.drawables.UIDrawable;
-=======
 /**
  * Project: SwingSet_Engine
  *
@@ -24,7 +15,6 @@ import java.awt.Graphics;
 import io.github.ga1actica.gameEngine.engineModules.ClassFactory;
 import io.github.ga1actica.gameEngine.engineModules.EngineContext;
 import io.github.ga1actica.gameEngine.interfaces.drawables.UIDrawable;
->>>>>>> main:SwingSet_Engine/src/main/java/io/github/ga1actica/gameEngine/UIDrawableAdapter.java
 
 /**
  * A convenience class that already implements the bare minimum for the

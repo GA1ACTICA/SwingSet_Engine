@@ -21,20 +21,6 @@ import java.awt.geom.Point2D;
 import java.util.Objects;
 
 import javax.swing.JPanel;
-<<<<<<< HEAD:engine/src/main/java/uiElements/slider/Slider.java
-
-import gameEngine.engineModules.ClassFactory;
-import utils.MathUtils;
-import gameEngine.engineModules.EngineContext;
-import gameEngine.engineModules.EnginePanel;
-import gameEngine.engineModules.Mouse;
-import gameEngine.interfaces.MenuInterface;
-import gameEngine.interfaces.Updatable;
-import gameEngine.interfaces.drawables.UIDrawable;
-import gameEngine.records.FixResult;
-import uiElements.button.RectButton;
-
-=======
 
 import io.github.ga1actica.gameEngine.engineModules.ClassFactory;
 import io.github.ga1actica.gameEngine.engineModules.EngineContext;
@@ -47,7 +33,6 @@ import io.github.ga1actica.gameEngine.records.FixResult;
 import io.github.ga1actica.uiElements.button.RectButton;
 import io.github.ga1actica.utils.MathUtils;
 
->>>>>>> main:SwingSet_Engine/src/main/java/io/github/ga1actica/uiElements/slider/Slider.java
 /**
  * Base implementation of a slider UI element.
  * <p>

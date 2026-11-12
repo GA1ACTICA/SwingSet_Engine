@@ -17,15 +17,6 @@ import java.awt.Graphics;
 import java.awt.Point;
 
 import javax.swing.JPanel;
-<<<<<<< HEAD:engine/src/main/java/uiElements/misc/UPSCounter.java
-
-import gameEngine.engineModules.ClassFactory;
-import gameEngine.engineModules.EngineContext;
-import gameEngine.interfaces.MenuInterface.MenuSetPosition;
-import gameEngine.interfaces.Updatable;
-import gameEngine.interfaces.drawables.UIDrawable;
-
-=======
 
 import io.github.ga1actica.gameEngine.engineModules.ClassFactory;
 import io.github.ga1actica.gameEngine.engineModules.EngineContext;
@@ -33,7 +24,6 @@ import io.github.ga1actica.gameEngine.interfaces.MenuInterface.MenuSetPosition;
 import io.github.ga1actica.gameEngine.interfaces.Updatable;
 import io.github.ga1actica.gameEngine.interfaces.drawables.UIDrawable;
 
->>>>>>> main:SwingSet_Engine/src/main/java/io/github/ga1actica/uiElements/misc/UPSCounter.java
 /**
  * A UPS counter to measure the updates per second which could be seen as the
  * approximate framerate since the framerate cant be directly measured in

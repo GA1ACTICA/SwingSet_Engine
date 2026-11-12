@@ -33,23 +33,6 @@ import java.awt.geom.RectangularShape;
 import java.io.IOException;
 
 import javax.swing.JPanel;
-<<<<<<< HEAD:engine/src/main/java/uiElements/textField/TextField.java
-
-import gameEngine.engineModules.ClassFactory;
-import gameEngine.engineModules.EngineContext;
-import gameEngine.engineModules.EnginePanel;
-import gameEngine.engineModules.Keys;
-import gameEngine.engineModules.cursor.CursorManager;
-import gameEngine.engineModules.cursor.CursorType;
-import gameEngine.interfaces.*;
-import gameEngine.interfaces.MenuInterface.MenuSetPosition;
-import gameEngine.interfaces.MenuInterface.MenuSetSize;
-import gameEngine.interfaces.drawables.UIDrawable;
-import utils.ErrorManagement;
-import utils.GraphicsUtils;
-import utils.GraphicsUtils.MaskType;
-
-=======
 
 import io.github.ga1actica.gameEngine.engineModules.ClassFactory;
 import io.github.ga1actica.gameEngine.engineModules.EngineContext;
@@ -68,7 +51,6 @@ import io.github.ga1actica.utils.ErrorManagement;
 import io.github.ga1actica.utils.GraphicsUtils;
 import io.github.ga1actica.utils.GraphicsUtils.MaskType;
 
->>>>>>> main:SwingSet_Engine/src/main/java/io/github/ga1actica/uiElements/textField/TextField.java
 /**
  * Provides a basic implementation of a single-line only text field for
  * displaying and editing text in a graphical user interface.

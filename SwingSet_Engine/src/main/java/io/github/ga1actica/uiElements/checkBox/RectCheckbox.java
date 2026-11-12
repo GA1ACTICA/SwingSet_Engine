@@ -21,19 +21,6 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.RectangularShape;
 
-<<<<<<< HEAD:engine/src/main/java/uiElements/checkBox/RectCheckbox.java
-import gameEngine.engineModules.ClassFactory;
-import gameEngine.engineModules.EngineContext;
-import gameEngine.engineModules.cursor.CursorManager;
-import gameEngine.engineModules.cursor.CursorType;
-import gameEngine.interfaces.Clickable;
-import gameEngine.interfaces.MenuInterface.MenuSetPosition;
-import gameEngine.interfaces.MenuInterface.MenuSetSize;
-import gameEngine.interfaces.drawables.UIDrawable;
-import utils.GraphicsUtils;
-import utils.GraphicsUtils.MaskType;
-import utils.Utils;
-=======
 import io.github.ga1actica.gameEngine.engineModules.ClassFactory;
 import io.github.ga1actica.gameEngine.engineModules.EngineContext;
 import io.github.ga1actica.gameEngine.engineModules.cursor.CursorManager;
@@ -45,7 +32,6 @@ import io.github.ga1actica.gameEngine.interfaces.drawables.UIDrawable;
 import io.github.ga1actica.utils.GraphicsUtils;
 import io.github.ga1actica.utils.GraphicsUtils.MaskType;
 import io.github.ga1actica.utils.Utils;
->>>>>>> main:SwingSet_Engine/src/main/java/io/github/ga1actica/uiElements/checkBox/RectCheckbox.java
 
 /**
  * Base implementation of a checkbox UI element.
