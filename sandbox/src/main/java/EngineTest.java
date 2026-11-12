@@ -1,7 +1,7 @@
 import java.awt.Point;
 
 import io.github.ga1actica.gameEngine.engineModules.Game;
-import io.github.ga1actica.uiElements.button.RectButton;
+import io.github.ga1actica.uiElements.button.RoundRectButton;
 
 public class EngineTest extends Game {
 
@@ -11,7 +11,9 @@ public class EngineTest extends Game {
             System.out.println("exiting the application");
         }));
 
-        RectButton b = new RectButton(context, new Point(100, 100), new Point(200, 200));
+        System.out.println(frame.getWidth());
+
+        RoundRectButton b = new RoundRectButton(context, new Point(frame.getWidth() / 2, frame.getHeight() / 2), 100);
         b.show();
         b.onClick(() -> {
             exit();

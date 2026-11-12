@@ -14,6 +14,7 @@ package io.github.ga1actica.gameEngine.interfaces;
 import java.awt.Point;
 
 import io.github.ga1actica.uiElements.misc.UPSCounter;
+import io.github.ga1actica.uiElements.button.RectButton;
 
 /**
  * Base interface for all menu elements.

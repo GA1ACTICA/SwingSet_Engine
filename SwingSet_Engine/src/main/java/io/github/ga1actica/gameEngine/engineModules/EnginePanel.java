@@ -135,10 +135,10 @@ public final class EnginePanel extends JPanel {
                         g2d.translate(getWidth() - logicalWidth, getHeight() - logicalHeight);
                         break;
 
-                    default:
+                    case UIElementLayout.CENTERED:
                         g2d.translate(
-                                (getWidth() - logicalWidth) / 2,
-                                (getHeight() - logicalHeight) / 2);
+                                ((getWidth() - logicalWidth) / 2),
+                                ((getHeight() - logicalHeight) / 2));
                         break;
                 }
 
@@ -248,7 +248,7 @@ public final class EnginePanel extends JPanel {
                         -(getHeight() - logicalHeight));
                 break;
 
-            default:
+            case UIElementLayout.CENTERED:
                 transform.translate(
                         -((getWidth() - logicalWidth) / 2),
                         -((getHeight() - logicalHeight) / 2));

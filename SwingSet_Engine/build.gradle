@@ -1,12 +1,11 @@
 plugins {
     id 'java-library'
     id 'maven-publish'
-    id 'com.gradleup.shadow' version '9.4.2'
     id 'com.vanniktech.maven.publish' version '0.37.0'
 }
 
 group = 'io.github.ga1actica'
-version = 'v1.1.0'
+version = 'v1.1.1'
 
 repositories {
     mavenCentral()
@@ -24,9 +23,6 @@ java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(25)
     }
-    
-    withSourcesJar()
-    withJavadocJar()
 }
 
 tasks.named('test') {
@@ -34,11 +30,6 @@ tasks.named('test') {
 }
 
 import org.gradle.api.file.DuplicatesStrategy
-
-tasks.shadowJar {
-    archiveClassifier.set('all')
-    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-}
 
 tasks.withType(JavaCompile) {
     options.compilerArgs += '-parameters'
@@ -106,8 +97,6 @@ tasks.register("webDoc", Copy) {
     }
 }
 }
-
-
 
 mavenPublishing {
     publishToMavenCentral(true)

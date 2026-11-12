@@ -11,7 +11,6 @@
 
 package io.github.ga1actica.gameEngine.engineModules;
 
-import java.awt.Dimension;
 import java.io.IOException;
 
 import javax.swing.JFrame;
@@ -122,17 +121,8 @@ public abstract class Game {
         keys = new Keys(state, context);
         mouse = new Mouse(state, context, panel);
 
-        new CursorManager(context, panel, mouse, state);
-        gu = new GameUpdate(keys,
-                mouse,
-                state,
-                panel,
-                frame,
-                context,
-                this);
         // PANEL setup
         panel.setLayout(null);
-        panel.setPreferredSize(new Dimension(state.data().width, state.data().height));
         panel.setBackground(state.data().backgroundColor);
         panel.setFocusable(true);
 
@@ -144,9 +134,19 @@ public abstract class Game {
 
         // FRAME setup
         frame.setContentPane(panel);
+        frame.setSize(state.data().width, state.data().height);
         frame.setResizable(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
+
+        new CursorManager(context, panel, mouse, state);
+        gu = new GameUpdate(keys,
+                mouse,
+                state,
+                panel,
+                frame,
+                context,
+                this);
 
         new Thread(gu).start();
     }

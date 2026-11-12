@@ -13,6 +13,8 @@ package io.github.ga1actica.gameEngine.engineState;
 
 import java.awt.Color;
 
+import io.github.ga1actica.gameEngine.interfaces.Updatable;
+
 /**
  * 
  * Contains fields that govern how the engine behaves that also can be loaded
