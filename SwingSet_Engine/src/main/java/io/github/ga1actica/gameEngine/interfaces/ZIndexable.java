@@ -1,0 +1,40 @@
+/**
+ * Project: SwingSet_Engine
+ *
+ * Author: Galactica
+ *
+ * Licensed under the MIT License.
+ * See LICENSE file in the project root for full license information.
+ *
+ * Copyright © 2026 Galactica
+ */
+
+package io.github.ga1actica.gameEngine.interfaces;
+
+/**
+ * Marks an element as having a z-index that controls its ordering in the
+ * rendering pipeline.
+ *
+ * <p>
+ * This ordering defines the visual stacking of elements and may also be
+ * used for resolving overlapping interactions.
+ * </p>
+ */
+public interface ZIndexable {
+
+    /**
+     * Sets the z-index of this {@link ZIndexable} element and updates its rendering
+     * priority
+     * within the engine context.
+     *
+     * @param zIndex the new z-index value.
+     */
+    void setZIndex(int zIndex);
+
+    /**
+     * Returns the z-index for the {@link ZIndexable} element.
+     * 
+     * @return the z-index
+     */
+    int getZIndex();
+}
