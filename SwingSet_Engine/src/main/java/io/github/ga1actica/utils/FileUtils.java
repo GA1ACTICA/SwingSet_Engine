@@ -12,8 +12,10 @@
 package io.github.ga1actica.utils;
 
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
-import java.net.URL;
+import java.io.InputStream;
+import java.nio.file.Path;
 
 import javax.imageio.ImageIO;
 
@@ -38,18 +40,31 @@ public class FileUtils extends Utils {
      * 
      */
     public static BufferedImage getBufferedImage(String path) {
-        URL url = FileUtils.class.getClassLoader().getResource(path);
 
-        if (url == null)
-            ErrorManagement.reportError(new IllegalArgumentException("Classpath resource not found: " + path),
-                    "Failed to locate image at " + path);
-
-        try {
-            return ImageIO.read(url);
-        } catch (IOException e) {
-            ErrorManagement.throwError(e, "Failed to load image at %s".formatted(path));
-            return null;
+        if (Path.of(path).isAbsolute()) {
+            try {
+                return ImageIO.read(new File(path));
+            } catch (IOException e) {
+                ErrorManagement.throwError(e, "Failed to load resource from absolute path: " + path);
+            }
         }
+
+        try (InputStream input = FileUtils.class
+                .getClassLoader()
+                .getResourceAsStream(path)) {
+
+            if (input == null) {
+                ErrorManagement.throwError(new IllegalArgumentException(),
+                        "Failed to load resource from classpath path: " + path);
+            }
+
+            return ImageIO.read(input);
+        } catch (IOException e) {
+            ErrorManagement.throwError(e, "Failed to load resource from classpath path: " + path);
+        }
+
+        // Shouldn't be accessible;
+        return null;
     }
 
 }

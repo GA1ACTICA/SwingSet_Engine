@@ -11,6 +11,10 @@
 
 package io.github.ga1actica.gameEngine.engineModules;
 
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
 import java.io.IOException;
 
 import javax.swing.JFrame;
@@ -21,6 +25,7 @@ import io.github.ga1actica.gameEngine.engineModules.cursor.CursorManager;
 import io.github.ga1actica.gameEngine.engineState.EngineState;
 import io.github.ga1actica.utils.ErrorManagement;
 import io.github.ga1actica.utils.Utils;
+import io.github.ga1actica.gameEngine.interfaces.Updatable;
 
 /**
  * Base class for all games using the engine.
@@ -134,12 +139,18 @@ public abstract class Game {
 
         // FRAME setup
         frame.setContentPane(panel);
-        frame.setSize(state.data().width, state.data().height);
-        frame.setResizable(true);
+        frame.setResizable(resizable);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setVisible(true);
+
+        setWindowSize(state.data().width, state.data().height);
 
         new CursorManager(context, panel, mouse, state);
+
+        init();
+
+        // Show window
+        frame.setVisible(true);
+
         gu = new GameUpdate(keys,
                 mouse,
                 state,
@@ -170,9 +181,10 @@ public abstract class Game {
     /**
      * Stops the application.
      * <p>
-     * This stops both the main render thread but also the game loop.
+     * This stops both the main render thread and the game loop.
      * <p>
-     * <b>Note:</b> {@link #onExit(Runnable)} runs on the final update cycle before
+     * <b>Note:</b> {@link #onExit(Runnable)} runs after the final update cycle
+     * before
      * the application terminates.
      */
     public void exit() {
@@ -199,4 +211,69 @@ public abstract class Game {
         exitRunnable.run();
     }
 
+    /**
+     * Updates the window and the data in {@code state} to the specified width
+     * and height.
+     * 
+     * @apiNote The specified dimensions represent the drawable area and
+     *          exclude window decorations (e.g. title bar and borders).
+     *          Consequently, the dimensions of the {@code JFrame} and
+     *          {@code JPanel} will differ:
+     * 
+     *          <pre>{@code
+     * frame.getWidth() != panel.getWidth()
+     * frame.getHeight() != panel.getHeight()
+     * }
+     * </pre>
+     * 
+     * @param width  the width of the window
+     * 
+     * @param height the height of the window
+     */
+    public void setWindowSize(int width, int height) {
+        panel.setPreferredSize(new Dimension(width, height));
+        frame.pack();
+
+        state.data().width = width;
+        state.data().height = height;
+    }
+
+    /**
+     * Updates the background color stored in {@code state} which is used when
+     * drawing the background.
+     * 
+     * @param color the new background color
+     */
+    public void setBackgroundColor(Color color) {
+        state.data().backgroundColor = color;
+    }
+
+    /**
+     * Sets the amount of updates per second the game runs at.
+     * <p>
+     * This is the amount of times {@link Updatable#update(float deltaTime)} is
+     * invoked per second.
+     * 
+     * @param updatePerSecond the amount of updates per second
+     */
+    public void setUpdatesPerSecond(int updatesPerSecond) {
+        state.data().updateInterval = 1000000000 / updatesPerSecond;
+    }
+
+    public void setFullscreen() {
+        GraphicsDevice device = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+        device.setFullScreenWindow(frame);
+        panel.setSize(frame.getWidth(), frame.getHeight());
+
+        state.data().width = frame.getWidth();
+        state.data().height = frame.getHeight();
+
+    }
+
+    public void setWindowed(int width, int height) {
+        GraphicsDevice device = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+        device.setFullScreenWindow(null);
+
+        setWindowSize(width, height);
+    }
 }

@@ -1,22 +1,41 @@
+import java.awt.Graphics;
 import java.awt.Point;
 
+import io.github.ga1actica.gameEngine.engineModules.ClassFactory;
 import io.github.ga1actica.gameEngine.engineModules.Game;
-import io.github.ga1actica.uiElements.button.RoundRectButton;
+import io.github.ga1actica.gameEngine.interfaces.drawables.Drawable;
+import io.github.ga1actica.gameEngine.interfaces.drawables.UIDrawable.UIElementLayout;
+import io.github.ga1actica.uiElements.checkBox.RoundRectCheckbox;
+import io.github.ga1actica.utils.Utils;
 
-public class EngineTest extends Game {
+public class EngineTest extends Game implements Drawable {
+
+    int zIndex;
 
     @Override
     protected void init() {
+        state.data().debugVerbose = true;
+
+        setFullscreen();
+
+        ClassFactory.create(this, context, zIndex);
+
         onExit((() -> {
             System.out.println("exiting the application");
         }));
 
-        System.out.println(frame.getWidth());
-
-        RoundRectButton b = new RoundRectButton(context, new Point(frame.getWidth() / 2, frame.getHeight() / 2), 100);
+        RoundRectCheckbox b = new RoundRectCheckbox(context,
+                new Point(panel.getWidth() - 100, 100),
+                100);
         b.show();
-        b.onClick(() -> {
-            exit();
+        b.setLayout(UIElementLayout.TOP_RIGHT_ALIGNED);
+
+        b.onToggleTrue(() -> {
+            setWindowed(1000, 1000);
+        });
+
+        b.onToggleFalse(() -> {
+            setFullscreen();
         });
     }
 
@@ -26,6 +45,22 @@ public class EngineTest extends Game {
 
     public static void main(String[] args) {
         new EngineTest();
+    }
+
+    @Override
+    public void setZIndex(int zIndex) {
+        this.zIndex = zIndex;
+    }
+
+    @Override
+    public int getZIndex() {
+        return zIndex;
+    }
+
+    @Override
+    public void draw(Graphics g) {
+        g.setColor(Utils.rgba(0, 238, 255, 0.4));
+        g.fillRect(0, 0, 100, 100);
     }
 
 }

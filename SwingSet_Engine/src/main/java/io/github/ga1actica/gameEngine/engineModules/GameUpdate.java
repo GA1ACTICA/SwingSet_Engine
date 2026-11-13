@@ -39,8 +39,6 @@ class GameUpdate implements Runnable {
         this.panel = panel;
         this.context = context;
         this.game = game;
-
-        game.init();
     }
 
     @Override

@@ -508,6 +508,8 @@ public class RectCheckbox
 
     /**
      * Sets the action to be executed whenever the checkbox is set to {@code false}.
+     * <p>
+     * <b>Note:</b> This is the default state of the checkbox.
      *
      * <p>
      * The provided {@link Runnable} is invoked whenever the checkbox is set to the

@@ -35,14 +35,12 @@ import io.github.ga1actica.gameEngine.interfaces.drawables.UIDrawable.UIElementL
 @SuppressWarnings("serial")
 public final class EnginePanel extends JPanel {
 
-    /**
-     * The logical width of the coordinate system used by {@link Drawable}.
-     */
-    public final int logicalWidth = 1000;
-    /**
-     * The logical height of the coordinate system used by {@link Drawable}.
-     */
-    public final int logicalHeight = 1000;
+    private int logicalWidth = 1000;
+    private int logicalHeight = 1000;
+
+    private int referenceWidth;
+    private int referenceHeight;
+    private boolean initialized;
 
     private transient EngineState state;
     private transient EngineContext context;
@@ -59,93 +57,26 @@ public final class EnginePanel extends JPanel {
     // rendering engine
     @Override
     protected void paintComponent(Graphics g) {
+        if (!initialized) {
+            referenceWidth = getWidth();
+            referenceHeight = getHeight();
+            initialized = true;
+
+            if (state.data().debugVerbose) {
+                System.out.println("Initialized width: " + getWidth());
+                System.out.println("Initialized height: " + getHeight());
+            }
+        }
+
         super.paintComponent(g);
 
         try {
 
             Graphics2D g2d = (Graphics2D) g.create();
-
             AffineTransform old = g2d.getTransform();
 
-            double scaleX = getWidth() / (double) logicalWidth;
-            double scaleY = getHeight() / (double) logicalHeight;
-            double scale = Math.min(scaleX, scaleY);
-
-            g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-                    RenderingHints.VALUE_ANTIALIAS_ON);
-            g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
-                    RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-
-            // Center + scale
-            g2d.translate(
-                    (getWidth() - logicalWidth * scale) / 2,
-                    (getHeight() - logicalHeight * scale) / 2);
-            g2d.scale(scale, scale);
-
-            // Gets the scaled transform
-            viewportTransform = g2d.getTransform();
-
-            g2d.setColor(state.data().backgroundColor);
-            g2d.fillRect(0, 0, getWidth(), getHeight());
-
-            // Draw game objects in world space
-            for (Drawable drawable : context.getWorldDrawables()) {
-                drawable.draw(g2d);
-            }
-
-            // Restore transform
-            g2d.setTransform(old);
-
-            for (Drawable drawable : context.getUiDrawables()) {
-
-                UIDrawable uiDrawable = (UIDrawable) drawable;
-
-                g2d.setTransform(old);
-
-                switch (uiDrawable.getLayout()) {
-                    case UIElementLayout.TOP_ALIGNED:
-                        g2d.translate((getWidth() - logicalWidth) / 2, 0);
-                        break;
-
-                    case UIElementLayout.BOTTOM_ALIGNED:
-                        g2d.translate((getWidth() - logicalWidth) / 2, getHeight() - logicalHeight);
-                        break;
-
-                    case UIElementLayout.LEFT_ALIGNED:
-                        g2d.translate(0, (getHeight() - logicalHeight) / 2);
-                        break;
-
-                    case UIElementLayout.RIGHT_ALIGNED:
-                        g2d.translate(getWidth() - logicalWidth, (getHeight() - logicalHeight) / 2);
-                        break;
-
-                    case UIElementLayout.TOP_LEFT_ALIGNED:
-                        // Nothing happens
-                        break;
-
-                    case UIElementLayout.BOTTOM_LEFT_ALIGNED:
-                        g2d.translate(0, getHeight() - logicalHeight);
-                        break;
-
-                    case UIElementLayout.TOP_RIGHT_ALIGNED:
-                        g2d.translate(getWidth() - logicalWidth, 0);
-                        break;
-
-                    case UIElementLayout.BOTTOM_RIGHT_ALIGNED:
-                        g2d.translate(getWidth() - logicalWidth, getHeight() - logicalHeight);
-                        break;
-
-                    case UIElementLayout.CENTERED:
-                        g2d.translate(
-                                ((getWidth() - logicalWidth) / 2),
-                                ((getHeight() - logicalHeight) / 2));
-                        break;
-                }
-
-                uiDrawable.draw(g2d);
-            }
-
-            g2d.setTransform(old);
+            drawableDraw(g2d, old);
+            uiDrawableDraw(g2d, old);
 
             // Always draws cursors on top
             for (CursorDrawable d : context.getCursorDrawables()) {
@@ -211,24 +142,32 @@ public final class EnginePanel extends JPanel {
      */
     public Point2D getTranslatedPoint(Point ptSrc, UIElementLayout layout) {
         AffineTransform transform = new AffineTransform();
+        int width = getWidth();
+        int height = getHeight();
 
         switch (layout) {
             case UIElementLayout.TOP_ALIGNED:
-                transform.translate(-((getWidth() - logicalWidth) / 2), 0);
+                transform.translate(
+                        -((width - referenceWidth) / 2),
+                        0);
                 break;
 
             case UIElementLayout.BOTTOM_ALIGNED:
-                transform.translate(-((getWidth() - logicalWidth) / 2),
-                        -(getHeight() - logicalHeight));
+                transform.translate(
+                        -((width - referenceWidth) / 2),
+                        -(height - referenceHeight));
                 break;
 
             case UIElementLayout.LEFT_ALIGNED:
-                transform.translate(0, -((getHeight() - logicalHeight) / 2));
+                transform.translate(
+                        0,
+                        -((height - referenceHeight) / 2));
                 break;
 
             case UIElementLayout.RIGHT_ALIGNED:
-                transform.translate(-(getWidth() - logicalWidth),
-                        -((getHeight() - logicalHeight) / 2));
+                transform.translate(
+                        -(width - referenceWidth),
+                        -((height - referenceHeight) / 2));
                 break;
 
             case UIElementLayout.TOP_LEFT_ALIGNED:
@@ -236,25 +175,118 @@ public final class EnginePanel extends JPanel {
                 break;
 
             case UIElementLayout.BOTTOM_LEFT_ALIGNED:
-                transform.translate(0, -(getHeight() - logicalHeight));
+                transform.translate(
+                        0,
+                        -(height - referenceHeight));
                 break;
 
             case UIElementLayout.TOP_RIGHT_ALIGNED:
-                transform.translate(-(getWidth() - logicalWidth), 0);
+                transform.translate(
+                        -(width - referenceWidth),
+                        0);
                 break;
 
             case UIElementLayout.BOTTOM_RIGHT_ALIGNED:
-                transform.translate(-(getWidth() - logicalWidth),
-                        -(getHeight() - logicalHeight));
+                transform.translate(
+                        -(width - referenceWidth),
+                        -(height - referenceHeight));
                 break;
 
             case UIElementLayout.CENTERED:
                 transform.translate(
-                        -((getWidth() - logicalWidth) / 2),
-                        -((getHeight() - logicalHeight) / 2));
+                        -((width - referenceWidth) / 2),
+                        -((height - referenceHeight) / 2));
                 break;
         }
 
         return transform.transform(ptSrc, null);
+    }
+
+    private void drawableDraw(Graphics2D g2d, AffineTransform old) {
+
+        double scaleX = getWidth() / (double) logicalWidth;
+        double scaleY = getHeight() / (double) logicalHeight;
+        double scale = Math.min(scaleX, scaleY);
+
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+                RenderingHints.VALUE_ANTIALIAS_ON);
+        g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
+                RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+
+        g2d.setColor(state.data().backgroundColor);
+        g2d.fillRect(0, 0, getWidth(), getHeight());
+
+        // Center + scale
+        g2d.translate(
+                (getWidth() - logicalWidth * scale) / 2,
+                (getHeight() - logicalHeight * scale) / 2);
+        g2d.scale(scale, scale);
+
+        // Gets the scaled transform
+        viewportTransform = g2d.getTransform();
+
+        // Draw game objects in world space
+        for (Drawable drawable : context.getWorldDrawables()) {
+            drawable.draw(g2d);
+        }
+
+        // Restore transform
+        g2d.setTransform(old);
+    }
+
+    private void uiDrawableDraw(Graphics2D g2d, AffineTransform old) {
+        int width = getWidth();
+        int height = getHeight();
+
+        for (Drawable drawable : context.getUiDrawables()) {
+
+            UIDrawable uiDrawable = (UIDrawable) drawable;
+
+            g2d.setTransform(old);
+
+            switch (uiDrawable.getLayout()) {
+                case UIElementLayout.TOP_ALIGNED:
+                    g2d.translate((width - referenceWidth) / 2, 0);
+                    break;
+
+                case UIElementLayout.BOTTOM_ALIGNED:
+                    g2d.translate((width - referenceWidth) / 2, height - referenceHeight);
+                    break;
+
+                case UIElementLayout.LEFT_ALIGNED:
+                    g2d.translate(0, (height - referenceHeight) / 2);
+                    break;
+
+                case UIElementLayout.RIGHT_ALIGNED:
+                    g2d.translate(width - referenceWidth, (height - referenceHeight) / 2);
+                    break;
+
+                case UIElementLayout.TOP_LEFT_ALIGNED:
+                    // Nothing happens
+                    break;
+
+                case UIElementLayout.BOTTOM_LEFT_ALIGNED:
+                    g2d.translate(0, height - referenceHeight);
+                    break;
+
+                case UIElementLayout.TOP_RIGHT_ALIGNED:
+                    g2d.translate(width - referenceWidth, 0);
+                    break;
+
+                case UIElementLayout.BOTTOM_RIGHT_ALIGNED:
+                    g2d.translate(width - referenceWidth, height - referenceHeight);
+                    break;
+
+                case UIElementLayout.CENTERED:
+                    g2d.translate(
+                            ((width - referenceWidth) / 2),
+                            ((height - referenceHeight) / 2));
+                    break;
+            }
+
+            uiDrawable.draw(g2d);
+        }
+
+        g2d.setTransform(old);
     }
 }
