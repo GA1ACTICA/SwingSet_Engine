@@ -8,7 +8,6 @@
  *
  * Copyright © 2026 Galactica
  */
-
 package io.github.ga1actica.utils.jsonUtils;
 
 import java.io.IOException;
