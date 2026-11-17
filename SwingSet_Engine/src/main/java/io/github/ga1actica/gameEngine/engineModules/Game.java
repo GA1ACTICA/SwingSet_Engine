@@ -254,12 +254,16 @@ public abstract class Game {
      * This is the amount of times {@link Updatable#update(float deltaTime)} is
      * invoked per second.
      * 
-     * @param updatePerSecond the amount of updates per second
+     * @param updatesPerSecond the amount of updates per second
      */
     public void setUpdatesPerSecond(int updatesPerSecond) {
         state.data().updateInterval = 1000000000 / updatesPerSecond;
     }
 
+    /**
+     * Sets the window to fullscreen mode and updates the dimensions in
+     * {@link EngineState}.
+     */
     public void setFullscreen() {
         GraphicsDevice device = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
         device.setFullScreenWindow(frame);
@@ -270,6 +274,14 @@ public abstract class Game {
 
     }
 
+    /**
+     * Sets the window to windowed mode and updates the dimensions in
+     * {@link EngineState}.
+     * 
+     * @param width  the width of the window
+     * 
+     * @param height the height of the window
+     */
     public void setWindowed(int width, int height) {
         GraphicsDevice device = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
         device.setFullScreenWindow(null);

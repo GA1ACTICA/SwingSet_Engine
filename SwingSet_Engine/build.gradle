@@ -5,7 +5,7 @@ plugins {
 }
 
 group = 'io.github.ga1actica'
-version = 'v1.1.1'
+version = 'v1.2.1'
 
 repositories {
     mavenCentral()
@@ -37,6 +37,11 @@ tasks.withType(JavaCompile) {
 
 tasks.withType(Javadoc).configureEach {
     options.memberLevel = JavadocMemberLevel.PROTECTED
+    options.tags = [
+        'apiNote:a:API Note:',
+        'implSpec:a:Implementation Requirements:',
+        'implNote:a:Implementation Note:'
+    ]
 }
 
 tasks.register("webDoc", Copy) {

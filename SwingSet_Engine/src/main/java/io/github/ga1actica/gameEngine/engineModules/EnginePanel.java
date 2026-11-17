@@ -35,12 +35,12 @@ import io.github.ga1actica.gameEngine.interfaces.drawables.UIDrawable.UIElementL
 @SuppressWarnings("serial")
 public final class EnginePanel extends JPanel {
 
-    private int logicalWidth = 1000;
-    private int logicalHeight = 1000;
+    private transient int logicalWidth = 1000;
+    private transient int logicalHeight = 1000;
 
-    private int referenceWidth;
-    private int referenceHeight;
-    private boolean initialized;
+    private transient int referenceWidth;
+    private transient int referenceHeight;
+    private transient boolean initialized;
 
     private transient EngineState state;
     private transient EngineContext context;
