@@ -26,6 +26,7 @@ import io.github.ga1actica.gameEngine.engineState.EngineState;
 import io.github.ga1actica.utils.ErrorManagement;
 import io.github.ga1actica.utils.Utils;
 import io.github.ga1actica.gameEngine.interfaces.Updatable;
+import io.github.ga1actica.gameEngine.interfaces.drawables.Drawable;
 
 /**
  * Base class for all games using the engine.
@@ -289,6 +290,29 @@ public abstract class Game {
         setWindowSize(width, height);
     }
 
+    /**
+     * 
+     * Sets the dimensions of the viewport used when transforming {@link Drawable
+     * Drawables}.
+     * <p>
+     * Currently, only the {@code FitView} viewport strategy is supported.
+     * It maintains a fixed aspect ratio by uniformly scaling the viewport to
+     * fit within the available screen dimensions, ensuring that the entire
+     * viewport remains visible.
+     * <p>
+     * The trade-off is that when the screen and viewport have different aspect
+     * ratios, the viewport will not occupy the entire screen. Empty space
+     * {@code (letterboxing)} may appear along the sides or at the top and bottom,
+     * depending on the difference in aspect ratios.
+     * <p>
+     * For some examples and additional information about viewports visit:
+     * <a href="https://libgdx.com/wiki/graphics/viewports#fitviewport">libGDX:
+     * FitViewport</a>.
+     * 
+     * @param width  the width of the viewport
+     * 
+     * @param height the height of the viewport
+     */
     public void setViewportDimensions(int width, int height) {
         state.data().viewportWidth = width;
         state.data().viewportHeight = height;
