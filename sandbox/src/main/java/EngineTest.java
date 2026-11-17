@@ -14,8 +14,11 @@ public class EngineTest extends Game implements Drawable {
 
     @Override
     protected void init() {
+<<<<<<< HEAD
         state.data().debugVerbose = true;
 
+=======
+>>>>>>> dev
         setFullscreen();
 
         ClassFactory.create(this, context, zIndex);
@@ -30,12 +33,17 @@ public class EngineTest extends Game implements Drawable {
         b.show();
         b.setLayout(UIElementLayout.TOP_RIGHT_ALIGNED);
 
+<<<<<<< HEAD
         b.onToggleTrue(() -> {
             setWindowed(1000, 1000);
         });
 
         b.onToggleFalse(() -> {
             setFullscreen();
+=======
+        b.onClick(() -> {
+            setViewportDimensions(panel.getWidth(), panel.getHeight());
+>>>>>>> dev
         });
     }
 
@@ -60,7 +68,11 @@ public class EngineTest extends Game implements Drawable {
     @Override
     public void draw(Graphics g) {
         g.setColor(Utils.rgba(0, 238, 255, 0.4));
+<<<<<<< HEAD
         g.fillRect(0, 0, 100, 100);
+=======
+        g.fillRect(0, 0, 1920, 1080);
+>>>>>>> dev
     }
 
 }

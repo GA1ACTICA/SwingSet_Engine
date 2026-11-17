@@ -14,6 +14,10 @@ package io.github.ga1actica.gameEngine.engineState;
 import java.awt.Color;
 
 import io.github.ga1actica.gameEngine.interfaces.Updatable;
+<<<<<<< HEAD
+=======
+import io.github.ga1actica.gameEngine.interfaces.drawables.Drawable;
+>>>>>>> dev
 
 /**
  * 
@@ -62,4 +66,14 @@ public final class EngineStateData {
      * The initial window height.
      */
     public int height = 1000;
+
+    /**
+     * The width of the viewport that {@link Drawable} use.
+     */
+    public int viewportWidth = 1000;
+
+    /**
+     * The height of the viewport that {@link Drawable} use.
+     */
+    public int viewportHeight = 1000;
 }
