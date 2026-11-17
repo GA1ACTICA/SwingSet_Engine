@@ -35,9 +35,6 @@ import io.github.ga1actica.gameEngine.interfaces.drawables.UIDrawable.UIElementL
 @SuppressWarnings("serial")
 public final class EnginePanel extends JPanel {
 
-    private transient int logicalWidth = 1000;
-    private transient int logicalHeight = 1000;
-
     private transient int referenceWidth;
     private transient int referenceHeight;
     private transient boolean initialized;
@@ -204,8 +201,8 @@ public final class EnginePanel extends JPanel {
 
     private void drawableDraw(Graphics2D g2d, AffineTransform old) {
 
-        double scaleX = getWidth() / (double) logicalWidth;
-        double scaleY = getHeight() / (double) logicalHeight;
+        double scaleX = getWidth() / (double) state.data().viewportWidth;
+        double scaleY = getHeight() / (double) state.data().viewportHeight;
         double scale = Math.min(scaleX, scaleY);
 
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
@@ -218,8 +215,8 @@ public final class EnginePanel extends JPanel {
 
         // Center + scale
         g2d.translate(
-                (getWidth() - logicalWidth * scale) / 2,
-                (getHeight() - logicalHeight * scale) / 2);
+                (getWidth() - state.data().viewportWidth * scale) / 2,
+                (getHeight() - state.data().viewportHeight * scale) / 2);
         g2d.scale(scale, scale);
 
         // Gets the scaled transform
@@ -229,6 +226,16 @@ public final class EnginePanel extends JPanel {
         for (Drawable drawable : context.getWorldDrawables()) {
             drawable.draw(g2d);
         }
+
+        System.out.println("Panel: " + getWidth() + "x" + getHeight());
+
+        System.out.println("Viewport: "
+                + state.data().viewportWidth + "x"
+                + state.data().viewportHeight);
+
+        System.out.println("Scale: " + scale);
+
+        System.out.println("Transform: " + viewportTransform);
 
         // Restore transform
         g2d.setTransform(old);

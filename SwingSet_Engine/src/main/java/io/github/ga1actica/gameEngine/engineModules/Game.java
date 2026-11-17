@@ -288,4 +288,9 @@ public abstract class Game {
 
         setWindowSize(width, height);
     }
+
+    public void setViewportDimensions(int width, int height) {
+        state.data().viewportWidth = width;
+        state.data().viewportHeight = height;
+    }
 }
