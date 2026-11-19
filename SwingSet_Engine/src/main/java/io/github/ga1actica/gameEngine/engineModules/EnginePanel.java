@@ -227,16 +227,6 @@ public final class EnginePanel extends JPanel {
             drawable.draw(g2d);
         }
 
-        System.out.println("Panel: " + getWidth() + "x" + getHeight());
-
-        System.out.println("Viewport: "
-                + state.data().viewportWidth + "x"
-                + state.data().viewportHeight);
-
-        System.out.println("Scale: " + scale);
-
-        System.out.println("Transform: " + viewportTransform);
-
         // Restore transform
         g2d.setTransform(old);
     }

@@ -15,6 +15,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
+import java.awt.Rectangle;
 import java.io.IOException;
 
 import javax.swing.JFrame;
@@ -75,6 +76,7 @@ public abstract class Game {
 
     private Runnable exitRunnable;
     private final GameUpdate gu;
+    private GraphicsDevice device;
 
     /**
      * Creates a new game with the specified title and resizability.
@@ -266,13 +268,32 @@ public abstract class Game {
      * {@link EngineState}.
      */
     public void setFullscreen() {
-        GraphicsDevice device = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+        if (device == null)
+            device = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+
         device.setFullScreenWindow(frame);
-        panel.setSize(frame.getWidth(), frame.getHeight());
 
-        state.data().width = frame.getWidth();
-        state.data().height = frame.getHeight();
+        Rectangle size = device.getDefaultConfiguration().getBounds();
 
+        panel.setSize((int) size.getWidth(), (int) size.getHeight());
+
+        state.data().width = (int) size.getWidth();
+        state.data().height = (int) size.getHeight();
+
+    }
+
+    /**
+     * Returns the dimensions of the default screen.
+     * 
+     * @return the size of the screen
+     */
+    public Dimension getScreenDimension() {
+        if (device == null)
+            device = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+
+        Rectangle size = device.getDefaultConfiguration().getBounds();
+
+        return new Dimension((int) size.getWidth(), (int) size.getHeight());
     }
 
     /**
